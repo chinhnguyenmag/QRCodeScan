@@ -7,4 +7,5 @@ package com.magrabbit.qrcodescan.utils;
  * 
  */
 public class CodeRequest {
+	public static final int CODE_REQUEST_SCAN_ACTIVITY = 77;
 }
