@@ -2,18 +2,17 @@ package com.magrabbit.qrcodescan.adapter;
 
 import java.util.ArrayList;
 
-import model.HistoryItem;
-import model.Item;
-import model.HistorySectionItem;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.magrabbit.qrcodescan.R;
+import com.magrabbit.qrcodescan.model.HistoryItem;
+import com.magrabbit.qrcodescan.model.HistorySectionItem;
+import com.magrabbit.qrcodescan.model.Item;
 
 public class HistoryAdapter extends ArrayAdapter<Item> {
 

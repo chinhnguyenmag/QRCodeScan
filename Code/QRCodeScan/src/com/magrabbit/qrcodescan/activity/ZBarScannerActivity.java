@@ -14,13 +14,18 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 
-import com.dm.zbar.android.scanner.ZBarConstants;
+import com.magrabbit.qrcodescan.R;
+import com.magrabbit.qrcodescan.customview.CameraPreview;
+import com.magrabbit.qrcodescan.customview.SlidingMenuCustom;
+import com.magrabbit.qrcodescan.listener.MenuSlidingClickListener;
 import com.magrabbit.qrcodescan.utils.CodeRequest;
 import com.magrabbit.qrcodescan.utils.StringExtraUtils;
+import com.magrabbit.qrcodescan.utils.ZBarConstants;
 
 public class ZBarScannerActivity extends Activity implements
-		Camera.PreviewCallback, ZBarConstants {
+		Camera.PreviewCallback, ZBarConstants, MenuSlidingClickListener {
 
 	private static final String TAG = "ZBarScannerActivity";
 	private CameraPreview mPreview;
@@ -28,6 +33,9 @@ public class ZBarScannerActivity extends Activity implements
 	private ImageScanner mScanner;
 	private Handler mAutoFocusHandler;
 	private boolean mPreviewing = true;
+	private FrameLayout mFrameCamera;
+	// For Sliding Menu
+	private SlidingMenuCustom mSlidingMenu;
 
 	static {
 		System.loadLibrary("iconv");
@@ -36,16 +44,17 @@ public class ZBarScannerActivity extends Activity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		// Hide the window title.
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		setContentView(R.layout.activity_scan);
+		mFrameCamera = (FrameLayout) findViewById(R.id.activity_scan_camera);
+		mSlidingMenu = new SlidingMenuCustom(this, this);
 		if (!isCameraAvailable()) {
 			// Cancel request if there is no rear-facing camera.
 			cancelRequest();
 			return;
 		}
-
-		// Hide the window title.
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		mAutoFocusHandler = new Handler();
 
@@ -55,7 +64,7 @@ public class ZBarScannerActivity extends Activity implements
 		// Create a RelativeLayout container that will hold a SurfaceView,
 		// and set it as the content of our activity.
 		mPreview = new CameraPreview(this, this, autoFocusCB);
-		setContentView(mPreview);
+		mFrameCamera.addView(mPreview);
 	}
 
 	public void setupScanner() {
@@ -63,7 +72,7 @@ public class ZBarScannerActivity extends Activity implements
 		mScanner.setConfig(0, Config.X_DENSITY, 3);
 		mScanner.setConfig(0, Config.Y_DENSITY, 3);
 
-		int[] symbols = getIntent().getIntArrayExtra(SCAN_MODES);
+		int[] symbols = new int[] { Symbol.QRCODE };
 		if (symbols != null) {
 			mScanner.setConfig(Symbol.NONE, Config.ENABLE, 0);
 			for (int symbol : symbols) {
@@ -177,4 +186,28 @@ public class ZBarScannerActivity extends Activity implements
 			mAutoFocusHandler.postDelayed(doAutoFocus, 1000);
 		}
 	};
+
+	@Override
+	public void onScannerClickListener() {
+		mSlidingMenu.toggle();
+	}
+
+	@Override
+	public void onHistoryClickListener() {
+		startActivity(new Intent(ZBarScannerActivity.this,
+				HistoryActivity.class));
+
+	}
+
+	@Override
+	public void onAboutClickListener() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onSettingClickListener() {
+		// TODO Auto-generated method stub
+
+	}
 }

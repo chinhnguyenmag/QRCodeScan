@@ -59,7 +59,8 @@ public class ZBarScannerActivity extends Activity implements
 		mScanner.setConfig(0, Config.X_DENSITY, 3);
 		mScanner.setConfig(0, Config.Y_DENSITY, 3);
 
-		int[] symbols = getIntent().getIntArrayExtra(SCAN_MODES);
+		// int[] symbols = getIntent().getIntArrayExtra(SCAN_MODES);
+		int[] symbols = new int[] { Symbol.QRCODE };
 		if (symbols != null) {
 			mScanner.setConfig(Symbol.NONE, Config.ENABLE, 0);
 			for (int symbol : symbols) {

@@ -7,7 +7,6 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.evernote.client.android.EvernoteSession;
 import com.magrabbit.qrcodescan.R;
@@ -29,7 +28,7 @@ public class BrowserActivity extends ParentActivity {
 			mScanResult = bundle.getString(StringExtraUtils.KEY_SCAN_RESULT);
 		}
 		mWebView = (WebView) findViewById(R.id.activity_website_wv);
-		mWebView.loadUrl("http://google.com.vn");
+		mWebView.loadUrl(mScanResult);
 		mWebView.setWebViewClient(new WebViewClient() {
 
 			public void onPageFinished(WebView view, String url) {
