@@ -34,5 +34,8 @@
     <string name="error_listing_notes">Error listing note</string>
     <string name="empty_content_error">Note title and content cannot be empty</string>
     <string name="note_saved">Note saved to Evernote</string>
+    
+     <drawable name="red_drawable">#CCAA1883</drawable>
+    <drawable name="green_drawable">#CC123Bff</drawable>
 
 </resources>

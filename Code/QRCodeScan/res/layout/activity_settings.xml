@@ -16,7 +16,7 @@
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="40dp"
+                android:layout_height="60dp"
                 android:background="@color/Orange" >
 
                 <ImageButton
@@ -72,13 +72,14 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginRight="20dp"
+                    android:layout_marginTop="4dp"
                     android:gravity="center"
                     mySwitch:backgroundMask="@drawable/smask_background_copy"
                     mySwitch:leftBackground="@drawable/sleft_background_copy1"
                     mySwitch:pushStyle="true"
                     mySwitch:rightBackground="@drawable/sright_background_copy1"
-                    mySwitch:textOff=""
-                    mySwitch:textOn=""
+                    mySwitch:textOff="OFF"
+                    mySwitch:textOn="ON"
                     mySwitch:textOnThumb="false"
                     mySwitch:thumb="@drawable/stoggle_copy1"
                     mySwitch:thumbExtraMovement="25dp"
@@ -117,8 +118,8 @@
                     mySwitch:leftBackground="@drawable/sleft_background_copy1"
                     mySwitch:pushStyle="true"
                     mySwitch:rightBackground="@drawable/sright_background_copy1"
-                    mySwitch:textOff=""
-                    mySwitch:textOn=""
+                   mySwitch:textOff="OFF"
+                    mySwitch:textOn="ON"
                     mySwitch:textOnThumb="false"
                     mySwitch:thumb="@drawable/stoggle_copy1"
                     mySwitch:thumbExtraMovement="25dp"

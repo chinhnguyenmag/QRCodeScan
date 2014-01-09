@@ -102,7 +102,6 @@
         <activity
             android:name="com.evernote.client.android.EvernoteOAuthActivity"
             android:configChanges="orientation|keyboardHidden" />
->>>>>>> 714b262d04744644100f0e08969e760d21899327
     </application>
 
 </manifest>
