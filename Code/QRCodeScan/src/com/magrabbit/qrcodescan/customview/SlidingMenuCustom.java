@@ -15,7 +15,6 @@ import com.magrabbit.qrcodescan.listener.MenuSlidingClickListener;
  */
 public class SlidingMenuCustom {
 	private SlidingMenu menu = null;
-	private Context mContext;
 	private Button mBtScanner;
 	private Button mBtHistory;
 	private Button mBtSetting;
@@ -27,14 +26,14 @@ public class SlidingMenuCustom {
 	 */
 	public SlidingMenuCustom(Context context,
 			final MenuSlidingClickListener listenner) {
-		menu = new SlidingMenu(mContext);
+		menu = new SlidingMenu(context);
 		menu.setMode(SlidingMenu.LEFT);
 		menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 		menu.setShadowWidthRes(R.dimen.shadow_width);
 		menu.setShadowDrawable(R.anim.shadow);
 		menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
 		menu.setFadeDegree(0.35f);
-		menu.attachToActivity((Activity) mContext, SlidingMenu.SLIDING_CONTENT);
+		menu.attachToActivity((Activity) context, SlidingMenu.SLIDING_CONTENT);
 		menu.setMenu(R.layout.activity_sliding);
 		menu.setSlidingEnabled(true);
 		View view = menu.getRootView();
@@ -80,5 +79,8 @@ public class SlidingMenuCustom {
 				listenner.onSettingClickListener();
 			}
 		});
+	}
+	public void toggle(){
+		menu.toggle();
 	}
 }
