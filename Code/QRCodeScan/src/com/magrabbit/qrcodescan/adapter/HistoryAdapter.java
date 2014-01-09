@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.magrabbit.qrcodescan.R;
@@ -50,13 +51,9 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 				v = vi.inflate(R.layout.list_item_entry, null);
 				final TextView title = (TextView) v
 						.findViewById(R.id.list_item_entry_title);
-				final TextView subtitle = (TextView) v
-						.findViewById(R.id.list_item_entry_summary);
 
 				if (title != null)
 					title.setText(ei.title);
-				if (subtitle != null)
-					subtitle.setText(ei.subtitle);
 			}
 		}
 		return v;

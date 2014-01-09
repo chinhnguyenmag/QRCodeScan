@@ -9,7 +9,11 @@ import model.HistoryItem;
 import model.HistorySectionItem;
 import model.Item;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.magrabbit.qrcodescan.R;
@@ -32,27 +36,33 @@ public class HistoryActivity extends Activity {
 
 		Format formatter = new SimpleDateFormat("EEE, MMM dd yyyy");
 		String date = formatter.format(new Date());
-		
+
 		items.add(new HistorySectionItem(date));
-		items.add(new HistoryItem("Item 1", "This is item 1.1"));
-		items.add(new HistoryItem("Item 2", "This is item 1.2"));
-		items.add(new HistoryItem("Item 3", "This is item 1.3"));
+		items.add(new HistoryItem("http://www.44doors.com"));
+		items.add(new HistoryItem("http://www.wikipedia.com"));
 
-		items.add(new HistorySectionItem("Category 2"));
-		items.add(new HistoryItem("Item 4", "This is item 2.1"));
-		items.add(new HistoryItem("Item 5", "This is item 2.2"));
-		items.add(new HistoryItem("Item 6", "This is item 2.3"));
-		items.add(new HistoryItem("Item 7", "This is item 2.4"));
-
-		items.add(new HistorySectionItem("Category 3"));
-		items.add(new HistoryItem("Item 8", "This is item 3.1"));
-		items.add(new HistoryItem("Item 9", "This is item 3.2"));
-		items.add(new HistoryItem("Item 10", "This is item 3.3"));
-		items.add(new HistoryItem("Item 11", "This is item 3.4"));
-		items.add(new HistoryItem("Item 12", "This is item 3.5"));
+		items.add(new HistorySectionItem(date));
+		items.add(new HistoryItem("http://www.google.com"));
+		items.add(new HistoryItem("http://www.44doors.com"));
+		items.add(new HistoryItem("http://www.44doors.com"));
 
 		mAdapter = new HistoryAdapter(this, items);
 		mLvHistory.setAdapter(mAdapter);
 		mAdapter.notifyDataSetChanged();
+
+		// Process click event on each item of list
+		mLvHistory.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View view,
+					int position, long id) {
+				if (!items.get(position).isSection()) {
+					// Add code to process
+					startActivity(new Intent(HistoryActivity.this,
+							BrowserActivity.class));
+				}
+
+			}
+		});
 	}
 }

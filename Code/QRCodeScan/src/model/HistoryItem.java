@@ -4,11 +4,9 @@ package model;
 public class HistoryItem implements Item{
 
 	public final String title;
-	public final String subtitle;
 
-	public HistoryItem(String title, String subtitle) {
+	public HistoryItem(String title) {
 		this.title = title;
-		this.subtitle = subtitle;
 	}
 	
 	@Override
