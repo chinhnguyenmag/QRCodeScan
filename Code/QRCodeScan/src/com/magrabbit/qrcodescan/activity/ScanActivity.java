@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.dm.zbar.android.scanner.ZBarConstants;
 import com.dm.zbar.android.scanner.ZBarScannerActivity;
 import com.magrabbit.qrcodescan.utils.CodeRequest;
+import com.magrabbit.qrcodescan.utils.StringExtraUtils;
 
 public class ScanActivity extends Activity {
 
@@ -48,15 +49,11 @@ public class ScanActivity extends Activity {
 		case ZBAR_SCANNER_REQUEST:
 		case ZBAR_QR_SCANNER_REQUEST:
 			if (resultCode == RESULT_OK) {
-				Toast.makeText(
-						this,
-						"Scan Result = "
-								+ data.getStringExtra(ZBarConstants.SCAN_RESULT),
-						Toast.LENGTH_LONG).show();
-
 				// Change to Browser for searching result
 				Intent intent = new Intent(ScanActivity.this,
 						BrowserActivity.class);
+				intent.putExtra(StringExtraUtils.KEY_SCAN_RESULT,
+						data.getStringExtra(ZBarConstants.SCAN_RESULT));
 				startActivityForResult(intent,
 						CodeRequest.CODE_REQUEST_SCAN_ACTIVITY);
 
