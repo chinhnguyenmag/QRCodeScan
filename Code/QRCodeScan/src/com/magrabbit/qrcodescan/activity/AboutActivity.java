@@ -11,7 +11,7 @@ import com.magrabbit.qrcodescan.listener.MenuSlidingClickListener;
 
 /**
  * @author vu le
- *
+ * 
  */
 public class AboutActivity extends Activity implements MenuSlidingClickListener {
 
@@ -23,7 +23,7 @@ public class AboutActivity extends Activity implements MenuSlidingClickListener 
 		setContentView(R.layout.activity_about);
 		mMenu = new SlidingMenuCustom(this, this);
 	}
-	
+
 	public void onClick_Menu(View view) {
 		if (mMenu == null) {
 			mMenu = new SlidingMenuCustom(this, this);
@@ -33,28 +33,28 @@ public class AboutActivity extends Activity implements MenuSlidingClickListener 
 
 	@Override
 	public void onScannerClickListener() {
-		startActivity(new Intent(this,ScanActivity.class));
+		startActivity(new Intent(this, ScanActivity.class));
 		finish();
 
 	}
 
 	@Override
 	public void onHistoryClickListener() {
-		startActivity(new Intent(this,HistoryActivity.class));
+		startActivity(new Intent(this, HistoryActivity.class));
 		finish();
 
 	}
 
 	@Override
 	public void onAboutClickListener() {
-		startActivity(new Intent(this,AboutActivity.class));
-		finish();
+		// startActivity(new Intent(this,AboutActivity.class));
+		// finish();
 	}
 
 	@Override
 	public void onSettingClickListener() {
-		startActivity(new Intent(this,SettingActivity.class));
+		startActivity(new Intent(this, SettingActivity.class));
 		finish();
-		
+
 	}
 }

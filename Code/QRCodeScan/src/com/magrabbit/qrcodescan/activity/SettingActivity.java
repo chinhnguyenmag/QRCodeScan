@@ -20,7 +20,8 @@ import com.magrabbit.qrcodescan.listener.MenuSlidingClickListener;
  * 
  * 
  */
-public class SettingActivity extends Activity implements MenuSlidingClickListener{
+public class SettingActivity extends Activity implements
+		MenuSlidingClickListener {
 
 	private MySwitch mySwitchOnOffSound;
 	private MySwitch mySwitchOnOffOpenUrl;
@@ -66,8 +67,7 @@ public class SettingActivity extends Activity implements MenuSlidingClickListene
 					}
 				});
 	}
-	
-	
+
 	public void onClick_Menu(View view) {
 		if (mMenu == null) {
 			mMenu = new SlidingMenuCustom(this, this);
@@ -75,31 +75,30 @@ public class SettingActivity extends Activity implements MenuSlidingClickListene
 		mMenu.toggle();
 	}
 
-
 	@Override
 	public void onScannerClickListener() {
-		startActivity(new Intent(this,ScanActivity.class));
+		startActivity(new Intent(this, ScanActivity.class));
 		finish();
 
 	}
 
 	@Override
 	public void onHistoryClickListener() {
-		startActivity(new Intent(this,HistoryActivity.class));
+		startActivity(new Intent(this, HistoryActivity.class));
 		finish();
 
 	}
 
 	@Override
 	public void onAboutClickListener() {
-		startActivity(new Intent(this,AboutActivity.class));
+		startActivity(new Intent(this, AboutActivity.class));
 		finish();
 	}
 
 	@Override
 	public void onSettingClickListener() {
-		startActivity(new Intent(this,SettingActivity.class));
-		finish();
-		
+		// startActivity(new Intent(this,SettingActivity.class));
+		// finish();
+
 	}
 }
