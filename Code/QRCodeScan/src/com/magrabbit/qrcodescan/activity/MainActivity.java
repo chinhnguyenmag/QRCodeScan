@@ -16,12 +16,14 @@ public class MainActivity extends Activity {
 	Button mBtHistory;
 	Button mBtSetting;
 	Button mBtAbout;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		initMenu();
 	}
+
 	public void onClick_Menu(View view) {
 		if (menu == null) {
 			initMenu();
@@ -42,45 +44,49 @@ public class MainActivity extends Activity {
 		menu.setMenu(R.layout.activity_sliding);
 		menu.setSlidingEnabled(true);
 		View view = menu.getRootView();
-		mBtAbout = (Button)view.findViewById(R.id.activity_sliding_bt_about);
-		mBtHistory = (Button)view.findViewById(R.id.activity_sliding_bt_history);
-		mBtScanner = (Button)view.findViewById(R.id.activity_sliding_bt_scanner);
-		mBtSetting = (Button)view.findViewById(R.id.activity_sliding_bt_setting);
-		
+		mBtAbout = (Button) view.findViewById(R.id.activity_sliding_bt_about);
+		mBtHistory = (Button) view
+				.findViewById(R.id.activity_sliding_bt_history);
+		mBtScanner = (Button) view
+				.findViewById(R.id.activity_sliding_bt_scanner);
+		mBtSetting = (Button) view
+				.findViewById(R.id.activity_sliding_bt_setting);
+
 		mBtAbout.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				menu.toggle();
-				startActivity(new Intent(MainActivity.this,HistoryActivity.class));
+				startActivity(new Intent(MainActivity.this,
+						HistoryActivity.class));
 				finish();
 			}
 		});
-		
+
 		mBtHistory.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
+
 			}
 		});
-		
+
 		mBtScanner.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		
+
 		mBtSetting.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 	}
-	
+
 }
