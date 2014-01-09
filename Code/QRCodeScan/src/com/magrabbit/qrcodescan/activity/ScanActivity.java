@@ -62,6 +62,8 @@ public class ScanActivity extends Activity {
 				if (!TextUtils.isEmpty(error)) {
 					Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
 				}
+			} else if (resultCode == RESULT_CANCELED) {
+				finish();
 			}
 			break;
 		case CodeRequest.CODE_REQUEST_SCAN_ACTIVITY:
