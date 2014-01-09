@@ -1,46 +1,39 @@
-package com.magrabbit.qrcodescan.activity;
+package com.magrabbit.qrcodescan.customview;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
+import android.content.Context;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.magrabbit.qrcodescan.R;
+import com.magrabbit.qrcodescan.listener.MenuSlidingClickListener;
 
-public class MainActivity extends Activity {
-	SlidingMenu menu = null;
-	Button mBtScanner;
-	Button mBtHistory;
-	Button mBtSetting;
-	Button mBtAbout;
+/**
+ * @author Hung Hoang This class init Sliding Menu.
+ */
+public class SlidingMenuCustom {
+	private SlidingMenu menu = null;
+	private Button mBtScanner;
+	private Button mBtHistory;
+	private Button mBtSetting;
+	private Button mBtAbout;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		initMenu();
-	}
-
-	public void onClick_Menu(View view) {
-		if (menu == null) {
-			initMenu();
-		}
-		menu.setMode(SlidingMenu.LEFT);
-		menu.toggle();
-	}
-
-	private void initMenu() {
-		menu = new SlidingMenu(this);
+	/**
+	 * @param context
+	 * @param listenner
+	 */
+	public SlidingMenuCustom(Context context,
+			final MenuSlidingClickListener listenner) {
+		menu = new SlidingMenu(context);
 		menu.setMode(SlidingMenu.LEFT);
 		menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 		menu.setShadowWidthRes(R.dimen.shadow_width);
 		menu.setShadowDrawable(R.anim.shadow);
 		menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
 		menu.setFadeDegree(0.35f);
-		menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+		menu.attachToActivity((Activity) context, SlidingMenu.SLIDING_CONTENT);
 		menu.setMenu(R.layout.activity_sliding);
 		menu.setSlidingEnabled(true);
 		View view = menu.getRootView();
@@ -57,16 +50,15 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				menu.toggle();
-				startActivity(new Intent(MainActivity.this,
-						HistoryActivity.class));
-				finish();
+				listenner.onAboutClickListener();
 			}
 		});
 
 		mBtHistory.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-
+				menu.toggle();
+				listenner.onHistoryClickListener();
 			}
 		});
 
@@ -74,8 +66,8 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-
+				menu.toggle();
+				listenner.onScannerClickListener();
 			}
 		});
 
@@ -83,10 +75,12 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-
+				menu.toggle();
+				listenner.onSettingClickListener();
 			}
 		});
 	}
-
+	public void toggle(){
+		menu.toggle();
+	}
 }

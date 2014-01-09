@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
     android:id="@+id/activity_sliding_ll"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:background="@color/Black"
     android:orientation="vertical"
@@ -11,32 +11,28 @@
         android:id="@+id/activity_sliding_bt_scanner"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="1"
         android:layout_marginBottom="20dp"
-        android:onClick="onClick_Scanner"
+        android:layout_weight="1"
         android:text="Scanner" />
 
     <Button
         android:id="@+id/activity_sliding_bt_history"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:onClick="onClick_History"
         android:layout_marginBottom="20dp"
+        android:layout_weight="1"
         android:text="History" />
 
     <Button
         android:id="@+id/activity_sliding_bt_setting"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:onClick="onClick_Setting"
         android:layout_marginBottom="20dp"
+        android:layout_weight="1"
         android:text="Setting" />
 
     <Button
         android:id="@+id/activity_sliding_bt_about"
-        android:onClick="onClick_About"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
