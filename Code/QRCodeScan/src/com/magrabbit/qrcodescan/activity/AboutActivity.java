@@ -7,6 +7,10 @@ import com.magrabbit.qrcodescan.R;
 import com.magrabbit.qrcodescan.customview.SlidingMenuCustom;
 import com.magrabbit.qrcodescan.listener.MenuSlidingClickListener;
 
+/**
+ * @author vu le
+ *
+ */
 public class AboutActivity extends Activity implements MenuSlidingClickListener {
 
 	private SlidingMenuCustom mMenu;
