@@ -4,6 +4,7 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
 import model.HistoryItem;
 import model.HistorySectionItem;
 import model.Item;
@@ -15,8 +16,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
-import com.jeremyfeinstein.slidingmenu.lib.app.SlidingActivityBase;
 import com.magrabbit.qrcodescan.R;
 import com.magrabbit.qrcodescan.adapter.HistoryAdapter;
 import com.magrabbit.qrcodescan.customview.SlidingMenuCustom;
@@ -91,13 +90,15 @@ public class HistoryActivity extends Activity implements MenuSlidingClickListene
 
 	@Override
 	public void onAboutClickListener() {
-		// TODO Auto-generated method stub
+		startActivity(new Intent(this,AboutActivity.class));
+		finish();
 		
 	}
 
 	@Override
 	public void onSettingClickListener() {
-		// TODO Auto-generated method stub
+		startActivity(new Intent(this,SettingActivity.class));
+		finish();
 		
 	}
 }

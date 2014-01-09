@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import com.magrabbit.qrcodescan.R;
 import com.magrabbit.qrcodescan.customize.MySwitch;
+import com.magrabbit.qrcodescan.customview.SlidingMenuCustom;
+import com.magrabbit.qrcodescan.listener.MenuSlidingClickListener;
 
 /**
  * @author vule
@@ -16,15 +18,17 @@ import com.magrabbit.qrcodescan.customize.MySwitch;
  * 
  * 
  */
-public class SettingActivity extends Activity{
+public class SettingActivity extends Activity implements MenuSlidingClickListener{
 
 	private MySwitch mySwitchOnOffSound;
 	private MySwitch mySwitchOnOffOpenUrl;
+	private SlidingMenuCustom mMenu;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
+		mMenu = new SlidingMenuCustom(this, this);
 		mySwitchOnOffSound = (MySwitch) findViewById(R.id.settings_switch_sound);
 		mySwitchOnOffOpenUrl = (MySwitch) findViewById(R.id.settings_switch_open_url);
 		mySwitchOnOffSound
@@ -58,5 +62,29 @@ public class SettingActivity extends Activity{
 						}
 					}
 				});
+	}
+
+	@Override
+	public void onScannerClickListener() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onHistoryClickListener() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onAboutClickListener() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onSettingClickListener() {
+		// TODO Auto-generated method stub
+		
 	}
 }
