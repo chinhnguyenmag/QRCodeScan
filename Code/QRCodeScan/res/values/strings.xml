@@ -5,6 +5,23 @@
     <string name="app_name">QRCodeScan</string>
     <string name="action_settings">Settings</string>
     <string name="mess_waitting">Processing...</string>
+    <string name="about">About</string>
+    <string name="setting">Settings</string>
+    <string name="scanner">SCANNER</string>
+    <string name="sound">Sound</string>
+    <string name="auto_open_url">Auto Open URL</string>
+    <string name="url_profile">URL Profile</string>
+    <string name="auto_close">Auto close URL view after</string>
+    <string name="share">SHARE</string>
+    <string name="message">Message</string>
+    <string name="mail">Mail</string>
+    <string name="twitter">Twitter</string>
+    <string name="facebook">facebook</string>
+    <string name="common_imagebutton_description">imagebutton</string>
+
+    <!-- text use to show in layout not important -->
+    <string name="link">44doors.com</string>
+    <string name="time_setting">5 seconds</string>
     <string name="save">Save</string>
     <string name="ok">Ok</string>
     <!-- EverNote -->

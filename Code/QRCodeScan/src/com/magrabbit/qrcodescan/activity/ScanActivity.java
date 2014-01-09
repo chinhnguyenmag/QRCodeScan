@@ -7,10 +7,12 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dm.zbar.android.scanner.ZBarConstants;
 import com.dm.zbar.android.scanner.ZBarScannerActivity;
+import com.magrabbit.qrcodescan.R;
 import com.magrabbit.qrcodescan.utils.CodeRequest;
 import com.magrabbit.qrcodescan.utils.StringExtraUtils;
 
@@ -18,11 +20,14 @@ public class ScanActivity extends Activity {
 
 	private static final int ZBAR_SCANNER_REQUEST = 0;
 	private static final int ZBAR_QR_SCANNER_REQUEST = 1;
+	private TextView mTvTitle;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// setContentView(R.layout.activity_scan);
+		setContentView(R.layout.activity_scan);
+		mTvTitle = (TextView)findViewById(R.id.header_scan_setting_about_tv_title);
+		mTvTitle.setText("Scan");
 		launchQRScanner(null);
 	}
 

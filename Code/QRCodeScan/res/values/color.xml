@@ -4,5 +4,6 @@
     <color name="White">#FFFFFF</color>
     <color name="Black">#333333</color>
     <color name="Orange">#e67b1e</color>
+     <color name="background_gray">#e3e3e3</color>
     <color name="transparent">@android:color/transparent</color>
 </resources>
