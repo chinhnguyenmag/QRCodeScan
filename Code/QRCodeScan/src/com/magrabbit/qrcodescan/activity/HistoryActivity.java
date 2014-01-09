@@ -4,6 +4,7 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,8 +13,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
-import com.jeremyfeinstein.slidingmenu.lib.app.SlidingActivityBase;
 import com.magrabbit.qrcodescan.R;
 import com.magrabbit.qrcodescan.adapter.HistoryAdapter;
 import com.magrabbit.qrcodescan.customview.SlidingMenuCustom;
@@ -22,7 +21,8 @@ import com.magrabbit.qrcodescan.model.HistoryItem;
 import com.magrabbit.qrcodescan.model.HistorySectionItem;
 import com.magrabbit.qrcodescan.model.Item;
 
-public class HistoryActivity extends Activity implements MenuSlidingClickListener {
+public class HistoryActivity extends Activity implements
+		MenuSlidingClickListener {
 
 	private ListView mLvHistory;
 	private HistoryAdapter mAdapter;
@@ -36,7 +36,7 @@ public class HistoryActivity extends Activity implements MenuSlidingClickListene
 		// inflate layout for list view
 		mLvHistory = (ListView) findViewById(R.id.activity_history_lv);
 		mMenu = new SlidingMenuCustom(this, this);
-		
+
 		long time = System.currentTimeMillis();
 
 		Format formatter = new SimpleDateFormat("EEE, MMM dd yyyy");
@@ -80,24 +80,26 @@ public class HistoryActivity extends Activity implements MenuSlidingClickListene
 	@Override
 	public void onScannerClickListener() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onHistoryClickListener() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onAboutClickListener() {
-		// TODO Auto-generated method stub
-		
+		startActivity(new Intent(this, AboutActivity.class));
+		finish();
+
 	}
 
 	@Override
 	public void onSettingClickListener() {
-		// TODO Auto-generated method stub
-		
+		startActivity(new Intent(this, SettingActivity.class));
+		finish();
+
 	}
 }
