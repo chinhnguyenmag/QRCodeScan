@@ -26,7 +26,8 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="5dp"
                     android:background="@drawable/ic_menu"
-                    android:contentDescription="@string/common_imagebutton_description" />
+                    android:contentDescription="@string/common_imagebutton_description"
+                    android:onClick="onClick_Menu" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -118,7 +119,7 @@
                     mySwitch:leftBackground="@drawable/sleft_background_copy1"
                     mySwitch:pushStyle="true"
                     mySwitch:rightBackground="@drawable/sright_background_copy1"
-                   mySwitch:textOff="OFF"
+                    mySwitch:textOff="OFF"
                     mySwitch:textOn="ON"
                     mySwitch:textOnThumb="false"
                     mySwitch:thumb="@drawable/stoggle_copy1"
@@ -134,6 +135,7 @@
                 android:background="@color/background_gray" />
 
             <LinearLayout
+                 android:id="@+id/setting_ll_url_profile"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="10dp"
@@ -164,6 +166,7 @@
                 android:background="@color/background_gray" />
 
             <LinearLayout
+                android:id="@+id/setting_ll_auto_close_by_time"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -211,6 +214,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/setting_ll_social_message"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -218,8 +222,8 @@
                 android:paddingTop="10dp" >
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
                     android:background="@drawable/ic_message"
@@ -250,6 +254,7 @@
                 android:background="@color/background_gray" />
 
             <LinearLayout
+                android:id="@+id/setting_ll_social_mail"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -257,8 +262,8 @@
                 android:paddingTop="10dp" >
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
                     android:background="@drawable/ic_email"
@@ -289,6 +294,7 @@
                 android:background="@color/background_gray" />
 
             <LinearLayout
+                android:id="@+id/setting_ll_social_twitter"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -296,8 +302,8 @@
                 android:paddingTop="10dp" >
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
                     android:background="@drawable/ic_twiiter"
@@ -328,6 +334,7 @@
                 android:background="@color/background_gray" />
 
             <LinearLayout
+                android:id="@+id/setting_ll_social_fb"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -335,8 +342,8 @@
                 android:paddingTop="10dp" >
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
                     android:background="@drawable/ic_facebook"
