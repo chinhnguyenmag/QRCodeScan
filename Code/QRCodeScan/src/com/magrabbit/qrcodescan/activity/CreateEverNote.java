@@ -30,6 +30,7 @@ import java.util.List;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.provider.ContactsContract.CommonDataKinds.Note;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -39,7 +40,6 @@ import android.widget.Toast;
 
 import com.evernote.client.android.EvernoteUtil;
 import com.evernote.client.android.OnClientCallback;
-import com.evernote.edam.type.Note;
 import com.evernote.edam.type.Notebook;
 import com.evernote.thrift.transport.TTransportException;
 import com.magrabbit.qrcodescan.R;
