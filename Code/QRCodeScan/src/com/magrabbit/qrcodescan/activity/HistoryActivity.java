@@ -1,8 +1,6 @@
 package com.magrabbit.qrcodescan.activity;
 
 import com.magrabbit.qrcodescan.R;
-import com.magrabbit.qrcodescan.R.layout;
-
 import android.app.Activity;
 import android.os.Bundle;
 

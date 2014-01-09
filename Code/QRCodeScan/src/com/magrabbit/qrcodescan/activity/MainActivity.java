@@ -1,15 +1,21 @@
 package com.magrabbit.qrcodescan.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.magrabbit.qrcodescan.R;
 
 public class MainActivity extends Activity {
 	SlidingMenu menu = null;
+	Button mBtScanner;
+	Button mBtHistory;
+	Button mBtSetting;
+	Button mBtAbout;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -28,11 +34,53 @@ public class MainActivity extends Activity {
 		menu = new SlidingMenu(this);
 		menu.setMode(SlidingMenu.LEFT);
 		menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-		menu.setTouchModeBehind(SlidingMenu.TOUCHMODE_FULLSCREEN);
-		menu.setFadeDegree(0.5f);
+		menu.setShadowWidthRes(R.dimen.shadow_width);
+		menu.setShadowDrawable(R.anim.shadow);
+		menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+		menu.setFadeDegree(0.35f);
 		menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
 		menu.setMenu(R.layout.activity_sliding);
+		menu.setSlidingEnabled(true);
 		View view = menu.getRootView();
-		menu.setBehindOffset(200);
+		mBtAbout = (Button)view.findViewById(R.id.activity_sliding_bt_about);
+		mBtHistory = (Button)view.findViewById(R.id.activity_sliding_bt_history);
+		mBtScanner = (Button)view.findViewById(R.id.activity_sliding_bt_scanner);
+		mBtSetting = (Button)view.findViewById(R.id.activity_sliding_bt_setting);
+		
+		mBtAbout.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				menu.toggle();
+				startActivity(new Intent(MainActivity.this,HistoryActivity.class));
+				finish();
+			}
+		});
+		
+		mBtHistory.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				
+			}
+		});
+		
+		mBtScanner.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		mBtSetting.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
+	
 }
