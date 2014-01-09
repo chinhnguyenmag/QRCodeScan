@@ -1,7 +1,9 @@
 package com.magrabbit.qrcodescan.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.magrabbit.qrcodescan.R;
 import com.magrabbit.qrcodescan.customview.SlidingMenuCustom;
@@ -21,29 +23,38 @@ public class AboutActivity extends Activity implements MenuSlidingClickListener 
 		setContentView(R.layout.activity_about);
 		mMenu = new SlidingMenuCustom(this, this);
 	}
+	
+	public void onClick_Menu(View view) {
+		if (mMenu == null) {
+			mMenu = new SlidingMenuCustom(this, this);
+		}
+		mMenu.toggle();
+	}
 
 	@Override
 	public void onScannerClickListener() {
-		// TODO Auto-generated method stub
+		startActivity(new Intent(this,ScanActivity.class));
+		finish();
 
 	}
 
 	@Override
 	public void onHistoryClickListener() {
-		// TODO Auto-generated method stub
+		startActivity(new Intent(this,HistoryActivity.class));
+		finish();
 
 	}
 
 	@Override
 	public void onAboutClickListener() {
-		// TODO Auto-generated method stub
-
+		startActivity(new Intent(this,AboutActivity.class));
+		finish();
 	}
 
 	@Override
 	public void onSettingClickListener() {
-		// TODO Auto-generated method stub
-
+		startActivity(new Intent(this,SettingActivity.class));
+		finish();
+		
 	}
-
 }

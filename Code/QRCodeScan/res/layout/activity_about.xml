@@ -16,6 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="5dp"
+             android:onClick="onClick_Menu"
             android:background="@drawable/ic_menu"
             android:contentDescription="@string/common_imagebutton_description" />
 

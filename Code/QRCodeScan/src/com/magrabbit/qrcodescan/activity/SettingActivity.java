@@ -1,7 +1,9 @@
 package com.magrabbit.qrcodescan.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Toast;
@@ -30,6 +32,7 @@ public class SettingActivity extends Activity implements MenuSlidingClickListene
 		setContentView(R.layout.activity_settings);
 		mMenu = new SlidingMenuCustom(this, this);
 		mySwitchOnOffSound = (MySwitch) findViewById(R.id.settings_switch_sound);
+		mySwitchOnOffSound.toggle();
 		mySwitchOnOffOpenUrl = (MySwitch) findViewById(R.id.settings_switch_open_url);
 		mySwitchOnOffSound
 				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -63,28 +66,40 @@ public class SettingActivity extends Activity implements MenuSlidingClickListene
 					}
 				});
 	}
+	
+	
+	public void onClick_Menu(View view) {
+		if (mMenu == null) {
+			mMenu = new SlidingMenuCustom(this, this);
+		}
+		mMenu.toggle();
+	}
+
 
 	@Override
 	public void onScannerClickListener() {
-		// TODO Auto-generated method stub
-		
+		startActivity(new Intent(this,ScanActivity.class));
+		finish();
+
 	}
 
 	@Override
 	public void onHistoryClickListener() {
-		// TODO Auto-generated method stub
-		
+		startActivity(new Intent(this,HistoryActivity.class));
+		finish();
+
 	}
 
 	@Override
 	public void onAboutClickListener() {
-		// TODO Auto-generated method stub
-		
+		startActivity(new Intent(this,AboutActivity.class));
+		finish();
 	}
 
 	@Override
 	public void onSettingClickListener() {
-		// TODO Auto-generated method stub
+		startActivity(new Intent(this,SettingActivity.class));
+		finish();
 		
 	}
 }
