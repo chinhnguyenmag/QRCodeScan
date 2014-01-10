@@ -1,5 +1,8 @@
 package com.magrabbit.qrcodescan.activity;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +20,7 @@ public class BrowserActivity extends ParentActivity {
 	private String mScanResult;
 	private WebView mWebView;
 	private TextView mTvTitle;
+	URL url;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -28,7 +32,13 @@ public class BrowserActivity extends ParentActivity {
 			mScanResult = bundle.getString(StringExtraUtils.KEY_SCAN_RESULT);
 		}
 		mWebView = (WebView) findViewById(R.id.activity_website_wv);
-		mWebView.loadUrl(mScanResult);
+		try {
+			url = new URL("www.slitaz.org");
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		mWebView.loadUrl(url.toString());
 		mWebView.setWebViewClient(new WebViewClient() {
 
 			public void onPageFinished(WebView view, String url) {

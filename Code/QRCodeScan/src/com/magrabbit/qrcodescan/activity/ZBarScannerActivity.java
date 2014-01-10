@@ -12,12 +12,12 @@ import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.view.Display;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.magrabbit.qrcodescan.R;
-import com.magrabbit.qrcodescan.customview.CameraPreview;
 import com.magrabbit.qrcodescan.customview.SlidingMenuCustom;
 import com.magrabbit.qrcodescan.listener.MenuSlidingClickListener;
 import com.magrabbit.qrcodescan.utils.CodeRequest;
@@ -28,7 +28,8 @@ public class ZBarScannerActivity extends Activity implements
 		Camera.PreviewCallback, ZBarConstants, MenuSlidingClickListener {
 
 	private static final String TAG = "ZBarScannerActivity";
-	private CameraPreview mPreview;
+	// private CameraPreview mPreview;
+	private Cp mPreview;
 	private Camera mCamera;
 	private ImageScanner mScanner;
 	private Handler mAutoFocusHandler;
@@ -61,10 +62,18 @@ public class ZBarScannerActivity extends Activity implements
 		// Create and configure the ImageScanner;
 		setupScanner();
 
+		// Get width and height of Android Device Screen
+		Display display = getWindowManager().getDefaultDisplay();
+		int width = display.getWidth();
+		int height = display.getHeight();
+
 		// Create a RelativeLayout container that will hold a SurfaceView,
 		// and set it as the content of our activity.
-		mPreview = new CameraPreview(this, this, autoFocusCB);
+		// mPreview = new CameraPreview(this, this, width, height, autoFocusCB);
+		mPreview = new Cp(this, this, autoFocusCB);
 		mFrameCamera.addView(mPreview);
+
+		// setContentView(mPreview);
 	}
 
 	public void setupScanner() {
