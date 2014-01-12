@@ -213,6 +213,7 @@ public class Cp extends ViewGroup implements SurfaceHolder.Callback {
 
 	public void stop() {
 		if (mCamera != null) {
+			mCamera.cancelAutoFocus();
 			mCamera.stopPreview();
 			mPreviewRunning = false;
 			mCamera = null;
