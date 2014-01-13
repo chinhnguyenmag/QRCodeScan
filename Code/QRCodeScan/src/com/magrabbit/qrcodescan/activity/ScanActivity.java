@@ -21,8 +21,11 @@ import android.widget.FrameLayout;
 
 import com.magrabbit.qrcodescan.R;
 import com.magrabbit.qrcodescan.customview.CameraPreview;
+import com.magrabbit.qrcodescan.customview.DialogConfirm;
+import com.magrabbit.qrcodescan.customview.DialogConfirm.ProcessDialogConfirm;
 import com.magrabbit.qrcodescan.customview.SlidingMenuCustom;
 import com.magrabbit.qrcodescan.listener.MenuSlidingClickListener;
+import com.magrabbit.qrcodescan.model.AppPreferences;
 import com.magrabbit.qrcodescan.utils.StringExtraUtils;
 import com.magrabbit.qrcodescan.utils.ZBarConstants;
 
@@ -36,6 +39,8 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	private Handler mAutoFocusHandler;
 	private boolean mPreviewing = true;
 	private FrameLayout mFrameCamera;
+	// Application Preference
+	private AppPreferences mPreference;
 	// For Sliding Menu
 	private SlidingMenuCustom mSlidingMenu;
 
@@ -50,6 +55,8 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_scan);
+
+		mPreference = new AppPreferences(ScanActivity.this);
 		mFrameCamera = (FrameLayout) findViewById(R.id.activity_scan_camera);
 		mSlidingMenu = new SlidingMenuCustom(this, this);
 		if (!isCameraAvailable()) {
@@ -152,23 +159,60 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 			mPreviewing = false;
 			SymbolSet syms = mScanner.getResults();
 			for (Symbol sym : syms) {
-				String symData = sym.getData();
+				final String symData = sym.getData();
 				if (!TextUtils.isEmpty(symData)) {
 					// Get the QR Code after scanning and put it to Browser for
 					// searching on WebSite
 
-					// Play sound
-					playSound();
+					// Check whether to play sound or not
+					if (mPreference.isSound()) {
+						playSound();
+					}
 
-					// Stop scanning
-					mCamera.cancelAutoFocus();
-					mCamera.setPreviewCallback(null);
+					if (mPreference.isOpenUrl()) {
+						// Stop scanning
+						mCamera.cancelAutoFocus();
+						mCamera.setPreviewCallback(null);
 
-					Intent dataIntent = new Intent(ScanActivity.this,
-							BrowserActivity.class);
-					dataIntent.putExtra(StringExtraUtils.KEY_SCAN_RESULT,
-							symData);
-					startActivity(dataIntent);
+						Intent dataIntent = new Intent(ScanActivity.this,
+								BrowserActivity.class);
+						dataIntent.putExtra(StringExtraUtils.KEY_SCAN_RESULT,
+								symData);
+						startActivity(dataIntent);
+					} else {
+						// Stop scanning
+						mCamera.cancelAutoFocus();
+						mCamera.setPreviewCallback(null);
+						
+						DialogConfirm dialog = new DialogConfirm(
+								ScanActivity.this,
+								android.R.drawable.ic_dialog_alert,
+								"Open Browser",
+								ScanActivity.this
+										.getString(R.string.activity_scan_open_url_confirm),
+								true, new ProcessDialogConfirm() {
+
+									@Override
+									public void click_Ok() {
+
+										Intent dataIntent = new Intent(
+												ScanActivity.this,
+												BrowserActivity.class);
+										dataIntent
+												.putExtra(
+														StringExtraUtils.KEY_SCAN_RESULT,
+														symData);
+										startActivity(dataIntent);
+
+									}
+
+									@Override
+									public void click_Cancel() {
+										mCamera.setPreviewCallback(ScanActivity.this);
+									}
+								});
+						dialog.show();
+					}
 					break;
 				}
 			}
@@ -194,17 +238,29 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	};
 
 	private void playSound() {
-		MediaPlayer mp = MediaPlayer.create(getBaseContext(),
-				R.raw.camera_shutter);
-		mp.start();
+		try {
+			MediaPlayer mp = MediaPlayer.create(getBaseContext(),
+					R.raw.camera_shutter);
+			mp.start();
 
-		mp.setOnCompletionListener(new OnCompletionListener() {
-			@Override
-			public void onCompletion(MediaPlayer mp) {
-				mp.release();
-			}
-		});
+			mp.setOnCompletionListener(new OnCompletionListener() {
+				@Override
+				public void onCompletion(MediaPlayer mp) {
+					mp.release();
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if (mPreference != null) {
+			mPreference = null;
+		}
 	}
 
 	public void onClick_Menu(View view) {

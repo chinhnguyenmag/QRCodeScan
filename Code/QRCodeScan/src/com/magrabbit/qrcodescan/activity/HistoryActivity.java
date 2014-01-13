@@ -63,8 +63,6 @@ public class HistoryActivity extends Activity implements
 		items.add(new HistoryItem("http://www.44doors.com"));
 
 		mAdapter = new HistoryAdapter(this, items);
-		// mLvHistory.setAdapter(mAdapter);
-		// mAdapter.notifyDataSetChanged();
 		mSwipeListView
 				.setSwipeListViewListener(new BaseSwipeListViewListener() {
 
@@ -160,7 +158,9 @@ public class HistoryActivity extends Activity implements
 
 				});
 
+		// Set Adapter for List View
 		mSwipeListView.setAdapter(mAdapter);
+		mAdapter.notifyDataSetChanged();
 		reload();
 
 	}
