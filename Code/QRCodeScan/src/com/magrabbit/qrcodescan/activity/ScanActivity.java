@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.magrabbit.qrcodescan.R;
+import com.magrabbit.qrcodescan.customview.CameraPreview;
 import com.magrabbit.qrcodescan.customview.SlidingMenuCustom;
 import com.magrabbit.qrcodescan.listener.MenuSlidingClickListener;
 import com.magrabbit.qrcodescan.utils.StringExtraUtils;
@@ -28,9 +29,8 @@ import com.magrabbit.qrcodescan.utils.ZBarConstants;
 public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		ZBarConstants, MenuSlidingClickListener {
 
-	private static final String TAG = "ZBarScannerActivity";
 	// private CameraPreview mPreview;
-	private Cp mPreview;
+	private CameraPreview mPreview;
 	private Camera mCamera;
 	private ImageScanner mScanner;
 	private Handler mAutoFocusHandler;
@@ -65,8 +65,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 
 		// Create a RelativeLayout container that will hold a SurfaceView,
 		// and set it as the content of our activity.
-		// mPreview = new CameraPreview(this, this, width, height, autoFocusCB);
-		mPreview = new Cp(this, this, autoFocusCB);
+		mPreview = new CameraPreview(this, this, autoFocusCB);
 		mFrameCamera.addView(mPreview);
 	}
 
@@ -119,11 +118,6 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 			mCamera.stopPreview();
 			mCamera.release();
 
-			// According to Jason Kuang on
-			// http://stackoverflow.com/questions/6519120/how-to-recover-camera-preview-from-sleep,
-			// there might be surface recreation problems when the device goes
-			// to sleep. So lets just hide it and
-			// recreate on resume
 			mPreview.hideSurfaceView();
 
 			mPreviewing = false;
