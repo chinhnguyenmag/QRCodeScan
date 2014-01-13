@@ -12,6 +12,7 @@ import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.view.Display;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -24,10 +25,11 @@ import com.magrabbit.qrcodescan.utils.CodeRequest;
 import com.magrabbit.qrcodescan.utils.StringExtraUtils;
 import com.magrabbit.qrcodescan.utils.ZBarConstants;
 
-public class ZBarScannerActivity extends Activity implements
+public class ScanActivity extends Activity implements
 		Camera.PreviewCallback, ZBarConstants, MenuSlidingClickListener {
 
 	private static final String TAG = "ZBarScannerActivity";
+	// private CameraPreview mPreview;
 	private CameraPreview mPreview;
 	private Camera mCamera;
 	private ImageScanner mScanner;
@@ -61,10 +63,18 @@ public class ZBarScannerActivity extends Activity implements
 		// Create and configure the ImageScanner;
 		setupScanner();
 
+		// Get width and height of Android Device Screen
+		Display display = getWindowManager().getDefaultDisplay();
+		int width = display.getWidth();
+		int height = display.getHeight();
+
 		// Create a RelativeLayout container that will hold a SurfaceView,
 		// and set it as the content of our activity.
+		// mPreview = new CameraPreview(this, this, width, height, autoFocusCB);
 		mPreview = new CameraPreview(this, this, autoFocusCB);
 		mFrameCamera.addView(mPreview);
+
+		// setContentView(mPreview);
 	}
 
 	public void setupScanner() {
@@ -160,7 +170,7 @@ public class ZBarScannerActivity extends Activity implements
 				if (!TextUtils.isEmpty(symData)) {
 					// Get the QR Code after scanning and put it to Browser for
 					// searching on WebSite
-					Intent dataIntent = new Intent(ZBarScannerActivity.this,
+					Intent dataIntent = new Intent(ScanActivity.this,
 							BrowserActivity.class);
 					dataIntent.putExtra(StringExtraUtils.KEY_SCAN_RESULT,
 							symData);
@@ -194,7 +204,7 @@ public class ZBarScannerActivity extends Activity implements
 
 	@Override
 	public void onHistoryClickListener() {
-		startActivity(new Intent(ZBarScannerActivity.this,
+		startActivity(new Intent(ScanActivity.this,
 				HistoryActivity.class));
 
 	}
