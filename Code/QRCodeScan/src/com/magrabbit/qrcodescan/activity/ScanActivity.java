@@ -1,5 +1,9 @@
 package com.magrabbit.qrcodescan.activity;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import net.sourceforge.zbar.Config;
 import net.sourceforge.zbar.Image;
 import net.sourceforge.zbar.ImageScanner;
@@ -20,19 +24,20 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.magrabbit.qrcodescan.R;
+import com.magrabbit.qrcodescan.control.DatabaseHandler;
 import com.magrabbit.qrcodescan.customview.CameraPreview;
 import com.magrabbit.qrcodescan.customview.DialogConfirm;
 import com.magrabbit.qrcodescan.customview.DialogConfirm.ProcessDialogConfirm;
 import com.magrabbit.qrcodescan.customview.SlidingMenuCustom;
 import com.magrabbit.qrcodescan.listener.MenuSlidingClickListener;
 import com.magrabbit.qrcodescan.model.AppPreferences;
+import com.magrabbit.qrcodescan.model.QRCode;
 import com.magrabbit.qrcodescan.utils.StringExtraUtils;
 import com.magrabbit.qrcodescan.utils.ZBarConstants;
 
 public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		ZBarConstants, MenuSlidingClickListener {
 
-	// private CameraPreview mPreview;
 	private CameraPreview mPreview;
 	private Camera mCamera;
 	private ImageScanner mScanner;
@@ -43,6 +48,8 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	private AppPreferences mPreference;
 	// For Sliding Menu
 	private SlidingMenuCustom mSlidingMenu;
+	// Save scanned QRCode into local database by SQLite
+	private DatabaseHandler mDataHandler;
 
 	static {
 		System.loadLibrary("iconv");
@@ -57,6 +64,9 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		setContentView(R.layout.activity_scan);
 
 		mPreference = new AppPreferences(ScanActivity.this);
+		
+		mDataHandler = new DatabaseHandler(this);
+		
 		mFrameCamera = (FrameLayout) findViewById(R.id.activity_scan_camera);
 		mSlidingMenu = new SlidingMenuCustom(this, this);
 		if (!isCameraAvailable()) {
@@ -161,6 +171,12 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 			for (Symbol sym : syms) {
 				final String symData = sym.getData();
 				if (!TextUtils.isEmpty(symData)) {
+					// Save into Database
+//					long time = System.currentTimeMillis();
+					Format formatter = new SimpleDateFormat("EEE, MMM dd yyyy");
+					String date = formatter.format(new Date());
+					mDataHandler.addQRCode(new QRCode(date, symData));
+					
 					// Get the QR Code after scanning and put it to Browser for
 					// searching on WebSite
 
@@ -208,6 +224,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 
 									@Override
 									public void click_Cancel() {
+										// Start scanning again
 										mCamera.setPreviewCallback(ScanActivity.this);
 									}
 								});
