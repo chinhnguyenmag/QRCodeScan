@@ -1,8 +1,5 @@
 package com.magrabbit.qrcodescan.activity;
 
-import com.magrabbit.qrcodescan.R;
-import com.magrabbit.qrcodescan.R.string;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -16,6 +13,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.magrabbit.qrcodescan.R;
 
 /**
  * This class provides common variables and methods that are used for all
