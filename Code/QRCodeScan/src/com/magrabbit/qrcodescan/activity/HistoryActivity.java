@@ -29,7 +29,6 @@ import com.magrabbit.qrcodescan.model.Item;
 public class HistoryActivity extends Activity implements
 		MenuSlidingClickListener {
 
-	private ListView mLvHistory;
 	private HistoryAdapter mAdapter;
 	private ArrayList<Item> items = new ArrayList<Item>();
 	private SlidingMenuCustom mMenu;
@@ -41,7 +40,7 @@ public class HistoryActivity extends Activity implements
     private boolean swipeCloseAllItemsWhenMoveList = true;
     private long swipeAnimationTime = 0;
     private float swipeOffsetLeft = 250;
-    private float swipeOffsetRight = 0;
+    private float swipeOffsetRight = 100;
     private int swipeActionLeft = SwipeListView.SWIPE_ACTION_REVEAL;
     private int swipeActionRight = SwipeListView.SWIPE_ACTION_REVEAL;
 
@@ -130,8 +129,11 @@ public class HistoryActivity extends Activity implements
 			
 			@Override
 			public void onClickFrontView(int position) {
-				// TODO Auto-generated method stub
-				
+				if (!items.get(position).isSection()) {
+					// Add code to process
+					startActivity(new Intent(HistoryActivity.this,
+							BrowserActivity.class));
+				}				
 			}
 			
 			@Override
@@ -163,20 +165,6 @@ public class HistoryActivity extends Activity implements
         mSwipeListView.setAdapter(mAdapter);
         reload();
         
-		// Process click event on each item of list
-/*		mLvHistory.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View view,
-					int position, long id) {
-				if (!items.get(position).isSection()) {
-					// Add code to process
-					startActivity(new Intent(HistoryActivity.this,
-							BrowserActivity.class));
-				}
-
-			}
-		});*/
 	}
 
 	public void onClick_Menu(View view) {

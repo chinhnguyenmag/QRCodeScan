@@ -54,8 +54,8 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 
 				if (title != null)
 					title.setText(ei.title);
-				((SwipeListView)parent).recycle(v, position);
 			}
+			((SwipeListView)parent).recycle(v, position);
 		}
 	
 		return v;

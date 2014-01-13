@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
     <LinearLayout
         android:id="@+id/back"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:gravity="right|center_vertical"
+        android:layout_height="fill_parent"
         android:background="@color/Black"
+        android:gravity="right|center_vertical"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        android:paddingRight="?android:attr/scrollbarSize"
         android:tag="back" >
 
         <Button
@@ -21,10 +23,10 @@
     <RelativeLayout
         android:id="@+id/front"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_height="fill_parent"
         android:background="@color/White"
         android:minHeight="?android:attr/listPreferredItemHeight"
+        android:paddingLeft="10dp"
         android:paddingRight="?android:attr/scrollbarSize"
         android:tag="front" >
 
@@ -33,8 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
-            android:paddingLeft="9dp"
+            android:layout_centerVertical="true"
             android:src="@android:drawable/ic_menu_preferences" />
 
         <ImageView
@@ -42,15 +43,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_centerInParent="true"
-            android:paddingLeft="9dp"
+             android:layout_centerVertical="true"
             android:src="@drawable/ic_arrow_right_active" />
 
         <TextView
             android:id="@+id/list_item_entry_title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/list_item_entry_arrow"
             android:layout_toRightOf="@id/list_item_entry_icon"
             android:ellipsize="marquee"
@@ -60,4 +60,4 @@
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </RelativeLayout>
 
-</FrameLayout>
+</RelativeLayout>
