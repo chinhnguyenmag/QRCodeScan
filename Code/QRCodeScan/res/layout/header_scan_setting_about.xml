@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:onClick="onClick_Menu"
-        android:src="@drawable/images" />
+        android:background="@drawable/ic_menu" />
 
     <TextView
         android:id="@+id/header_scan_setting_about_tv_title"
