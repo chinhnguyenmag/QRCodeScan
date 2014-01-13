@@ -173,8 +173,8 @@ public class HistoryActivity extends Activity implements
 
 	@Override
 	public void onScannerClickListener() {
-		// TODO Auto-generated method stub
-
+		startActivity(new Intent(this, ScanActivity.class));
+		finish();
 	}
 
 	@Override

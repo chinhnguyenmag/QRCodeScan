@@ -15,5 +15,21 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/activity_scan_title" >
     </FrameLayout>
+    
+    <!-- Autofocus crosshairs -->
+    <RelativeLayout
+        android:id="@+id/af_casing"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:clipChildren="false" >
+
+        <com.package.AutofocusCrosshair
+            android:id="@+id/af_crosshair"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:clipChildren="false" >
+        </com.package.AutofocusCrosshair>
+    </RelativeLayout>
 
 </RelativeLayout>
