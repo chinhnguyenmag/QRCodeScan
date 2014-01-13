@@ -9,6 +9,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -25,8 +27,8 @@ import com.magrabbit.qrcodescan.utils.CodeRequest;
 import com.magrabbit.qrcodescan.utils.StringExtraUtils;
 import com.magrabbit.qrcodescan.utils.ZBarConstants;
 
-public class ScanActivity extends Activity implements
-		Camera.PreviewCallback, ZBarConstants, MenuSlidingClickListener {
+public class ScanActivity extends Activity implements Camera.PreviewCallback,
+		ZBarConstants, MenuSlidingClickListener {
 
 	private static final String TAG = "ZBarScannerActivity";
 	// private CameraPreview mPreview;
@@ -170,6 +172,10 @@ public class ScanActivity extends Activity implements
 				if (!TextUtils.isEmpty(symData)) {
 					// Get the QR Code after scanning and put it to Browser for
 					// searching on WebSite
+
+					// Play sound
+					playSound();
+
 					Intent dataIntent = new Intent(ScanActivity.this,
 							BrowserActivity.class);
 					dataIntent.putExtra(StringExtraUtils.KEY_SCAN_RESULT,
@@ -197,6 +203,20 @@ public class ScanActivity extends Activity implements
 		}
 	};
 
+	private void playSound() {
+		MediaPlayer mp = MediaPlayer.create(getBaseContext(),
+				R.raw.camera_shutter);
+		mp.start();
+
+		mp.setOnCompletionListener(new OnCompletionListener() {
+			@Override
+			public void onCompletion(MediaPlayer mp) {
+				mp.release();
+			}
+		});
+
+	}
+
 	@Override
 	public void onScannerClickListener() {
 		mSlidingMenu.toggle();
@@ -204,20 +224,19 @@ public class ScanActivity extends Activity implements
 
 	@Override
 	public void onHistoryClickListener() {
-		startActivity(new Intent(ScanActivity.this,
-				HistoryActivity.class));
-
+		startActivity(new Intent(ScanActivity.this, HistoryActivity.class));
+		finish();
 	}
 
 	@Override
 	public void onAboutClickListener() {
-		// TODO Auto-generated method stub
-
+		startActivity(new Intent(this, AboutActivity.class));
+		finish();
 	}
 
 	@Override
 	public void onSettingClickListener() {
-		// TODO Auto-generated method stub
-
+		startActivity(new Intent(ScanActivity.this, SettingActivity.class));
+		finish();
 	}
 }
