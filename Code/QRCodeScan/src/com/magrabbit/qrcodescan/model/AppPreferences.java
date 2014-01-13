@@ -15,58 +15,94 @@ public class AppPreferences {
 		this.mPrefsEditor = mAppSharedPrefs.edit();
 	}
 
+	/**
+	 * @param serverUrl
+	 * @return
+	 */
 	public boolean setServerURL(String serverUrl) {
 		mPrefsEditor.putString("Server", serverUrl);
 		mPrefsEditor.commit();
 		return true;
 	}
 
+	/**
+	 * @return server url.
+	 */
 	public String getServerURL() {
 		String server = mAppSharedPrefs.getString("Server", "");
 		return server;
 	}
 
+	/**
+	 * @param isSound
+	 * @return
+	 */
 	public boolean setSound(boolean isSound) {
 		mPrefsEditor.putBoolean("Sound", isSound);
 		mPrefsEditor.commit();
 		return true;
 	}
 
+	/**
+	 * @return open sound true/false
+	 */
 	public boolean isSound() {
 		boolean isSound = mAppSharedPrefs.getBoolean("Sound", false);
 		return isSound;
 	}
 
+	/**
+	 * @param isOpen
+	 * @return
+	 */
 	public boolean setOpenUrl(boolean isOpen) {
 		mPrefsEditor.putBoolean("OpenUrl", isOpen);
 		mPrefsEditor.commit();
 		return true;
 	}
 
+	/**
+	 * @return auto open url true/false.
+	 */
 	public boolean isOpenUrl() {
 		boolean isOpen = mAppSharedPrefs.getBoolean("OpenUrl", false);
 		return isOpen;
 	}
 
+	/**
+	 * @param profileUrl
+	 * @return
+	 */
 	public boolean setProfileUrl(String profileUrl) {
 		mPrefsEditor.putString("ProfileUrl", profileUrl);
 		mPrefsEditor.commit();
 		return true;
 	}
 
+	/**
+	 * @return url of profile.
+	 */
 	public String getProfileUrl() {
 		String profileUrl = mAppSharedPrefs.getString("ProfileUrl", "");
 		return profileUrl;
 	}
 
-	public boolean setCloseUrl(boolean isClose) {
-		mPrefsEditor.putBoolean("CloseUrl", isClose);
+	/**
+	 * @param closeUrl
+	 * @return
+	 */
+	public boolean setCloseUrl(boolean closeUrl) {
+		mPrefsEditor.putBoolean("CloseUrl", closeUrl);
 		mPrefsEditor.commit();
 		return true;
 	}
 
-	public boolean getCloseUrl() {
-		boolean isClose = mAppSharedPrefs.getBoolean("CloseUrl", false);
-		return isClose;
+	/**
+	 * 
+	 * @return auto close url view after time
+	 */
+	public int getCloseUrl() {
+		int closeUrl = mAppSharedPrefs.getInt("CloseUrl", -1);
+		return closeUrl;
 	}
 }
