@@ -32,13 +32,7 @@ public class BrowserActivity extends ParentActivity {
 			mScanResult = bundle.getString(StringExtraUtils.KEY_SCAN_RESULT);
 		}
 		mWebView = (WebView) findViewById(R.id.activity_website_wv);
-		try {
-			url = new URL("www.slitaz.org");
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		mWebView.loadUrl(url.toString());
+		mWebView.loadUrl(mScanResult);
 		mWebView.setWebViewClient(new WebViewClient() {
 
 			public void onPageFinished(WebView view, String url) {
