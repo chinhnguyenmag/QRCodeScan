@@ -56,13 +56,6 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar"
             android:windowSoftInputMode="stateAlwaysHidden" >
-        </activity>
-        <activity
-            android:name=".activity.ZBarScannerActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:windowSoftInputMode="stateAlwaysHidden" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
