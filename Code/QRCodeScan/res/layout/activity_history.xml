@@ -31,4 +31,11 @@
         swipe:swipeFrontView="@+id/front"
         swipe:swipeMode="left"
         swipe:swipeOpenOnLongPress="true" />
+
+    <ToggleButton
+        android:id="@+id/toggleButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ToggleButton" />
+
 </LinearLayout>

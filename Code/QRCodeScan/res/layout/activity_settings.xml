@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:mySwitch="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res/com.magrabbit.qrcodescan"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -66,26 +67,12 @@
                     android:gravity="left"
                     android:text="@string/sound" />
 
-                <com.magrabbit.qrcodescan.customize.MySwitch
-                    android:id="@+id/settings_switch_sound"
-                    style="@style/mySwitchStyle"
+                <com.appspheregroup.android.swichview.SwitchView
+                    android:id="@+id/activity_settings_sv_sound"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="4dp"
-                    android:gravity="center"
-                    mySwitch:backgroundMask="@drawable/smask_background_copy"
-                    mySwitch:leftBackground="@drawable/sleft_background_copy1"
-                    mySwitch:pushStyle="true"
-                    mySwitch:rightBackground="@drawable/sright_background_copy1"
-                    mySwitch:textOff="OFF"
-                    mySwitch:textOn="ON"
-                    mySwitch:textOnThumb="false"
-                    mySwitch:thumb="@drawable/stoggle_copy1"
-                    mySwitch:thumbExtraMovement="25dp"
-                    mySwitch:track="@drawable/sgroove_copy"
-                    mySwitch:trackTextPadding="2dp" />
+                    app:text_off=""
+                    app:text_on="" />
             </LinearLayout>
 
             <View
@@ -107,25 +94,12 @@
                     android:gravity="left"
                     android:text="@string/auto_open_url" />
 
-                <com.magrabbit.qrcodescan.customize.MySwitch
-                    android:id="@+id/settings_switch_open_url"
-                    style="@style/mySwitchStyle"
+                <com.appspheregroup.android.swichview.SwitchView
+                    android:id="@+id/activity_settings_sv_open_url"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="20dp"
-                    android:gravity="center"
-                    mySwitch:backgroundMask="@drawable/smask_background_copy"
-                    mySwitch:leftBackground="@drawable/sleft_background_copy1"
-                    mySwitch:pushStyle="true"
-                    mySwitch:rightBackground="@drawable/sright_background_copy1"
-                    mySwitch:textOff="OFF"
-                    mySwitch:textOn="ON"
-                    mySwitch:textOnThumb="false"
-                    mySwitch:thumb="@drawable/stoggle_copy1"
-                    mySwitch:thumbExtraMovement="25dp"
-                    mySwitch:track="@drawable/sgroove_copy"
-                    mySwitch:trackTextPadding="2dp" />
+                    app:text_off=""
+                    app:text_on="" />
             </LinearLayout>
 
             <View
@@ -135,7 +109,7 @@
                 android:background="@color/background_gray" />
 
             <LinearLayout
-                 android:id="@+id/setting_ll_url_profile"
+                android:id="@+id/setting_ll_url_profile"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="10dp"

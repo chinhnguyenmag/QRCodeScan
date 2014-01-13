@@ -47,6 +47,7 @@ public class HistoryActivity extends Activity implements
 		// mLvHistory = (ListView) findViewById(R.id.activity_history_lv);
 		mSwipeListView = (SwipeListView) findViewById(R.id.activity_history_lv);
 		mMenu = new SlidingMenuCustom(this, this);
+		mMenu.setTouchModeAboveMargin();
 
 		long time = System.currentTimeMillis();
 
@@ -195,7 +196,6 @@ public class HistoryActivity extends Activity implements
 		startActivity(new Intent(this, SettingActivity.class));
 		overridePendingTransition(0, 0);
 		finish();
-
 	}
 
 	private void reload() {
