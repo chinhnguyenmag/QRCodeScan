@@ -97,8 +97,6 @@ public class SettingActivity extends Activity implements
 
 	@Override
 	public void onSettingClickListener() {
-		// startActivity(new Intent(this,SettingActivity.class));
-		// finish();
 
 	}
 }
