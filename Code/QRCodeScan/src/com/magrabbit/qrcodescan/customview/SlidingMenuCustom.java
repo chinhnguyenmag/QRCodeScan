@@ -28,7 +28,7 @@ public class SlidingMenuCustom {
 			final MenuSlidingClickListener listenner) {
 		menu = new SlidingMenu(context);
 		menu.setMode(SlidingMenu.LEFT);
-		menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+		menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 		menu.setShadowWidthRes(R.dimen.shadow_width);
 		menu.setShadowDrawable(R.anim.shadow);
 		menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
@@ -82,5 +82,8 @@ public class SlidingMenuCustom {
 	}
 	public void toggle(){
 		menu.toggle();
+	}
+	public void setTouchModeAboveMargin(){
+		menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 	}
 }

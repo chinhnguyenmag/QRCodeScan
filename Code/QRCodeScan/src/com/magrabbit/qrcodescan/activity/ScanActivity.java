@@ -14,7 +14,7 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
-import android.view.Display;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -23,14 +23,12 @@ import com.magrabbit.qrcodescan.R;
 import com.magrabbit.qrcodescan.customview.CameraPreview;
 import com.magrabbit.qrcodescan.customview.SlidingMenuCustom;
 import com.magrabbit.qrcodescan.listener.MenuSlidingClickListener;
-import com.magrabbit.qrcodescan.utils.CodeRequest;
 import com.magrabbit.qrcodescan.utils.StringExtraUtils;
 import com.magrabbit.qrcodescan.utils.ZBarConstants;
 
 public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		ZBarConstants, MenuSlidingClickListener {
 
-	private static final String TAG = "ZBarScannerActivity";
 	// private CameraPreview mPreview;
 	private CameraPreview mPreview;
 	private Camera mCamera;
@@ -65,18 +63,10 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		// Create and configure the ImageScanner;
 		setupScanner();
 
-		// Get width and height of Android Device Screen
-		Display display = getWindowManager().getDefaultDisplay();
-		int width = display.getWidth();
-		int height = display.getHeight();
-
 		// Create a RelativeLayout container that will hold a SurfaceView,
 		// and set it as the content of our activity.
-		// mPreview = new CameraPreview(this, this, width, height, autoFocusCB);
 		mPreview = new CameraPreview(this, this, autoFocusCB);
 		mFrameCamera.addView(mPreview);
-
-		// setContentView(mPreview);
 	}
 
 	public void setupScanner() {
@@ -128,11 +118,6 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 			mCamera.stopPreview();
 			mCamera.release();
 
-			// According to Jason Kuang on
-			// http://stackoverflow.com/questions/6519120/how-to-recover-camera-preview-from-sleep,
-			// there might be surface recreation problems when the device goes
-			// to sleep. So lets just hide it and
-			// recreate on resume
 			mPreview.hideSurfaceView();
 
 			mPreviewing = false;
@@ -162,8 +147,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		int result = mScanner.scanImage(barcode);
 
 		if (result != 0) {
-			mCamera.cancelAutoFocus();
-			mCamera.setPreviewCallback(null);
+			// Turn off Camera Preview
 			mCamera.stopPreview();
 			mPreviewing = false;
 			SymbolSet syms = mScanner.getResults();
@@ -176,15 +160,21 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 					// Play sound
 					playSound();
 
+					// Stop scanning
+					mCamera.cancelAutoFocus();
+					mCamera.setPreviewCallback(null);
+
 					Intent dataIntent = new Intent(ScanActivity.this,
 							BrowserActivity.class);
 					dataIntent.putExtra(StringExtraUtils.KEY_SCAN_RESULT,
 							symData);
-					startActivityForResult(dataIntent,
-							CodeRequest.CODE_REQUEST_SCAN_ACTIVITY);
+					startActivity(dataIntent);
 					break;
 				}
 			}
+			// Turn on Camera Preview
+			mCamera.startPreview();
+			mPreviewing = true;
 		}
 	}
 
@@ -215,6 +205,13 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 			}
 		});
 
+	}
+
+	public void onClick_Menu(View view) {
+		if (mSlidingMenu == null) {
+			mSlidingMenu = new SlidingMenuCustom(this, this);
+		}
+		mSlidingMenu.toggle();
 	}
 
 	@Override

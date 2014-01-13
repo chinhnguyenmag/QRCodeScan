@@ -31,4 +31,5 @@
         swipe:swipeFrontView="@+id/front"
         swipe:swipeMode="left"
         swipe:swipeOpenOnLongPress="true" />
+
 </LinearLayout>
