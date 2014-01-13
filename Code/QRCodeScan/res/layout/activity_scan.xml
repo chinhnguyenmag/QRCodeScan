@@ -15,5 +15,4 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/activity_scan_title" >
     </FrameLayout>
-
 </RelativeLayout>
