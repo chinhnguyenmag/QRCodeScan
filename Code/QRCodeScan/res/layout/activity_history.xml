@@ -7,7 +7,7 @@
 
     <include layout="@layout/header_history" />
 
-    <ListView
+<!--     <ListView
         android:id="@+id/activity_history_lv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,6 +16,20 @@
         android:divider="@color/Orange"
         android:dividerHeight="1dp"
         android:padding="10dp" >
-    </ListView>
+    </ListView> -->
+    <com.fortysevendeg.swipelistview.SwipeListView
+        xmlns:swipe="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/activity_history_lv"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:listSelector="#00000000"
+        swipe:swipeActionLeft="dismiss"
+        swipe:swipeActionRight="reveal"
+        swipe:swipeAnimationTime="2"
+        swipe:swipeBackView="@+id/back"
+        swipe:swipeCloseAllItemsWhenMoveList="true"
+        swipe:swipeFrontView="@+id/front"
+        swipe:swipeMode="left"
+        swipe:swipeOpenOnLongPress="true" />
 
 </LinearLayout>

@@ -33,7 +33,7 @@ public class AboutActivity extends Activity implements MenuSlidingClickListener 
 
 	@Override
 	public void onScannerClickListener() {
-		startActivity(new Intent(this, ZBarScannerActivity.class));
+		startActivity(new Intent(this, ScanActivity.class));
 		finish();
 
 	}

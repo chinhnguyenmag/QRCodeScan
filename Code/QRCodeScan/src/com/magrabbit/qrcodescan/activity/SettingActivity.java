@@ -4,12 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.Toast;
 
+import com.appspheregroup.android.swichview.SwitchView;
+import com.appspheregroup.android.swichview.SwitchView.OnSwitchChangeListener;
 import com.magrabbit.qrcodescan.R;
-import com.magrabbit.qrcodescan.customize.MySwitch;
 import com.magrabbit.qrcodescan.customview.SlidingMenuCustom;
 import com.magrabbit.qrcodescan.listener.MenuSlidingClickListener;
 
@@ -21,51 +19,21 @@ import com.magrabbit.qrcodescan.listener.MenuSlidingClickListener;
  * 
  */
 public class SettingActivity extends Activity implements
-		MenuSlidingClickListener {
+		MenuSlidingClickListener, OnSwitchChangeListener {
 
-	private MySwitch mySwitchOnOffSound;
-	private MySwitch mySwitchOnOffOpenUrl;
 	private SlidingMenuCustom mMenu;
+	private SwitchView mSwitchViewSound;
+	private SwitchView mSwitchViewOpenUrl;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
 		mMenu = new SlidingMenuCustom(this, this);
-		mySwitchOnOffSound = (MySwitch) findViewById(R.id.settings_switch_sound);
-		mySwitchOnOffSound.toggle();
-		mySwitchOnOffOpenUrl = (MySwitch) findViewById(R.id.settings_switch_open_url);
-		mySwitchOnOffSound
-				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-					@Override
-					public void onCheckedChanged(CompoundButton buttonView,
-							boolean isChecked) {
-						if (isChecked) {
-							Toast.makeText(SettingActivity.this, "Sound ON",
-									Toast.LENGTH_SHORT).show();
-						} else {
-							Toast.makeText(SettingActivity.this, "Sound OFF",
-									Toast.LENGTH_SHORT).show();
-						}
-					}
-				});
-
-		mySwitchOnOffOpenUrl
-				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-					@Override
-					public void onCheckedChanged(CompoundButton buttonView,
-							boolean isChecked) {
-						if (isChecked) {
-							Toast.makeText(SettingActivity.this, "Open ON",
-									Toast.LENGTH_SHORT).show();
-						} else {
-							Toast.makeText(SettingActivity.this, "Open OFF",
-									Toast.LENGTH_SHORT).show();
-						}
-					}
-				});
+		mSwitchViewSound = (SwitchView) findViewById(R.id.activity_settings_sv_sound);
+		mSwitchViewOpenUrl = (SwitchView) findViewById(R.id.activity_settings_sv_open_url);
+		mSwitchViewSound.setOnSwitchChangeListener(this);
+		mSwitchViewOpenUrl.setOnSwitchChangeListener(this);
 	}
 
 	public void onClick_Menu(View view) {
@@ -77,7 +45,7 @@ public class SettingActivity extends Activity implements
 
 	@Override
 	public void onScannerClickListener() {
-		startActivity(new Intent(this, ZBarScannerActivity.class));
+		startActivity(new Intent(this, ScanActivity.class));
 		finish();
 
 	}
@@ -97,8 +65,22 @@ public class SettingActivity extends Activity implements
 
 	@Override
 	public void onSettingClickListener() {
-		// startActivity(new Intent(this,SettingActivity.class));
-		// finish();
+
+	}
+
+	@Override
+	public void onSwitchChanged(View view, boolean isOn) {
+		
+		switch (view.getId()) {
+		case R.id.activity_settings_sv_sound:
+			
+			break;
+		case R.id.activity_settings_sv_open_url:
+			
+			break;
+		default:
+			break;
+		}
 
 	}
 }

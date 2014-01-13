@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.fortysevendeg.swipelistview.SwipeListView;
 import com.magrabbit.qrcodescan.R;
 import com.magrabbit.qrcodescan.model.HistoryItem;
 import com.magrabbit.qrcodescan.model.HistorySectionItem;
@@ -54,7 +55,9 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 				if (title != null)
 					title.setText(ei.title);
 			}
+			((SwipeListView)parent).recycle(v, position);
 		}
+	
 		return v;
 	}
 

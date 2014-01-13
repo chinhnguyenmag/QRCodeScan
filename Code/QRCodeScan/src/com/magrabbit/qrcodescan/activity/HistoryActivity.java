@@ -8,11 +8,11 @@ import java.util.Date;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
 
+import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
+import com.fortysevendeg.swipelistview.SwipeListView;
 import com.magrabbit.qrcodescan.R;
 import com.magrabbit.qrcodescan.adapter.HistoryAdapter;
 import com.magrabbit.qrcodescan.customview.SlidingMenuCustom;
@@ -24,18 +24,30 @@ import com.magrabbit.qrcodescan.model.Item;
 public class HistoryActivity extends Activity implements
 		MenuSlidingClickListener {
 
-	private ListView mLvHistory;
 	private HistoryAdapter mAdapter;
 	private ArrayList<Item> items = new ArrayList<Item>();
 	private SlidingMenuCustom mMenu;
+	private SwipeListView mSwipeListView;
+
+	// =============================================================
+	private int swipeMode = SwipeListView.SWIPE_MODE_BOTH;
+	private boolean swipeOpenOnLongPress = true;
+	private boolean swipeCloseAllItemsWhenMoveList = true;
+	private long swipeAnimationTime = 0;
+	private float swipeOffsetLeft = 250;
+	private float swipeOffsetRight = 100;
+	private int swipeActionLeft = SwipeListView.SWIPE_ACTION_REVEAL;
+	private int swipeActionRight = SwipeListView.SWIPE_ACTION_REVEAL;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_history);
 		// inflate layout for list view
-		mLvHistory = (ListView) findViewById(R.id.activity_history_lv);
+		// mLvHistory = (ListView) findViewById(R.id.activity_history_lv);
+		mSwipeListView = (SwipeListView) findViewById(R.id.activity_history_lv);
 		mMenu = new SlidingMenuCustom(this, this);
+		mMenu.setTouchModeAboveMargin();
 
 		long time = System.currentTimeMillis();
 
@@ -51,23 +63,106 @@ public class HistoryActivity extends Activity implements
 		items.add(new HistoryItem("http://www.44doors.com"));
 
 		mAdapter = new HistoryAdapter(this, items);
-		mLvHistory.setAdapter(mAdapter);
+		mSwipeListView
+				.setSwipeListViewListener(new BaseSwipeListViewListener() {
+
+					@Override
+					public void onStartOpen(int position, int action,
+							boolean right) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onStartClose(int position, boolean right) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onOpened(int position, boolean toRight) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onMove(int position, float x) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onListChanged() {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onLastListItem() {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onFirstListItem() {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onDismiss(int[] reverseSortedPositions) {
+						for (int position : reverseSortedPositions) {
+							items.remove(position);
+						}
+						mAdapter.notifyDataSetChanged();
+					}
+
+					@Override
+					public void onClosed(int position, boolean fromRight) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onClickFrontView(int position) {
+						if (!items.get(position).isSection()) {
+							// Add code to process
+							startActivity(new Intent(HistoryActivity.this,
+									BrowserActivity.class));
+						}
+					}
+
+					@Override
+					public void onClickBackView(int position) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onChoiceStarted() {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onChoiceEnded() {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onChoiceChanged(int position, boolean selected) {
+						// TODO Auto-generated method stub
+
+					}
+
+				});
+
+		// Set Adapter for List View
+		mSwipeListView.setAdapter(mAdapter);
 		mAdapter.notifyDataSetChanged();
+		reload();
 
-		// Process click event on each item of list
-		mLvHistory.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View view,
-					int position, long id) {
-				if (!items.get(position).isSection()) {
-					// Add code to process
-					startActivity(new Intent(HistoryActivity.this,
-							BrowserActivity.class));
-				}
-
-			}
-		});
 	}
 
 	public void onClick_Menu(View view) {
@@ -79,8 +174,8 @@ public class HistoryActivity extends Activity implements
 
 	@Override
 	public void onScannerClickListener() {
-		// TODO Auto-generated method stub
-
+		startActivity(new Intent(this, ScanActivity.class));
+		finish();
 	}
 
 	@Override
@@ -99,7 +194,23 @@ public class HistoryActivity extends Activity implements
 	@Override
 	public void onSettingClickListener() {
 		startActivity(new Intent(this, SettingActivity.class));
+		overridePendingTransition(0, 0);
 		finish();
+	}
 
+	private void reload() {
+		mSwipeListView.setSwipeMode(swipeMode);
+		mSwipeListView.setSwipeActionLeft(swipeActionLeft);
+		mSwipeListView.setSwipeActionRight(swipeActionRight);
+		mSwipeListView.setOffsetLeft(convertDpToPixel(swipeOffsetLeft));
+		mSwipeListView.setOffsetRight(convertDpToPixel(swipeOffsetRight));
+		mSwipeListView.setAnimationTime(swipeAnimationTime);
+		mSwipeListView.setSwipeOpenOnLongPress(swipeOpenOnLongPress);
+	}
+
+	public int convertDpToPixel(float dp) {
+		DisplayMetrics metrics = getResources().getDisplayMetrics();
+		float px = dp * (metrics.densityDpi / 160f);
+		return (int) px;
 	}
 }
