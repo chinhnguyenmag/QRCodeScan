@@ -20,7 +20,6 @@ public class BrowserActivity extends ParentActivity {
 	private String mScanResult;
 	private WebView mWebView;
 	private TextView mTvTitle;
-	URL url;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -32,13 +31,18 @@ public class BrowserActivity extends ParentActivity {
 			mScanResult = bundle.getString(StringExtraUtils.KEY_SCAN_RESULT);
 		}
 		mWebView = (WebView) findViewById(R.id.activity_website_wv);
+		if (mScanResult!=null&&!mScanResult.toLowerCase().startsWith("http://")&&!mScanResult.toLowerCase().startsWith("https://")) {
+			mScanResult = "http://" + mScanResult;
+		}
 		mWebView.loadUrl(mScanResult);
+		
 		mWebView.setWebViewClient(new WebViewClient() {
 
 			public void onPageFinished(WebView view, String url) {
 				mTvTitle.setText(view.getTitle());
 			}
 		});
+		
 	}
 
 	/**
