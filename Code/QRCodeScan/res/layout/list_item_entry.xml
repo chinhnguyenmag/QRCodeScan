@@ -1,40 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:minHeight="?android:attr/listPreferredItemHeight"
-    android:paddingRight="?android:attr/scrollbarSize" >
+    android:layout_height="fill_parent" >
 
-    <ImageView
-        android:id="@+id/list_item_entry_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerInParent="true"
-        android:paddingLeft="9dp"
-        android:src="@android:drawable/ic_menu_preferences" />
+    <LinearLayout
+        android:id="@+id/back"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:gravity="right|center_vertical"
+        android:background="@color/Black"
+        android:tag="back" >
 
-    <ImageView
-        android:id="@+id/list_item_entry_arrow"
-        android:layout_width="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:paddingLeft="9dp"
-        android:src="@drawable/ic_arrow_right_active" />
+        <Button
+            android:id="@+id/example_row_b_action_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/list_item_entry_title"
+    <RelativeLayout
+        android:id="@+id/front"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_toLeftOf="@id/list_item_entry_arrow"
-        android:layout_toRightOf="@id/list_item_entry_icon"
-        android:ellipsize="marquee"
         android:gravity="center"
-        android:fadingEdge="horizontal"
-        android:singleLine="true"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:background="@color/White"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        android:paddingRight="?android:attr/scrollbarSize"
+        android:tag="front" >
 
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/list_item_entry_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:paddingLeft="9dp"
+            android:src="@android:drawable/ic_menu_preferences" />
+
+        <ImageView
+            android:id="@+id/list_item_entry_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:paddingLeft="9dp"
+            android:src="@drawable/ic_arrow_right_active" />
+
+        <TextView
+            android:id="@+id/list_item_entry_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toLeftOf="@id/list_item_entry_arrow"
+            android:layout_toRightOf="@id/list_item_entry_icon"
+            android:ellipsize="marquee"
+            android:fadingEdge="horizontal"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </RelativeLayout>
+
+</FrameLayout>
