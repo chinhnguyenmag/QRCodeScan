@@ -1,6 +1,5 @@
 package com.magrabbit.qrcodescan.activity;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import android.app.Activity;

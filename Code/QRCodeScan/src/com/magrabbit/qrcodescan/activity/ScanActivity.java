@@ -25,8 +25,8 @@ import com.magrabbit.qrcodescan.utils.CodeRequest;
 import com.magrabbit.qrcodescan.utils.StringExtraUtils;
 import com.magrabbit.qrcodescan.utils.ZBarConstants;
 
-public class ScanActivity extends Activity implements
-		Camera.PreviewCallback, ZBarConstants, MenuSlidingClickListener {
+public class ScanActivity extends Activity implements Camera.PreviewCallback,
+		ZBarConstants, MenuSlidingClickListener {
 
 	private static final String TAG = "ZBarScannerActivity";
 	// private CameraPreview mPreview;
@@ -204,8 +204,7 @@ public class ScanActivity extends Activity implements
 
 	@Override
 	public void onHistoryClickListener() {
-		startActivity(new Intent(ScanActivity.this,
-				HistoryActivity.class));
+		startActivity(new Intent(ScanActivity.this, HistoryActivity.class));
 
 	}
 
