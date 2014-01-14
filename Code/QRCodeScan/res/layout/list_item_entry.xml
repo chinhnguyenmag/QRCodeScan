@@ -43,14 +43,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-             android:layout_centerVertical="true"
-            android:src="@drawable/ic_arrow_right_active" />
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_next" />
 
         <TextView
             android:id="@+id/list_item_entry_title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-             android:layout_centerVertical="true"
+            android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/list_item_entry_arrow"
             android:layout_toRightOf="@id/list_item_entry_icon"
             android:ellipsize="marquee"

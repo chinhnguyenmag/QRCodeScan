@@ -91,7 +91,7 @@ public class AppPreferences {
 	 * @param closeUrl
 	 * @return
 	 */
-	public boolean setCloseUrl(boolean closeUrl) {
+	public boolean setCloseUrlTime(boolean closeUrl) {
 		mPrefsEditor.putBoolean("CloseUrl", closeUrl);
 		mPrefsEditor.commit();
 		return true;
@@ -101,7 +101,7 @@ public class AppPreferences {
 	 * 
 	 * @return auto close url view after time
 	 */
-	public int getCloseUrl() {
+	public int getCloseUrlTime() {
 		int closeUrl = mAppSharedPrefs.getInt("CloseUrl", -1);
 		return closeUrl;
 	}

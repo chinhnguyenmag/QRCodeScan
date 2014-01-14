@@ -6,7 +6,6 @@ import java.util.TimerTask;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -35,7 +34,7 @@ public class BrowserActivity extends ParentActivity {
 		setContentView(R.layout.activity_website);
 		// Get the setting of time of opening URL
 		mPreference = new AppPreferences(BrowserActivity.this);
-		mCloseTime = mPreference.getCloseUrl();
+		mCloseTime = mPreference.getCloseUrlTime();
 
 		mTvTitle = (TextView) findViewById(R.id.header_website_tv_title);
 		Bundle bundle = getIntent().getExtras();
@@ -55,16 +54,19 @@ public class BrowserActivity extends ParentActivity {
 			public void onPageFinished(WebView view, String url) {
 				mTvTitle.setText(view.getTitle());
 
-				// Timer for counting the amount of time to close application
-				mTimer = new Timer();
-				TimerTask closeWebPage = new TimerTask() {
+				if (mCloseTime != -1) {
+					// Timer for counting the amount of time to close
+					// application
+					mTimer = new Timer();
+					TimerTask closeWebPage = new TimerTask() {
 
-					@Override
-					public void run() {
-						finish();
-					}
-				};
-				mTimer.schedule(closeWebPage, SystemClock.uptimeMillis() + 2000);
+						@Override
+						public void run() {
+							finish();
+						}
+					};
+					mTimer.schedule(closeWebPage, mCloseTime * 1000);
+				}
 			}
 		});
 
@@ -96,6 +98,10 @@ public class BrowserActivity extends ParentActivity {
 	}
 
 	public void onClick_Back(View v) {
+		finish();
+	}
+
+	public void onClick_Bookmark(View v) {
 
 	}
 

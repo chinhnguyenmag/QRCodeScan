@@ -3,12 +3,23 @@ package com.magrabbit.qrcodescan.model;
 
 public class HistoryItem implements Item{
 
-	public final String title;
+	private String mTitle;
 
 	public HistoryItem(String title) {
-		this.title = title;
+		this.mTitle = title;
 	}
 	
+	
+	public String getTitle() {
+		return mTitle;
+	}
+
+
+	public void setTitle(String title) {
+		this.mTitle = title;
+	}
+
+
 	@Override
 	public boolean isSection() {
 		return false;
