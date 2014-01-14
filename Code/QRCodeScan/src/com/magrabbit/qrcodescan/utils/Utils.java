@@ -371,8 +371,7 @@ public class Utils {
 
 		return sdf.format(mTime);
 	}
-	
-	
+
 	/**
 	 * Check an email is valid or not
 	 * 
@@ -600,5 +599,12 @@ public class Utils {
 			return time2;
 		}
 
+	}
+
+	public static int parseIndex(int value, int step) {
+		if(value==-1) {
+			return 19;
+		}
+		return value / step;
 	}
 }

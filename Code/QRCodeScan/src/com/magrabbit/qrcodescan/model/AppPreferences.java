@@ -91,8 +91,8 @@ public class AppPreferences {
 	 * @param closeUrl
 	 * @return
 	 */
-	public boolean setCloseUrl(boolean closeUrl) {
-		mPrefsEditor.putBoolean("CloseUrl", closeUrl);
+	public boolean setCloseUrl(int closeUrl) {
+		mPrefsEditor.putInt("CloseUrl", closeUrl);
 		mPrefsEditor.commit();
 		return true;
 	}

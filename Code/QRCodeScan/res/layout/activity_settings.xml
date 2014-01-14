@@ -143,6 +143,7 @@
                 android:id="@+id/setting_ll_auto_close_by_time"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:onClick="onClick_AutoClose"
                 android:orientation="horizontal"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp" >
@@ -156,13 +157,13 @@
                     android:text="@string/auto_close" />
 
                 <TextView
+                    android:id="@+id/activity_setting_tv_time"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:text="@string/time_setting"
                     android:textColor="@android:color/darker_gray" />
 
                 <ImageButton
@@ -171,7 +172,8 @@
                     android:layout_height="20dp"
                     android:layout_marginRight="20dp"
                     android:background="@drawable/ic_next"
-                    android:contentDescription="@string/common_imagebutton_description" />
+                    android:contentDescription="@string/common_imagebutton_description"
+                    android:onClick="onClick_AutoClose" />
             </LinearLayout>
 
             <LinearLayout
@@ -216,8 +218,8 @@
                     android:id="@+id/settings_ib_share_message"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:layout_marginRight="20dp"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginRight="20dp"
                     android:background="@drawable/ic_next"
                     android:contentDescription="@string/common_imagebutton_description" />
             </LinearLayout>
@@ -257,8 +259,8 @@
                     android:id="@+id/settings_ib_share_mail"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginRight="20dp"
-                     android:layout_gravity="center_vertical"
                     android:background="@drawable/ic_next"
                     android:contentDescription="@string/common_imagebutton_description" />
             </LinearLayout>
@@ -298,8 +300,8 @@
                     android:id="@+id/settings_ib_share_twitter"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginRight="20dp"
-                     android:layout_gravity="center_vertical"
                     android:background="@drawable/ic_next"
                     android:contentDescription="@string/common_imagebutton_description" />
             </LinearLayout>
@@ -339,8 +341,8 @@
                     android:id="@+id/settings_ib_share_facebook"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginRight="20dp"
-                     android:layout_gravity="center_vertical"
                     android:background="@drawable/ic_next"
                     android:contentDescription="@string/common_imagebutton_description" />
             </LinearLayout>

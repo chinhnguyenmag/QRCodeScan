@@ -24,6 +24,8 @@
     <string name="time_setting">5 seconds</string>
     <string name="save">Save</string>
     <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+
     <!-- EverNote -->
     <string name="label_select_notebook_button">Select Notebook</string>
     <string name="title">Note Title</string>
@@ -34,8 +36,8 @@
     <string name="error_listing_notes">Error listing note</string>
     <string name="empty_content_error">Note title and content cannot be empty</string>
     <string name="note_saved">Note saved to Evernote</string>
-    
-     <drawable name="red_drawable">#CCAA1883</drawable>
+
+    <drawable name="red_drawable">#CCAA1883</drawable>
     <drawable name="green_drawable">#CC123Bff</drawable>
 
 </resources>
