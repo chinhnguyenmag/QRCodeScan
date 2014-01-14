@@ -13,7 +13,6 @@ import com.google.gson.Gson;
 import com.magrabbit.qrcodescan.model.FaceBookAccount;
 import com.magrabbit.qrcodescan.server.Server;
 import com.magrabbit.qrcodescan.social.facebook.model.ImageProfileEntity;
-import com.magrabbit.qrcodescan.utils.Utils;
 
 public class FacebookInfoTask extends AsyncTask<Void, Void, Boolean> {
 

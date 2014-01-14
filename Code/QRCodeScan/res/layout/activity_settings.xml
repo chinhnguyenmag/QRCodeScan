@@ -67,7 +67,7 @@
                     android:gravity="left"
                     android:text="@string/sound" />
 
-                <com.appspheregroup.android.swichview.SwitchView
+                <com.magrabbit.qrcodescan.control.SwitchView
                     android:id="@+id/activity_settings_sv_sound"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
                     android:gravity="left"
                     android:text="@string/auto_open_url" />
 
-                <com.appspheregroup.android.swichview.SwitchView
+                <com.magrabbit.qrcodescan.control.SwitchView
                     android:id="@+id/activity_settings_sv_open_url"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -187,28 +187,33 @@
                     android:text="@string/share" />
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/setting_ll_social_message"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp" >
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:id="@+id/setting_ic_sms"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
                     android:background="@drawable/ic_message"
                     android:contentDescription="@string/common_imagebutton_description" />
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
+                    android:layout_toLeftOf="@+id/settings_ib_share_message"
+                    android:layout_toRightOf="@+id/setting_ic_sms"
                     android:gravity="left"
                     android:text="@string/message" />
 
@@ -216,11 +221,12 @@
                     android:id="@+id/settings_ib_share_message"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
-                    android:layout_gravity="center_vertical"
                     android:background="@drawable/ic_next"
                     android:contentDescription="@string/common_imagebutton_description" />
-            </LinearLayout>
+            </RelativeLayout>
 
             <View
                 android:layout_width="fill_parent"
@@ -258,7 +264,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:layout_marginRight="20dp"
-                     android:layout_gravity="center_vertical"
                     android:background="@drawable/ic_next"
                     android:contentDescription="@string/common_imagebutton_description" />
             </LinearLayout>
@@ -299,7 +304,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:layout_marginRight="20dp"
-                     android:layout_gravity="center_vertical"
                     android:background="@drawable/ic_next"
                     android:contentDescription="@string/common_imagebutton_description" />
             </LinearLayout>
@@ -340,7 +344,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:layout_marginRight="20dp"
-                     android:layout_gravity="center_vertical"
                     android:background="@drawable/ic_next"
                     android:contentDescription="@string/common_imagebutton_description" />
             </LinearLayout>

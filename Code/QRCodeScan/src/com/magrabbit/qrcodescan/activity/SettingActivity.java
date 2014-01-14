@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.appspheregroup.android.swichview.SwitchView;
-import com.appspheregroup.android.swichview.SwitchView.OnSwitchChangeListener;
 import com.magrabbit.qrcodescan.R;
+import com.magrabbit.qrcodescan.control.SwitchView;
+import com.magrabbit.qrcodescan.control.SwitchView.OnSwitchChangeListener;
 import com.magrabbit.qrcodescan.customview.SlidingMenuCustom;
 import com.magrabbit.qrcodescan.listener.MenuSlidingClickListener;
 
