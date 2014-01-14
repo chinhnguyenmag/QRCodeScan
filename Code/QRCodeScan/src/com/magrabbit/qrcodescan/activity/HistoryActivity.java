@@ -17,7 +17,6 @@ import com.magrabbit.qrcodescan.control.DatabaseHandler;
 import com.magrabbit.qrcodescan.customview.SlidingMenuCustom;
 import com.magrabbit.qrcodescan.listener.MenuSlidingClickListener;
 import com.magrabbit.qrcodescan.model.HistoryItem;
-import com.magrabbit.qrcodescan.model.HistorySectionItem;
 import com.magrabbit.qrcodescan.model.Item;
 import com.magrabbit.qrcodescan.model.QRCode;
 import com.magrabbit.qrcodescan.utils.StringExtraUtils;
