@@ -172,8 +172,8 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 				final String symData = sym.getData();
 				if (!TextUtils.isEmpty(symData)) {
 					// Save into Database
-//					long time = System.currentTimeMillis();
 					Format formatter = new SimpleDateFormat("EEE, MMM dd yyyy");
+					
 					String date = formatter.format(new Date());
 					mDataHandler.addQRCode(new QRCode(date, symData));
 					

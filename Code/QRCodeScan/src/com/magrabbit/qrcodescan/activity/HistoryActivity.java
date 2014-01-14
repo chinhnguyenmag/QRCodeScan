@@ -17,8 +17,10 @@ import com.magrabbit.qrcodescan.control.DatabaseHandler;
 import com.magrabbit.qrcodescan.customview.SlidingMenuCustom;
 import com.magrabbit.qrcodescan.listener.MenuSlidingClickListener;
 import com.magrabbit.qrcodescan.model.HistoryItem;
+import com.magrabbit.qrcodescan.model.HistorySectionItem;
 import com.magrabbit.qrcodescan.model.Item;
 import com.magrabbit.qrcodescan.model.QRCode;
+import com.magrabbit.qrcodescan.utils.StringExtraUtils;
 
 public class HistoryActivity extends Activity implements
 		MenuSlidingClickListener {
@@ -53,20 +55,21 @@ public class HistoryActivity extends Activity implements
 		mDataHandler = new DatabaseHandler(this);
 		mListQRCodes = new ArrayList<QRCode>();
 		mListQRCodes.addAll(mDataHandler.getAllQRCodes());
-		for (int i = 0; i < mListQRCodes.size(); i++) {
-			if (!mListQRCodes.get(i).getDate()
-					.equals(mListQRCodes.get(i + 1).getDate())) {
+		// add the first section and item into list view
+		items.add(new HistorySectionItem(mListQRCodes.get(0).getDate()));
+		items.add(new HistoryItem(mListQRCodes.get(0).getUrl()));
 
+		for (int i = 1; i < mListQRCodes.size(); i++) {
+			if (!mListQRCodes.get(i).getDate()
+					.equals(mListQRCodes.get(i - 1).getDate())) {
+				// section
+				items.add(new HistorySectionItem(mListQRCodes.get(i).getDate()));
+				items.add(new HistoryItem(mListQRCodes.get(i).getUrl()));
+			} else {
+				// item
+				items.add(new HistoryItem(mListQRCodes.get(i).getUrl()));
 			}
 		}
-
-//		items.add(new HistorySectionItem(date));
-		items.add(new HistoryItem("http://www.44doors.com"));
-		items.add(new HistoryItem("http://www.wikipedia.com"));
-//		items.add(new HistorySectionItem(date));
-		items.add(new HistoryItem("http://www.google.com"));
-		items.add(new HistoryItem("http://www.44doors.com"));
-		items.add(new HistoryItem("http://www.44doors.com"));
 
 		mAdapter = new HistoryAdapter(this, items);
 		mSwipeListView
@@ -133,8 +136,14 @@ public class HistoryActivity extends Activity implements
 					public void onClickFrontView(int position) {
 						if (!items.get(position).isSection()) {
 							// Add code to process
-							startActivity(new Intent(HistoryActivity.this,
-									BrowserActivity.class));
+							HistoryItem item = (HistoryItem) items
+									.get(position);
+							Intent dataIntent = new Intent(
+									HistoryActivity.this, BrowserActivity.class);
+							dataIntent.putExtra(
+									StringExtraUtils.KEY_SCAN_RESULT,
+									item.getTitle());
+							startActivity(dataIntent);
 						}
 					}
 
@@ -186,7 +195,7 @@ public class HistoryActivity extends Activity implements
 
 	@Override
 	public void onHistoryClickListener() {
-		// TODO Auto-generated method stub
+		mMenu.toggle();
 
 	}
 

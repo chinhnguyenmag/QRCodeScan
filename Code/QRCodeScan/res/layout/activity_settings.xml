@@ -233,29 +233,34 @@
                 android:layout_height="2dp"
                 android:layout_marginLeft="20dp"
                 android:background="@color/background_gray" />
-
-            <LinearLayout
+            
+             <RelativeLayout
                 android:id="@+id/setting_ll_social_mail"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp" >
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:id="@+id/setting_ic_mail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
                     android:background="@drawable/ic_email"
                     android:contentDescription="@string/common_imagebutton_description" />
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
+                    android:layout_toLeftOf="@+id/settings_ib_share_mail"
+                    android:layout_toRightOf="@+id/setting_ic_mail"
                     android:gravity="left"
                     android:text="@string/mail" />
 
@@ -263,39 +268,46 @@
                     android:id="@+id/settings_ib_share_mail"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
                     android:background="@drawable/ic_next"
                     android:contentDescription="@string/common_imagebutton_description" />
-            </LinearLayout>
+            </RelativeLayout>
 
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="2dp"
                 android:layout_marginLeft="20dp"
                 android:background="@color/background_gray" />
-
-            <LinearLayout
+            
+             <RelativeLayout
                 android:id="@+id/setting_ll_social_twitter"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp" >
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:id="@+id/setting_ic_twitter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
                     android:background="@drawable/ic_twiiter"
                     android:contentDescription="@string/common_imagebutton_description" />
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
+                    android:layout_toLeftOf="@+id/settings_ib_share_twitter"
+                    android:layout_toRightOf="@+id/setting_ic_twitter"
                     android:gravity="left"
                     android:text="@string/twitter" />
 
@@ -303,39 +315,46 @@
                     android:id="@+id/settings_ib_share_twitter"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
                     android:background="@drawable/ic_next"
                     android:contentDescription="@string/common_imagebutton_description" />
-            </LinearLayout>
+            </RelativeLayout>
 
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="2dp"
                 android:layout_marginLeft="20dp"
                 android:background="@color/background_gray" />
-
-            <LinearLayout
-                android:id="@+id/setting_ll_social_fb"
-                android:layout_width="fill_parent"
+            
+             <RelativeLayout
+                android:id="@+id/setting_ll_social_facebook"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp" >
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:id="@+id/setting_ic_facebook"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
                     android:background="@drawable/ic_facebook"
                     android:contentDescription="@string/common_imagebutton_description" />
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
+                    android:layout_toLeftOf="@+id/settings_ib_share_facebook"
+                    android:layout_toRightOf="@+id/setting_ic_facebook"
                     android:gravity="left"
                     android:text="@string/facebook" />
 
@@ -343,10 +362,12 @@
                     android:id="@+id/settings_ib_share_facebook"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
                     android:background="@drawable/ic_next"
                     android:contentDescription="@string/common_imagebutton_description" />
-            </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 

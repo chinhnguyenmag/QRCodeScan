@@ -9,7 +9,9 @@
         android:id="@+id/header_website_ib_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical" >
+        android:gravity="center_vertical"
+        android:clickable="true"
+        android:onClick="onClick_Back" >
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -29,6 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:onClick="onClick_Bookmark"
         android:src="@android:drawable/arrow_up_float" />
 
     <TextView
