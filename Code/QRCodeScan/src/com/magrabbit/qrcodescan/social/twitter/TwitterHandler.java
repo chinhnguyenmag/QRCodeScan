@@ -7,13 +7,11 @@ import java.net.URLDecoder;
 import oauth.signpost.OAuthProvider;
 import oauth.signpost.basic.DefaultOAuthProvider;
 import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
-
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.User;
 import twitter4j.auth.AccessToken;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -23,7 +21,6 @@ import android.view.Window;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
-import com.magrabbit.qrcodescan.utils.Constants;
 import com.magrabbit.qrcodescan.utils.SocialUtil;
 
 public class TwitterHandler {

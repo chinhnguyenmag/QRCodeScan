@@ -6,9 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.appspheregroup.android.swichview.SwitchView;
-import com.appspheregroup.android.swichview.SwitchView.OnSwitchChangeListener;
 import com.magrabbit.qrcodescan.R;
+import com.magrabbit.qrcodescan.control.SwitchView;
+import com.magrabbit.qrcodescan.control.SwitchView.OnSwitchChangeListener;
 import com.magrabbit.qrcodescan.customview.DialogPickTime;
 import com.magrabbit.qrcodescan.customview.DialogPickTime.ProcessDialogPickTime;
 import com.magrabbit.qrcodescan.customview.SlidingMenuCustom;
@@ -40,10 +40,10 @@ public class SettingActivity extends Activity implements
 
 		mSwitchViewSound.setSwitchOn(mAppPreferences.isSound());
 		mSwitchViewOpenUrl.setSwitchOn(mAppPreferences.isOpenUrl());
-		if (mAppPreferences.getCloseUrl() == -1) {
+		if (mAppPreferences.getCloseUrlTime() == -1) {
 			mTvTime.setText("Nerver");
 		} else {
-			mTvTime.setText(mAppPreferences.getCloseUrl() + " seconds");
+			mTvTime.setText(mAppPreferences.getCloseUrlTime() + " seconds");
 		}
 	}
 
@@ -101,10 +101,10 @@ public class SettingActivity extends Activity implements
 					@Override
 					public void click_Ok(int value) {
 						mAppPreferences.setCloseUrl(value);
-						if (mAppPreferences.getCloseUrl() == -1) {
+						if (mAppPreferences.getCloseUrlTime() == -1) {
 							mTvTime.setText("Nerver");
 						} else {
-							mTvTime.setText(mAppPreferences.getCloseUrl()
+							mTvTime.setText(mAppPreferences.getCloseUrlTime()
 									+ " seconds");
 						}
 					}
@@ -113,7 +113,7 @@ public class SettingActivity extends Activity implements
 					public void click_Cancel() {
 
 					}
-				}, mAppPreferences.getCloseUrl());
+				}, mAppPreferences.getCloseUrlTime());
 		d.show();
 	}
 }

@@ -1,9 +1,7 @@
 package com.magrabbit.qrcodescan.activity;
 
-import java.text.Format;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,11 +13,14 @@ import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.magrabbit.qrcodescan.R;
 import com.magrabbit.qrcodescan.adapter.HistoryAdapter;
+import com.magrabbit.qrcodescan.control.DatabaseHandler;
 import com.magrabbit.qrcodescan.customview.SlidingMenuCustom;
 import com.magrabbit.qrcodescan.listener.MenuSlidingClickListener;
 import com.magrabbit.qrcodescan.model.HistoryItem;
 import com.magrabbit.qrcodescan.model.HistorySectionItem;
 import com.magrabbit.qrcodescan.model.Item;
+import com.magrabbit.qrcodescan.model.QRCode;
+import com.magrabbit.qrcodescan.utils.StringExtraUtils;
 
 public class HistoryActivity extends Activity implements
 		MenuSlidingClickListener {
@@ -28,6 +29,8 @@ public class HistoryActivity extends Activity implements
 	private ArrayList<Item> items = new ArrayList<Item>();
 	private SlidingMenuCustom mMenu;
 	private SwipeListView mSwipeListView;
+	private DatabaseHandler mDataHandler;
+	private List<QRCode> mListQRCodes;
 
 	// =============================================================
 	private int swipeMode = SwipeListView.SWIPE_MODE_BOTH;
@@ -44,27 +47,31 @@ public class HistoryActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_history);
 		// inflate layout for list view
-		// mLvHistory = (ListView) findViewById(R.id.activity_history_lv);
 		mSwipeListView = (SwipeListView) findViewById(R.id.activity_history_lv);
 		mMenu = new SlidingMenuCustom(this, this);
 		mMenu.setTouchModeAboveMargin();
 
-		long time = System.currentTimeMillis();
+		// Get QRCode from Database to inflate into list view
+		mDataHandler = new DatabaseHandler(this);
+		mListQRCodes = new ArrayList<QRCode>();
+		mListQRCodes.addAll(mDataHandler.getAllQRCodes());
+		// add the first section and item into list view
+		items.add(new HistorySectionItem(mListQRCodes.get(0).getDate()));
+		items.add(new HistoryItem(mListQRCodes.get(0).getUrl()));
 
-		Format formatter = new SimpleDateFormat("EEE, MMM dd yyyy");
-		String date = formatter.format(new Date());
-
-		items.add(new HistorySectionItem(date));
-		items.add(new HistoryItem("http://www.44doors.com"));
-		items.add(new HistoryItem("http://www.wikipedia.com"));
-		items.add(new HistorySectionItem(date));
-		items.add(new HistoryItem("http://www.google.com"));
-		items.add(new HistoryItem("http://www.44doors.com"));
-		items.add(new HistoryItem("http://www.44doors.com"));
+		for (int i = 1; i < mListQRCodes.size(); i++) {
+			if (!mListQRCodes.get(i).getDate()
+					.equals(mListQRCodes.get(i - 1).getDate())) {
+				// section
+				items.add(new HistorySectionItem(mListQRCodes.get(i).getDate()));
+				items.add(new HistoryItem(mListQRCodes.get(i).getUrl()));
+			} else {
+				// item
+				items.add(new HistoryItem(mListQRCodes.get(i).getUrl()));
+			}
+		}
 
 		mAdapter = new HistoryAdapter(this, items);
-		// mLvHistory.setAdapter(mAdapter);
-		// mAdapter.notifyDataSetChanged();
 		mSwipeListView
 				.setSwipeListViewListener(new BaseSwipeListViewListener() {
 
@@ -129,8 +136,14 @@ public class HistoryActivity extends Activity implements
 					public void onClickFrontView(int position) {
 						if (!items.get(position).isSection()) {
 							// Add code to process
-							startActivity(new Intent(HistoryActivity.this,
-									BrowserActivity.class));
+							HistoryItem item = (HistoryItem) items
+									.get(position);
+							Intent dataIntent = new Intent(
+									HistoryActivity.this, BrowserActivity.class);
+							dataIntent.putExtra(
+									StringExtraUtils.KEY_SCAN_RESULT,
+									item.getTitle());
+							startActivity(dataIntent);
 						}
 					}
 
@@ -160,7 +173,9 @@ public class HistoryActivity extends Activity implements
 
 				});
 
+		// Set Adapter for List View
 		mSwipeListView.setAdapter(mAdapter);
+		mAdapter.notifyDataSetChanged();
 		reload();
 
 	}
@@ -180,7 +195,7 @@ public class HistoryActivity extends Activity implements
 
 	@Override
 	public void onHistoryClickListener() {
-		// TODO Auto-generated method stub
+		mMenu.toggle();
 
 	}
 

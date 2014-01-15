@@ -16,8 +16,9 @@
     <string name="message">Message</string>
     <string name="mail">Mail</string>
     <string name="twitter">Twitter</string>
-    <string name="facebook">facebook</string>
+    <string name="facebook">Facebook</string>
     <string name="common_imagebutton_description">imagebutton</string>
+     <string name="cancel">Cancel</string>
 
     <!-- text use to show in layout not important -->
     <string name="link">44doors.com</string>
@@ -36,8 +37,12 @@
     <string name="error_listing_notes">Error listing note</string>
     <string name="empty_content_error">Note title and content cannot be empty</string>
     <string name="note_saved">Note saved to Evernote</string>
-
     <drawable name="red_drawable">#CCAA1883</drawable>
+    
+    <!-- Scan Activity -->
+    <string name="activity_scan_open_url_confirm">Would you like to browse scanned result?</string>
+    
+     <drawable name="red_drawable">#CCAA1883</drawable>
     <drawable name="green_drawable">#CC123Bff</drawable>
 
 </resources>

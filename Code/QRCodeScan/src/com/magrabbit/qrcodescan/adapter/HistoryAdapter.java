@@ -53,11 +53,11 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 						.findViewById(R.id.list_item_entry_title);
 
 				if (title != null)
-					title.setText(ei.title);
+					title.setText(ei.getTitle());
 			}
-			((SwipeListView)parent).recycle(v, position);
+			((SwipeListView) parent).recycle(v, position);
 		}
-	
+
 		return v;
 	}
 

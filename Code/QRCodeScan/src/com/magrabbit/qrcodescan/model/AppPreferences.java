@@ -101,7 +101,7 @@ public class AppPreferences {
 	 * 
 	 * @return auto close url view after time
 	 */
-	public int getCloseUrl() {
+	public int getCloseUrlTime() {
 		int closeUrl = mAppSharedPrefs.getInt("CloseUrl", -1);
 		return closeUrl;
 	}
