@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.magrabbit.qrcodescan.R;
 import com.magrabbit.qrcodescan.customview.SlidingMenuCustom;
@@ -16,11 +18,18 @@ import com.magrabbit.qrcodescan.listener.MenuSlidingClickListener;
 public class AboutActivity extends Activity implements MenuSlidingClickListener {
 
 	private SlidingMenuCustom mMenu;
+	private TextView mTvTitle;
+	private ImageButton mBtRight;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_about);
+		mTvTitle = (TextView) findViewById(R.id.header_tv_title);
+		mBtRight = (ImageButton) findViewById(R.id.header_bt_right);
+		mTvTitle.setText(R.string.header_title_about);
+		mBtRight.setVisibility(View.GONE);
+
 		mMenu = new SlidingMenuCustom(this, this);
 	}
 

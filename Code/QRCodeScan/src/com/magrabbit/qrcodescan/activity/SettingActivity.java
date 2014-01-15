@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.magrabbit.qrcodescan.R;
@@ -23,11 +24,18 @@ public class SettingActivity extends Activity implements
 	private SwitchView mSwitchViewOpenUrl;
 	private AppPreferences mAppPreferences;
 	private TextView mTvTime;
+	private TextView mTvTitle;
+	private ImageButton mBtRight;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
+		mTvTitle = (TextView) findViewById(R.id.header_tv_title);
+		mBtRight = (ImageButton) findViewById(R.id.header_bt_right);
+		mTvTitle.setText(R.string.header_title_setting);
+		mBtRight.setVisibility(View.GONE);
+
 		mAppPreferences = new AppPreferences(this);
 		mMenu = new SlidingMenuCustom(this, this);
 		mMenu.setTouchModeAboveMargin();
