@@ -3,7 +3,9 @@ package com.magrabbit.qrcodescan.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
@@ -152,12 +154,12 @@ public class SettingActivity extends Activity implements
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.setting_ll_social_message: {
-			Toast.makeText(this, "Share via SMS", Toast.LENGTH_SHORT).show();
+			sendSMS();
 			break;
 		}
 
 		case R.id.setting_ll_social_mail: {
-			Toast.makeText(this, "Share via Mail", Toast.LENGTH_SHORT).show();
+			sendMail();
 			break;
 		}
 
@@ -256,10 +258,38 @@ public class SettingActivity extends Activity implements
 		});
 	}
 
+	protected void sendSMS() {
+		Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+		smsIntent.putExtra("sms_body", "lucky");
+		smsIntent.setType("vnd.android-dir/mms-sms");
+
+		try {
+			startActivity(smsIntent);
+			// finish();
+		} catch (Exception e) {
+			Toast.makeText(this, "Please insert your simcard.",
+					Toast.LENGTH_SHORT).show();
+		}
+	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		mFacebook.authorizeCallback(requestCode, resultCode, data);
+	}
+
+	protected void sendMail() {
+		Intent emailIntent = new Intent(Intent.ACTION_SEND);
+		emailIntent.setType("message/rfc822");
+		emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Follow this link");
+		emailIntent.putExtra(Intent.EXTRA_TEXT, "QRcode link http://qrcode.com");
+		try {
+			startActivity(Intent.createChooser(emailIntent, "Choose an Email client:"));
+		} catch (android.content.ActivityNotFoundException ex) {
+			Toast.makeText(this,
+					"There are no email clients installed.", Toast.LENGTH_SHORT)
+					.show();
+		}
 	}
 
 }
