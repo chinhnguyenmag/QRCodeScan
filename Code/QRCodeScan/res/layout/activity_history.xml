@@ -7,7 +7,8 @@
 
     <include layout="@layout/header_history" />
 
-<!--     <ListView
+    <!--
+         <ListView
         android:id="@+id/activity_history_lv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,7 +17,9 @@
         android:divider="@color/Orange"
         android:dividerHeight="1dp"
         android:padding="10dp" >
-    </ListView> -->
+    </ListView>
+    -->
+
     <com.fortysevendeg.swipelistview.SwipeListView
         xmlns:swipe="http://schemas.android.com/apk/res-auto"
         android:id="@+id/activity_history_lv"

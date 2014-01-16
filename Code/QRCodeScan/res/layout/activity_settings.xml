@@ -270,12 +270,14 @@
                 <ImageButton
                     android:id="@+id/settings_ib_share_mail"
                     android:layout_width="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginRight="20dp"
                     android:background="@drawable/ic_next"
                     android:contentDescription="@string/common_imagebutton_description" />
+
             </RelativeLayout>
 
             <View
