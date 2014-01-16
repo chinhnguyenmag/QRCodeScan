@@ -61,7 +61,7 @@ public class CreateEverNote extends ParentActivity {
 		String content = mEditTextContent.getText().toString();
 		if (TextUtils.isEmpty(title) || TextUtils.isEmpty(content)) {
 			Toast.makeText(getApplicationContext(),
-					R.string.empty_content_error, Toast.LENGTH_LONG).show();
+					R.string.activity_create_evernote_empty_content_error, Toast.LENGTH_LONG).show();
 		}
 
 		Note note = new Note();
@@ -82,7 +82,7 @@ public class CreateEverNote extends ParentActivity {
 						@Override
 						public void onSuccess(Note data) {
 							Toast.makeText(getApplicationContext(),
-									R.string.note_saved, Toast.LENGTH_LONG)
+									R.string.activity_create_evernote_note_saved, Toast.LENGTH_LONG)
 									.show();
 							finish();
 							removeDialog(DIALOG_PROGRESS);
@@ -92,7 +92,7 @@ public class CreateEverNote extends ParentActivity {
 						public void onException(Exception exception) {
 							Log.e(LOGTAG, "Error saving note", exception);
 							Toast.makeText(getApplicationContext(),
-									R.string.error_saving_note,
+									R.string.activity_create_evernote_error_saving_note,
 									Toast.LENGTH_LONG).show();
 							removeDialog(DIALOG_PROGRESS);
 						}
@@ -100,7 +100,7 @@ public class CreateEverNote extends ParentActivity {
 		} catch (TTransportException exception) {
 			Log.e(LOGTAG, "Error creating notestore", exception);
 			Toast.makeText(getApplicationContext(),
-					R.string.error_creating_notestore, Toast.LENGTH_LONG)
+					R.string.activity_create_evernote_error_creating_notestore, Toast.LENGTH_LONG)
 					.show();
 			removeDialog(DIALOG_PROGRESS);
 		}
@@ -165,7 +165,7 @@ public class CreateEverNote extends ParentActivity {
 						public void onException(Exception exception) {
 							Log.e(LOGTAG, "Error listing notebooks", exception);
 							Toast.makeText(getApplicationContext(),
-									R.string.error_listing_notebooks,
+									R.string.activity_create_evernote_error_listing_notebooks,
 									Toast.LENGTH_LONG).show();
 							removeDialog(DIALOG_PROGRESS);
 						}
@@ -173,7 +173,7 @@ public class CreateEverNote extends ParentActivity {
 		} catch (TTransportException exception) {
 			Log.e(LOGTAG, "Error creating notestore", exception);
 			Toast.makeText(getApplicationContext(),
-					R.string.error_creating_notestore, Toast.LENGTH_LONG)
+					R.string.activity_create_evernote_error_creating_notestore, Toast.LENGTH_LONG)
 					.show();
 			removeDialog(DIALOG_PROGRESS);
 		}
