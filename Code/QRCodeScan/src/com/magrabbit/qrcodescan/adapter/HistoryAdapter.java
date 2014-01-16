@@ -86,14 +86,55 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 									Toast.LENGTH_SHORT).show();
 						}
 					});
-					holder.mBtnEvernote.setOnClickListener(new OnClickListener() {
-						
+					holder.mBtnEvernote
+							.setOnClickListener(new OnClickListener() {
+
+								@Override
+								public void onClick(View v) {
+									// TODO Auto-generated method stub
+
+								}
+							});
+
+					holder.mBtnSMS.setOnClickListener(new OnClickListener() {
+
 						@Override
 						public void onClick(View v) {
-							// TODO Auto-generated method stub
-							
+							Toast.makeText(context, "Share via SMS",
+									Toast.LENGTH_SHORT).show();
 						}
 					});
+
+					holder.mBtnEmail.setOnClickListener(new OnClickListener() {
+
+						@Override
+						public void onClick(View v) {
+							Toast.makeText(context, "Share via Mail",
+									Toast.LENGTH_SHORT).show();
+						}
+					});
+
+					holder.mBtnTwitter
+							.setOnClickListener(new OnClickListener() {
+
+								@Override
+								public void onClick(View v) {
+									Toast.makeText(context,
+											"Share via Twitter",
+											Toast.LENGTH_SHORT).show();
+								}
+							});
+
+					holder.mBtnFacebook
+							.setOnClickListener(new OnClickListener() {
+
+								@Override
+								public void onClick(View v) {
+									Toast.makeText(context,
+											"Share via Facebook",
+											Toast.LENGTH_SHORT).show();
+								}
+							});
 				}
 				((SwipeListView) parent).recycle(v, position);
 			}
