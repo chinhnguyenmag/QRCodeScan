@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
 import com.fortysevendeg.swipelistview.SwipeListView;
@@ -41,11 +43,17 @@ public class HistoryActivity extends Activity implements
 	private float swipeOffsetRight = 100;
 	private int swipeActionLeft = SwipeListView.SWIPE_ACTION_REVEAL;
 	private int swipeActionRight = SwipeListView.SWIPE_ACTION_REVEAL;
+	private TextView mTvTitle;
+	private ImageButton mBtRight;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_history);
+		mTvTitle = (TextView) findViewById(R.id.header_tv_title);
+		mBtRight = (ImageButton) findViewById(R.id.header_bt_right);
+		mTvTitle.setText(R.string.header_title_history);
+
 		// inflate layout for list view
 		mSwipeListView = (SwipeListView) findViewById(R.id.activity_history_lv);
 		mMenu = new SlidingMenuCustom(this, this);
@@ -56,19 +64,23 @@ public class HistoryActivity extends Activity implements
 		mListQRCodes = new ArrayList<QRCode>();
 		mListQRCodes.addAll(mDataHandler.getAllQRCodes());
 		// add the first section and item into list view
-		items.add(new HistorySectionItem(mListQRCodes.get(0).getDate()));
-		items.add(new HistoryItem(mListQRCodes.get(0).getUrl()));
-
-		for (int i = 1; i < mListQRCodes.size(); i++) {
-			if (!mListQRCodes.get(i).getDate()
-					.equals(mListQRCodes.get(i - 1).getDate())) {
-				// section
-				items.add(new HistorySectionItem(mListQRCodes.get(i).getDate()));
-				items.add(new HistoryItem(mListQRCodes.get(i).getUrl()));
-			} else {
-				// item
-				items.add(new HistoryItem(mListQRCodes.get(i).getUrl()));
+		if (mListQRCodes.size() != 0) {
+			items.add(new HistorySectionItem(mListQRCodes.get(0).getDate()));
+			items.add(new HistoryItem(mListQRCodes.get(0).getUrl()));
+			
+			for (int i = 1; i < mListQRCodes.size(); i++) {
+				if (!mListQRCodes.get(i).getDate()
+						.equals(mListQRCodes.get(i - 1).getDate())) {
+					// section
+					items.add(new HistorySectionItem(mListQRCodes.get(i)
+							.getDate()));
+					items.add(new HistoryItem(mListQRCodes.get(i).getUrl()));
+				} else {
+					// item
+					items.add(new HistoryItem(mListQRCodes.get(i).getUrl()));
+				}
 			}
+
 		}
 
 		mAdapter = new HistoryAdapter(this, items);
@@ -211,6 +223,10 @@ public class HistoryActivity extends Activity implements
 		startActivity(new Intent(this, SettingActivity.class));
 		overridePendingTransition(0, 0);
 		finish();
+	}
+
+	public void onClick_Right(View v) {
+
 	}
 
 	private void reload() {

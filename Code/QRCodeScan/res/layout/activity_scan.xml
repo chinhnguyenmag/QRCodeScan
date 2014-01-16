@@ -6,7 +6,7 @@
 
     <include
         android:id="@+id/activity_scan_title"
-        layout="@layout/header_scan_setting_about" />
+        layout="@layout/header" />
 
     <RelativeLayout
         android:layout_width="match_parent"
