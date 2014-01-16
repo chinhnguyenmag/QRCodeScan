@@ -23,12 +23,12 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.magrabbit.qrcodescan.R;
 import com.magrabbit.qrcodescan.control.DatabaseHandler;
-import com.magrabbit.qrcodescan.customview.CameraPreview;
 import com.magrabbit.qrcodescan.customview.CameraPreviewNew;
 import com.magrabbit.qrcodescan.customview.DialogConfirm;
 import com.magrabbit.qrcodescan.customview.DialogConfirm.ProcessDialogConfirm;
@@ -42,12 +42,13 @@ import com.magrabbit.qrcodescan.utils.ZBarConstants;
 public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		ZBarConstants, MenuSlidingClickListener {
 
-	private CameraPreview mPreview;
+	// private CameraPreview mPreview;
+	private CameraPreviewNew mPreview;
 	private Camera mCamera;
 	private ImageScanner mScanner;
 	private Handler mAutoFocusHandler;
 	private boolean mPreviewing = true;
-	private RelativeLayout mFrameCamera;
+	private LinearLayout mFrameCamera;
 	// Application Preference
 	private AppPreferences mPreference;
 	// For Sliding Menu
@@ -74,8 +75,8 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 
 		mDataHandler = new DatabaseHandler(this);
 
-		mFrameCamera = (RelativeLayout) findViewById(R.id.activity_scan_camera);
-		mSlidingMenu = new SlidingMenuCustom(this, this);
+		mFrameCamera = (LinearLayout) findViewById(R.id.activity_scan_camera);
+		
 		if (!isCameraAvailable()) {
 			// Cancel request if there is no rear-facing camera.
 			cancelRequest();
@@ -89,9 +90,12 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 
 		// Create a RelativeLayout container that will hold a SurfaceView,
 		// and set it as the content of our activity.
-		
-		mPreview = new CameraPreview(this, this, autoFocusCB);
+
+		// mPreview = new CameraPreview(this, this, autoFocusCB);
+		mPreview = new CameraPreviewNew(this, this, autoFocusCB);
+
 		mFrameCamera.addView(mPreview);
+		mSlidingMenu = new SlidingMenuCustom(this, this);
 	}
 
 	public void setupScanner() {
@@ -121,7 +125,8 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 			}
 
 			mPreview.setCamera(mCamera);
-			mPreview.showSurfaceView();
+			/* Please Uncomment */
+			// mPreview.showSurfaceView();
 
 			mPreviewing = true;
 		} catch (Exception e) {
@@ -143,7 +148,8 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 			mCamera.stopPreview();
 			mCamera.release();
 
-			mPreview.hideSurfaceView();
+			/* Please Uncomment */
+			// mPreview.hideSurfaceView();
 
 			mPreviewing = false;
 			mCamera = null;

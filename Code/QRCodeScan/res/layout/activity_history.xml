@@ -5,7 +5,7 @@
     android:background="@color/White"
     android:orientation="vertical" >
 
-    <include layout="@layout/header" />
+    <include layout="@layout/header_history" />
 
     <!--
          <ListView

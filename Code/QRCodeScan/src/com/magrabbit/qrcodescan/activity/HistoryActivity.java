@@ -9,14 +9,14 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.evernote.client.android.EvernoteSession;
 import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.magrabbit.qrcodescan.R;
 import com.magrabbit.qrcodescan.adapter.HistoryAdapter;
+import com.magrabbit.qrcodescan.adapter.HistoryAdapter.HistoryAdapter_Process;
 import com.magrabbit.qrcodescan.control.DatabaseHandler;
 import com.magrabbit.qrcodescan.customview.SlidingMenuCustom;
 import com.magrabbit.qrcodescan.listener.MenuSlidingClickListener;
@@ -26,7 +26,7 @@ import com.magrabbit.qrcodescan.model.Item;
 import com.magrabbit.qrcodescan.model.QRCode;
 import com.magrabbit.qrcodescan.utils.StringExtraUtils;
 
-public class HistoryActivity extends Activity implements
+public class HistoryActivity extends ParentActivity implements
 		MenuSlidingClickListener {
 
 	private HistoryAdapter mAdapter;
@@ -35,6 +35,7 @@ public class HistoryActivity extends Activity implements
 	private SwipeListView mSwipeListView;
 	private DatabaseHandler mDataHandler;
 	private List<QRCode> mListQRCodes;
+	private int mSectionNumber = 0;
 
 	// =============================================================
 	private int swipeMode = SwipeListView.SWIPE_MODE_BOTH;
@@ -45,16 +46,11 @@ public class HistoryActivity extends Activity implements
 	private float swipeOffsetRight = 100;
 	private int swipeActionLeft = SwipeListView.SWIPE_ACTION_REVEAL;
 	private int swipeActionRight = SwipeListView.SWIPE_ACTION_REVEAL;
-	private TextView mTvTitle;
-	private ImageButton mBtRight;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_history);
-		mTvTitle = (TextView) findViewById(R.id.header_tv_title);
-		mBtRight = (ImageButton) findViewById(R.id.header_bt_right);
-		mTvTitle.setText(R.string.header_title_history);
 
 		// Determine screen size
 		if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE) {
@@ -99,10 +95,50 @@ public class HistoryActivity extends Activity implements
 					items.add(new HistoryItem(mListQRCodes.get(i).getUrl()));
 				}
 			}
-
 		}
 
-		mAdapter = new HistoryAdapter(this, items);
+		mAdapter = new HistoryAdapter(this, items,
+				new HistoryAdapter_Process() {
+
+					@Override
+					public void delete_item(int position) {
+						// delete from database
+						mDataHandler.deleteQRCode(mListQRCodes.get(position));
+						items.remove(position);
+						mAdapter.notifyDataSetChanged();
+						mSwipeListView.setAdapter(mAdapter);
+					}
+
+					@Override
+					public void click_evernote(int position) {
+						addEverNote(null);
+					}
+
+					@Override
+					public void click_facebook(int position) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void click_twitter(int position) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void click_sms(int position) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void click_email(int position) {
+						// TODO Auto-generated method stub
+
+					}
+
+				});
 		mSwipeListView
 				.setSwipeListViewListener(new BaseSwipeListViewListener() {
 
@@ -246,7 +282,14 @@ public class HistoryActivity extends Activity implements
 		overridePendingTransition(0, 0);
 	}
 
-	public void onClick_Right(View v) {
+	public void onClick_ClearAll(View v) {
+		// delete all QR Code from Database
+		for (QRCode code : mListQRCodes) {
+			mDataHandler.deleteQRCode(code);
+		}
+		items.clear();
+		mAdapter.notifyDataSetChanged();
+		mSwipeListView.setAdapter(mAdapter);
 
 	}
 
@@ -264,5 +307,30 @@ public class HistoryActivity extends Activity implements
 		DisplayMetrics metrics = getResources().getDisplayMetrics();
 		float px = dp * (metrics.densityDpi / 160f);
 		return (int) px;
+	}
+
+	/**
+	 * @param v
+	 * @Description Processing login and adding a new EverNote
+	 */
+	public void addEverNote(View v) {
+		mEvernoteSession.authenticate(HistoryActivity.this);
+	}
+
+	/**
+	 * Called when the control returns from an activity that we launched.
+	 */
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		switch (requestCode) {
+		// Add a new EverNote when OAuth activity returns result
+		case EvernoteSession.REQUEST_CODE_OAUTH:
+			if (resultCode == Activity.RESULT_OK) {
+				startActivity(new Intent(HistoryActivity.this,
+						CreateEverNote.class));
+			}
+			break;
+		}
 	}
 }
