@@ -2,6 +2,7 @@ package com.magrabbit.qrcodescan.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -10,6 +11,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.android.DialogError;
+import com.facebook.android.Facebook;
+import com.facebook.android.Facebook.DialogListener;
+import com.facebook.android.FacebookError;
 import com.magrabbit.qrcodescan.R;
 import com.magrabbit.qrcodescan.control.SwitchView;
 import com.magrabbit.qrcodescan.control.SwitchView.OnSwitchChangeListener;
@@ -18,6 +23,7 @@ import com.magrabbit.qrcodescan.customview.DialogPickTime.ProcessDialogPickTime;
 import com.magrabbit.qrcodescan.customview.SlidingMenuCustom;
 import com.magrabbit.qrcodescan.listener.MenuSlidingClickListener;
 import com.magrabbit.qrcodescan.model.AppPreferences;
+import com.magrabbit.qrcodescan.utils.SocialUtil;
 
 public class SettingActivity extends Activity implements
 		MenuSlidingClickListener, OnSwitchChangeListener, OnClickListener {
@@ -33,6 +39,8 @@ public class SettingActivity extends Activity implements
 	private RelativeLayout mRlShareSMS;
 	private RelativeLayout mRlShareMail;
 	private RelativeLayout mRlShareTwitter;
+	private Facebook mFacebook = new Facebook(SocialUtil.FACEBOOK_APPID);
+	private SharedPreferences mSharedPreferences;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -160,8 +168,7 @@ public class SettingActivity extends Activity implements
 		}
 
 		case R.id.setting_ll_social_facebook: {
-			Toast.makeText(this, "Share via Facebook", Toast.LENGTH_SHORT)
-					.show();
+			loginToFacebook();
 			break;
 		}
 
@@ -169,4 +176,90 @@ public class SettingActivity extends Activity implements
 			break;
 		}
 	}
+
+	public void loginToFacebook() {
+		mSharedPreferences = getPreferences(MODE_PRIVATE);
+		String access_token = mSharedPreferences
+				.getString("access_token", null);
+		long expires = mSharedPreferences.getLong("access_expires", 0);
+		if (access_token != null) {
+			mFacebook.setAccessToken(access_token);
+			postToWall();
+		}
+
+		if (expires != 0) {
+			mFacebook.setAccessExpires(expires);
+		}
+
+		if (!mFacebook.isSessionValid()) {
+			mFacebook.authorize(this,
+					new String[] { "email", "publish_stream" },
+					new DialogListener() {
+
+						@Override
+						public void onFacebookError(FacebookError e) {
+						}
+
+						@Override
+						public void onError(DialogError e) {
+						}
+
+						@Override
+						public void onComplete(Bundle values) {
+							SharedPreferences.Editor editor = mSharedPreferences
+									.edit();
+							editor.putString("access_token",
+									mFacebook.getAccessToken());
+							editor.putLong("access_expires",
+									mFacebook.getAccessExpires());
+							editor.commit();
+
+							postToWall();
+						}
+
+						@Override
+						public void onCancel() {
+						}
+					});
+		}
+	}
+
+	public void getAccessToken() {
+		String access_token = mFacebook.getAccessToken();
+		Toast.makeText(getApplicationContext(),
+				"Access Token: " + access_token, Toast.LENGTH_LONG).show();
+	}
+
+	public void postToWall() {
+		Bundle parameters = new Bundle();
+		parameters.putString("link", "http://toitesthuthoi.com");
+		mFacebook.dialog(this, "feed", parameters, new DialogListener() {
+
+			@Override
+			public void onFacebookError(FacebookError e) {
+			}
+
+			@Override
+			public void onError(DialogError e) {
+			}
+
+			@Override
+			public void onComplete(Bundle values) {
+				Toast.makeText(SettingActivity.this,
+						"Commment has been posted in your wall!",
+						Toast.LENGTH_SHORT).show();
+			}
+
+			@Override
+			public void onCancel() {
+			}
+		});
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		mFacebook.authorizeCallback(requestCode, resultCode, data);
+	}
+
 }
