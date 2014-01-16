@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.magrabbit.qrcodescan.R;
 import com.magrabbit.qrcodescan.control.SwitchView;
@@ -17,7 +20,7 @@ import com.magrabbit.qrcodescan.listener.MenuSlidingClickListener;
 import com.magrabbit.qrcodescan.model.AppPreferences;
 
 public class SettingActivity extends Activity implements
-		MenuSlidingClickListener, OnSwitchChangeListener {
+		MenuSlidingClickListener, OnSwitchChangeListener, OnClickListener {
 
 	private SlidingMenuCustom mMenu;
 	private SwitchView mSwitchViewSound;
@@ -26,6 +29,10 @@ public class SettingActivity extends Activity implements
 	private TextView mTvTime;
 	private TextView mTvTitle;
 	private ImageButton mBtRight;
+	private RelativeLayout mRlShareFacebook;
+	private RelativeLayout mRlShareSMS;
+	private RelativeLayout mRlShareMail;
+	private RelativeLayout mRlShareTwitter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +49,14 @@ public class SettingActivity extends Activity implements
 		mSwitchViewSound = (SwitchView) findViewById(R.id.activity_settings_sv_sound);
 		mSwitchViewOpenUrl = (SwitchView) findViewById(R.id.activity_settings_sv_open_url);
 		mTvTime = (TextView) findViewById(R.id.activity_setting_tv_time);
+		mRlShareFacebook = (RelativeLayout) findViewById(R.id.setting_ll_social_facebook);
+		mRlShareSMS = (RelativeLayout) findViewById(R.id.setting_ll_social_message);
+		mRlShareMail = (RelativeLayout) findViewById(R.id.setting_ll_social_mail);
+		mRlShareTwitter = (RelativeLayout) findViewById(R.id.setting_ll_social_twitter);
+		mRlShareSMS.setOnClickListener(this);
+		mRlShareMail.setOnClickListener(this);
+		mRlShareTwitter.setOnClickListener(this);
+		mRlShareFacebook.setOnClickListener(this);
 
 		mSwitchViewSound.setOnSwitchChangeListener(this);
 		mSwitchViewOpenUrl.setOnSwitchChangeListener(this);
@@ -124,5 +139,35 @@ public class SettingActivity extends Activity implements
 					}
 				}, mAppPreferences.getCloseUrlTime());
 		d.show();
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.setting_ll_social_message: {
+			Toast.makeText(this, "Share via SMS", Toast.LENGTH_SHORT).show();
+			break;
+		}
+
+		case R.id.setting_ll_social_mail: {
+			Toast.makeText(this, "Share via Mail", Toast.LENGTH_SHORT).show();
+			break;
+		}
+
+		case R.id.setting_ll_social_twitter: {
+			Toast.makeText(this, "Share via Twitter", Toast.LENGTH_SHORT)
+					.show();
+			break;
+		}
+
+		case R.id.setting_ll_social_facebook: {
+			Toast.makeText(this, "Share via Facebook", Toast.LENGTH_SHORT)
+					.show();
+			break;
+		}
+
+		default:
+			break;
+		}
 	}
 }

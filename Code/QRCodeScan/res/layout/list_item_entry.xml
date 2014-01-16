@@ -10,14 +10,49 @@
         android:background="@color/Black"
         android:gravity="right|center_vertical"
         android:minHeight="?android:attr/listPreferredItemHeight"
-        android:paddingRight="?android:attr/scrollbarSize"
         android:tag="back" >
 
         <Button
-            android:id="@+id/example_row_b_action_1"
+            android:id="@+id/list_item_entry_btn_evernote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Delete" />
+            android:text="Note"
+            android:textSize="10sp" />
+
+        <Button
+            android:id="@+id/list_item_entry_btn_sms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SMS"
+            android:textSize="10sp" />
+
+        <Button
+            android:id="@+id/list_item_entry_btn_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textSize="10sp" />
+
+        <Button
+            android:id="@+id/list_item_entry_btn_twitter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Twitter"
+            android:textSize="10sp" />
+
+        <Button
+            android:id="@+id/list_item_entry_btn_facebook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Facebook"
+            android:textSize="10sp" />
+
+        <Button
+            android:id="@+id/list_item_entry_btn_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete"
+            android:textSize="10sp" />
     </LinearLayout>
 
     <RelativeLayout

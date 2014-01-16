@@ -1,13 +1,9 @@
 package com.magrabbit.qrcodescan.adapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import kankan.wheel.widget.adapters.NumericWheelAdapter;
 import android.content.Context;
 
 import com.magrabbit.qrcodescan.R;
-
-import kankan.wheel.widget.adapters.NumericWheelAdapter;
 
 /**
  * @author Hung Hoang
@@ -39,8 +35,8 @@ public class PickTimeAdapter extends NumericWheelAdapter {
 		}
 		return null;
 	}
-	
-	public CharSequence getValueItem(int index){
+
+	public CharSequence getValueItem(int index) {
 		return getItemText(index);
 	}
 }
