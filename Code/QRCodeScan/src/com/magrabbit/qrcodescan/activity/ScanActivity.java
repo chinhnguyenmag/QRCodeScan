@@ -10,6 +10,9 @@ import net.sourceforge.zbar.ImageScanner;
 import net.sourceforge.zbar.Symbol;
 import net.sourceforge.zbar.SymbolSet;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
@@ -44,7 +47,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 
 	// private CameraPreview mPreview;
 	private CameraPreviewNew mPreview;
-	private Camera mCamera;
+	public Camera mCamera;
 	private ImageScanner mScanner;
 	private Handler mAutoFocusHandler;
 	private boolean mPreviewing = true;
@@ -57,6 +60,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	private DatabaseHandler mDataHandler;
 	private TextView mTvTitle;
 	private ImageButton mBtRight;
+	private AlertDialog.Builder alertDialogBuilder;
 
 	static {
 		System.loadLibrary("iconv");
@@ -185,72 +189,122 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 			for (Symbol sym : syms) {
 				final String symData = sym.getData();
 				if (!TextUtils.isEmpty(symData)) {
-					// Save into Database
-					Format formatter = new SimpleDateFormat("EEE, MMM dd yyyy");
+					if (symData.contains("cptr.it/?var=")
+							&& symData.contains("&id=")) {
+						// Save into Database
+						Format formatter = new SimpleDateFormat(
+								"EEE, MMM dd yyyy");
 
-					String date = formatter.format(new Date());
-					mDataHandler.addQRCode(new QRCode(date, symData));
+						String date = formatter.format(new Date());
+						mDataHandler.addQRCode(new QRCode(date, symData));
 
-					// Get the QR Code after scanning and put it to Browser for
-					// searching on WebSite
+						// Get the QR Code after scanning and put it to Browser
+						// for
+						// searching on WebSite
 
-					// Check whether to play sound or not
-					if (mPreference.isSound()) {
-						playSound();
-					}
+						// Check whether to play sound or not
+						if (mPreference.isSound()) {
+							playSound();
+						}
 
-					if (mPreference.isOpenUrl()) {
-						// Stop scanning
-						mCamera.cancelAutoFocus();
-						mCamera.setPreviewCallback(null);
+						if (mPreference.isOpenUrl()) {
+							// Stop scanning
+							mCamera.cancelAutoFocus();
+							mCamera.setPreviewCallback(null);
 
-						Intent dataIntent = new Intent(ScanActivity.this,
-								BrowserActivity.class);
-						dataIntent.putExtra(StringExtraUtils.KEY_SCAN_RESULT,
-								symData);
-						startActivity(dataIntent);
+							Intent dataIntent = new Intent(ScanActivity.this,
+									BrowserActivity.class);
+							dataIntent.putExtra(
+									StringExtraUtils.KEY_SCAN_RESULT, symData);
+							startActivity(dataIntent);
+						} else {
+							// Stop scanning
+							mCamera.cancelAutoFocus();
+							mCamera.setPreviewCallback(null);
+
+							DialogConfirm dialog = new DialogConfirm(
+									ScanActivity.this,
+									android.R.drawable.ic_dialog_alert,
+									ScanActivity.this
+											.getString(R.string.activity_scan_open_browser_title),
+									ScanActivity.this
+											.getString(R.string.activity_scan_open_url_confirm),
+									true, new ProcessDialogConfirm() {
+
+										@Override
+										public void click_Ok() {
+
+											Intent dataIntent = new Intent(
+													ScanActivity.this,
+													BrowserActivity.class);
+											dataIntent
+													.putExtra(
+															StringExtraUtils.KEY_SCAN_RESULT,
+															symData);
+											startActivity(dataIntent);
+
+										}
+
+										@Override
+										public void click_Cancel() {
+											// Start scanning again
+											mCamera.setPreviewCallback(ScanActivity.this);
+										}
+									});
+							dialog.show();
+						}
+						break;
+
 					} else {
+						// Show warning dialog for Invalid URL
+						showComingSoonDialog(ScanActivity.this);
 						// Stop scanning
 						mCamera.cancelAutoFocus();
 						mCamera.setPreviewCallback(null);
-
-						DialogConfirm dialog = new DialogConfirm(
-								ScanActivity.this,
-								android.R.drawable.ic_dialog_alert,
-								"Open Browser",
-								ScanActivity.this
-										.getString(R.string.activity_scan_open_url_confirm),
-								true, new ProcessDialogConfirm() {
-
-									@Override
-									public void click_Ok() {
-
-										Intent dataIntent = new Intent(
-												ScanActivity.this,
-												BrowserActivity.class);
-										dataIntent
-												.putExtra(
-														StringExtraUtils.KEY_SCAN_RESULT,
-														symData);
-										startActivity(dataIntent);
-
-									}
-
-									@Override
-									public void click_Cancel() {
-										// Start scanning again
-										mCamera.setPreviewCallback(ScanActivity.this);
-									}
-								});
-						dialog.show();
 					}
-					break;
 				}
 			}
 			// Turn on Camera Preview
 			mCamera.startPreview();
 			mPreviewing = true;
+
 		}
+	}
+
+	/* INVALID URL DIALOG */
+
+	public void showComingSoonDialog(Context context) {
+		alertDialogBuilder = new AlertDialog.Builder(context);
+
+		// set title
+		alertDialogBuilder.setTitle(context.getResources().getString(
+				R.string.activity_scan_invalid_url_title));
+
+		// set dialog message
+		alertDialogBuilder
+				.setMessage(
+						context.getResources()
+								.getString(
+										R.string.activity_scan_invalid_url_message))
+				.setCancelable(false)
+				.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+						startPreviewAgain();
+					}
+				}); // create alert dialog
+		AlertDialog alertDialog = alertDialogBuilder.create();
+
+		// show it
+		alertDialog.show();
+	}
+
+	public void startPreviewAgain() {
+		// Turn on Camera Preview
+		mCamera.startPreview();
+		mPreviewing = true;
+		// Start scanning again
+		mCamera.setPreviewCallback(ScanActivity.this);
 	}
 
 	private Runnable doAutoFocus = new Runnable() {

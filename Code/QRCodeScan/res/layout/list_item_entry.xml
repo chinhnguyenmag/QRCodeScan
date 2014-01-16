@@ -13,13 +13,6 @@
         android:tag="back" >
 
         <Button
-            android:id="@+id/list_item_entry_btn_evernote"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Note"
-            android:textSize="10sp" />
-
-        <Button
             android:id="@+id/list_item_entry_btn_sms"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,6 +38,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Facebook"
+            android:textSize="10sp" />
+         <Button
+            android:id="@+id/list_item_entry_btn_evernote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Note"
             android:textSize="10sp" />
 
         <Button

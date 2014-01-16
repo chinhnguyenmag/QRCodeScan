@@ -25,7 +25,7 @@
     <string name="cancel">Cancel</string>
 
     <!-- text use to show in layout not important -->
-    <string name="link">44doors.com</string>
+    <string name="link">cptr.it</string>
     <string name="time_setting">5 seconds</string>
     <string name="save">Save</string>
     <string name="ok">Ok</string>
@@ -45,8 +45,17 @@
 
     <drawable name="red_drawable">#CCAA1883</drawable>
     <!-- Scan Activity -->
-    <string name="activity_scan_open_url_confirm">Would you like to browse scanned result?</string>
+    <string name="activity_scan_open_url_confirm">Are you sure you want to browse scanned result?</string>
+    <string name="activity_scan_open_browser_title"> Open Browser</string>
+    <string name="activity_scan_invalid_url_title">Invalid URL</string>
+    <string name="activity_scan_invalid_url_message">This URL is not right format</string>
 
+    <!-- History Activity -->
+    <string name="activity_history_delete_history_confirm">Are you sure you want to delete this scan history?</string>
+    <string name="activity_history_delete_all_history_confirm">Are you sure you want to delete all scan histories?</string>
+    <string name="activity_history_delete_history_title">Clear History</string>
+    <string name="activity_history_delete_all_history_title">Clear All Histories</string>
+   
     <drawable name="red_drawable">#CCAA1883</drawable>
     <drawable name="green_drawable">#CC123Bff</drawable>
 

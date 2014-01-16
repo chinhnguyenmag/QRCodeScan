@@ -1,17 +1,17 @@
-/*
- * Barebones implementation of displaying camera preview.
- * 
- * Created by lisah0 on 2012-02-24
+
+/**
+ * @author baonguyen
  */
 package com.magrabbit.qrcodescan.customview;
 
 import java.io.IOException;
+import java.util.List;
 
 import android.content.Context;
 import android.hardware.Camera;
 import android.hardware.Camera.AutoFocusCallback;
 import android.hardware.Camera.PreviewCallback;
-import android.os.storage.StorageManager;
+import android.hardware.Camera.Size;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -22,6 +22,8 @@ public class CameraPreviewNew extends SurfaceView implements
 	private SurfaceHolder mHolder;
 	private SurfaceView mSurfaceView;
 	private Camera mCamera;
+	private Size mPreviewSize;
+	private List<Size> mSupportedPreviewSizes;
 	private PreviewCallback previewCallback;
 	private AutoFocusCallback autoFocusCallback;
 
@@ -30,19 +32,7 @@ public class CameraPreviewNew extends SurfaceView implements
 		super(context);
 		previewCallback = previewCb;
 		autoFocusCallback = autoFocusCb;
-
-		/*
-		 * Set camera to continuous focus if supported, otherwise use software
-		 * auto-focus. Only works for API level >=9.
-		 */
-		/*
-		 * Camera.Parameters parameters = camera.getParameters(); for (String f
-		 * : parameters.getSupportedFocusModes()) { if (f ==
-		 * Parameters.FOCUS_MODE_CONTINUOUS_PICTURE) {
-		 * mCamera.setFocusMode(Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
-		 * autoFocusCallback = null; break; } }
-		 */
-
+		
 		// Install a SurfaceHolder.Callback so we get notified when the
 		// underlying surface is created and destroyed.
 		mHolder = getHolder();
@@ -93,9 +83,17 @@ public class CameraPreviewNew extends SurfaceView implements
 		}
 
 		try {
+			// Now that the size is known, set up the camera parameters and
+			// begin the preview.
+			Camera.Parameters parameters = mCamera.getParameters();
+			if (mPreviewSize != null) {
+				parameters.setPreviewSize(mPreviewSize.width,
+						mPreviewSize.height);
+			}
 			// Hard code camera surface rotation 90 degs to match Activity view
 			// in portrait
 			mCamera.setDisplayOrientation(90);
+			mCamera.setParameters(parameters);
 			mCamera.setPreviewDisplay(mHolder);
 			mCamera.setPreviewCallback(previewCallback);
 			mCamera.startPreview();
@@ -103,6 +101,62 @@ public class CameraPreviewNew extends SurfaceView implements
 		} catch (Exception e) {
 			Log.d("DBG", "Error starting camera preview: " + e.getMessage());
 		}
+	}
+
+	@Override
+	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+		// We purposely disregard child measurements because act as a wrapper to
+		// a SurfaceView that
+		// centers the camera preview instead of stretching it.
+		final int width = resolveSize(getSuggestedMinimumWidth(),
+				widthMeasureSpec);
+		final int height = resolveSize(getSuggestedMinimumHeight(),
+				heightMeasureSpec);
+		setMeasuredDimension(width, height);
+
+		if (mSupportedPreviewSizes == null && mCamera != null) {
+			mSupportedPreviewSizes = mCamera.getParameters()
+					.getSupportedPreviewSizes();
+		}
+		if (mSupportedPreviewSizes != null) {
+			mPreviewSize = getOptimalPreviewSize(mSupportedPreviewSizes, width,
+					height);
+		}
+	}
+
+	private Size getOptimalPreviewSize(List<Size> sizes, int w, int h) {
+		final double ASPECT_TOLERANCE = 0.1;
+		double targetRatio = (double) w / h;
+		if (sizes == null)
+			return null;
+
+		Size optimalSize = null;
+		double minDiff = Double.MAX_VALUE;
+
+		int targetHeight = h;
+
+		// Try to find an size match aspect ratio and size
+		for (Size size : sizes) {
+			double ratio = (double) size.width / size.height;
+			if (Math.abs(ratio - targetRatio) > ASPECT_TOLERANCE)
+				continue;
+			if (Math.abs(size.height - targetHeight) < minDiff) {
+				optimalSize = size;
+				minDiff = Math.abs(size.height - targetHeight);
+			}
+		}
+
+		// Cannot find the one match the aspect ratio, ignore the requirement
+		if (optimalSize == null) {
+			minDiff = Double.MAX_VALUE;
+			for (Size size : sizes) {
+				if (Math.abs(size.height - targetHeight) < minDiff) {
+					optimalSize = size;
+					minDiff = Math.abs(size.height - targetHeight);
+				}
+			}
+		}
+		return optimalSize;
 	}
 
 	public void stop() {

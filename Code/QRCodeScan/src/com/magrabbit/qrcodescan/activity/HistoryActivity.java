@@ -1,29 +1,50 @@
 package com.magrabbit.qrcodescan.activity;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.Signature;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.evernote.client.android.EvernoteSession;
+import com.facebook.android.DialogError;
+import com.facebook.android.Facebook;
+import com.facebook.android.Facebook.DialogListener;
+import com.facebook.android.FacebookError;
 import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.magrabbit.qrcodescan.R;
 import com.magrabbit.qrcodescan.adapter.HistoryAdapter;
 import com.magrabbit.qrcodescan.adapter.HistoryAdapter.HistoryAdapter_Process;
 import com.magrabbit.qrcodescan.control.DatabaseHandler;
+import com.magrabbit.qrcodescan.customview.DialogConfirm;
+import com.magrabbit.qrcodescan.customview.DialogConfirm.ProcessDialogConfirm;
 import com.magrabbit.qrcodescan.customview.SlidingMenuCustom;
 import com.magrabbit.qrcodescan.listener.MenuSlidingClickListener;
 import com.magrabbit.qrcodescan.model.HistoryItem;
 import com.magrabbit.qrcodescan.model.HistorySectionItem;
 import com.magrabbit.qrcodescan.model.Item;
 import com.magrabbit.qrcodescan.model.QRCode;
+import com.magrabbit.qrcodescan.utils.SocialUtil;
 import com.magrabbit.qrcodescan.utils.StringExtraUtils;
 
 public class HistoryActivity extends ParentActivity implements
@@ -36,6 +57,8 @@ public class HistoryActivity extends ParentActivity implements
 	private DatabaseHandler mDataHandler;
 	private List<QRCode> mListQRCodes;
 	private int mSectionNumber = 0;
+	private Facebook mFacebook = new Facebook(SocialUtil.FACEBOOK_APPID);
+	private SharedPreferences mSharedPreferences;
 
 	// =============================================================
 	private int swipeMode = SwipeListView.SWIPE_MODE_BOTH;
@@ -78,6 +101,28 @@ public class HistoryActivity extends ParentActivity implements
 		mDataHandler = new DatabaseHandler(this);
 		mListQRCodes = new ArrayList<QRCode>();
 		mListQRCodes.addAll(mDataHandler.getAllQRCodes());
+		Collections.sort(mListQRCodes, new Comparator<QRCode>() {
+
+			@Override
+			public int compare(QRCode lhs, QRCode rhs) {
+				SimpleDateFormat form = new SimpleDateFormat("EEE, MMM dd yyyy");
+
+				Date d1 = null;
+				Date d2 = null;
+				try {
+					d1 = form.parse(lhs.getDate());
+					d2 = form.parse(rhs.getDate());
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				if (d1.compareTo(d2) > 0) {
+					return -1;
+				} else if (d1.compareTo(d2) < 0) {
+					return 1;
+				} else
+					return 0;
+			}
+		});
 		// add the first section and item into list view
 		if (mListQRCodes.size() != 0) {
 			items.add(new HistorySectionItem(mListQRCodes.get(0).getDate()));
@@ -101,12 +146,35 @@ public class HistoryActivity extends ParentActivity implements
 				new HistoryAdapter_Process() {
 
 					@Override
-					public void delete_item(int position) {
-						// delete from database
-						mDataHandler.deleteQRCode(mListQRCodes.get(position));
-						items.remove(position);
-						mAdapter.notifyDataSetChanged();
-						mSwipeListView.setAdapter(mAdapter);
+					public void delete_item(final int position) {
+						DialogConfirm dialog = new DialogConfirm(
+								HistoryActivity.this,
+								android.R.drawable.ic_dialog_alert,
+								HistoryActivity.this
+										.getString(R.string.activity_history_delete_history_title),
+								HistoryActivity.this
+										.getString(R.string.activity_history_delete_history_confirm),
+								true, new ProcessDialogConfirm() {
+
+									@Override
+									public void click_Ok() {
+
+										// delete from database
+										mDataHandler.deleteQRCode(mListQRCodes
+												.get(position));
+										items.remove(position);
+										mAdapter.notifyDataSetChanged();
+										mSwipeListView.setAdapter(mAdapter);
+
+									}
+
+									@Override
+									public void click_Cancel() {
+
+									}
+								});
+						dialog.show();
+
 					}
 
 					@Override
@@ -116,26 +184,24 @@ public class HistoryActivity extends ParentActivity implements
 
 					@Override
 					public void click_facebook(int position) {
-						// TODO Auto-generated method stub
-
+						loginToFacebook(mListQRCodes.get(position).getUrl()
+								.trim());
 					}
 
 					@Override
 					public void click_twitter(int position) {
-						// TODO Auto-generated method stub
-
+						Toast.makeText(HistoryActivity.this,
+								"Share via Twitter", Toast.LENGTH_SHORT).show();
 					}
 
 					@Override
 					public void click_sms(int position) {
-						// TODO Auto-generated method stub
-
+						sendSMS(mListQRCodes.get(position).getUrl().trim());
 					}
 
 					@Override
 					public void click_email(int position) {
-						// TODO Auto-generated method stub
-
+						sendMail(mListQRCodes.get(position).getUrl().trim());
 					}
 
 				});
@@ -283,13 +349,34 @@ public class HistoryActivity extends ParentActivity implements
 	}
 
 	public void onClick_ClearAll(View v) {
-		// delete all QR Code from Database
-		for (QRCode code : mListQRCodes) {
-			mDataHandler.deleteQRCode(code);
-		}
-		items.clear();
-		mAdapter.notifyDataSetChanged();
-		mSwipeListView.setAdapter(mAdapter);
+		DialogConfirm dialog = new DialogConfirm(
+				HistoryActivity.this,
+				android.R.drawable.ic_dialog_alert,
+				HistoryActivity.this
+						.getString(R.string.activity_history_delete_all_history_title),
+				HistoryActivity.this
+						.getString(R.string.activity_history_delete_all_history_confirm),
+				true, new ProcessDialogConfirm() {
+
+					@Override
+					public void click_Ok() {
+
+						// delete all QR Code from Database
+						for (QRCode code : mListQRCodes) {
+							mDataHandler.deleteQRCode(code);
+						}
+						items.clear();
+						mAdapter.notifyDataSetChanged();
+						mSwipeListView.setAdapter(mAdapter);
+
+					}
+
+					@Override
+					public void click_Cancel() {
+
+					}
+				});
+		dialog.show();
 
 	}
 
@@ -323,6 +410,7 @@ public class HistoryActivity extends ParentActivity implements
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+		mFacebook.authorizeCallback(requestCode, resultCode, data);
 		switch (requestCode) {
 		// Add a new EverNote when OAuth activity returns result
 		case EvernoteSession.REQUEST_CODE_OAUTH:
@@ -331,6 +419,136 @@ public class HistoryActivity extends ParentActivity implements
 						CreateEverNote.class));
 			}
 			break;
+		}
+	}
+
+	public void loginToFacebook(final String link) {
+
+		try {
+
+			PackageInfo info = getPackageManager().getPackageInfo(
+					this.getPackageName(), PackageManager.GET_SIGNATURES);
+
+			for (Signature signature : info.signatures) {
+
+				MessageDigest md = MessageDigest.getInstance("SHA");
+				md.update(signature.toByteArray());
+				Log.d("====Hash Key===",
+						Base64.encodeToString(md.digest(), Base64.DEFAULT));
+			}
+
+		} catch (NameNotFoundException e) {
+
+			e.printStackTrace();
+
+		} catch (NoSuchAlgorithmException ex) {
+
+			ex.printStackTrace();
+
+		}
+		mSharedPreferences = getPreferences(MODE_PRIVATE);
+		String access_token = mSharedPreferences
+				.getString("access_token", null);
+		long expires = mSharedPreferences.getLong("access_expires", 0);
+		if (access_token != null) {
+			mFacebook.setAccessToken(access_token);
+			postToWall(link);
+		}
+
+		if (expires != 0) {
+			mFacebook.setAccessExpires(expires);
+		}
+
+		if (!mFacebook.isSessionValid()) {
+			mFacebook.authorize(this,
+					new String[] { "email", "publish_stream" },
+					new DialogListener() {
+
+						@Override
+						public void onFacebookError(FacebookError e) {
+						}
+
+						@Override
+						public void onError(DialogError e) {
+						}
+
+						@Override
+						public void onComplete(Bundle values) {
+							SharedPreferences.Editor editor = mSharedPreferences
+									.edit();
+							editor.putString("access_token",
+									mFacebook.getAccessToken());
+							editor.putLong("access_expires",
+									mFacebook.getAccessExpires());
+							editor.commit();
+
+							postToWall(link);
+						}
+
+						@Override
+						public void onCancel() {
+						}
+					});
+		}
+	}
+
+	public void getAccessToken() {
+		String access_token = mFacebook.getAccessToken();
+		Toast.makeText(getApplicationContext(),
+				"Access Token: " + access_token, Toast.LENGTH_LONG).show();
+	}
+
+	public void postToWall(String link) {
+		Bundle parameters = new Bundle();
+		parameters.putString("link", link);
+		mFacebook.dialog(this, "feed", parameters, new DialogListener() {
+
+			@Override
+			public void onFacebookError(FacebookError e) {
+			}
+
+			@Override
+			public void onError(DialogError e) {
+			}
+
+			@Override
+			public void onComplete(Bundle values) {
+				Toast.makeText(HistoryActivity.this,
+						"Commment has been posted in your wall!",
+						Toast.LENGTH_SHORT).show();
+			}
+
+			@Override
+			public void onCancel() {
+			}
+		});
+	}
+
+	protected void sendSMS(String link) {
+		Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+		smsIntent.putExtra("sms_body", link);
+		smsIntent.setType("vnd.android-dir/mms-sms");
+
+		try {
+			startActivity(smsIntent);
+			// finish();
+		} catch (Exception e) {
+			Toast.makeText(this, "Please insert your simcard.",
+					Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	protected void sendMail(String link) {
+		Intent emailIntent = new Intent(Intent.ACTION_SEND);
+		emailIntent.setType("message/rfc822");
+		emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Follow this link");
+		emailIntent.putExtra(Intent.EXTRA_TEXT, link);
+		try {
+			startActivity(Intent.createChooser(emailIntent,
+					"Choose an Email client:"));
+		} catch (android.content.ActivityNotFoundException ex) {
+			Toast.makeText(this, "There are no email clients installed.",
+					Toast.LENGTH_SHORT).show();
 		}
 	}
 }
