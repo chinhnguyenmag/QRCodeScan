@@ -34,6 +34,10 @@ import com.magrabbit.qrcodescan.listener.MenuSlidingClickListener;
 import com.magrabbit.qrcodescan.model.AppPreferences;
 import com.magrabbit.qrcodescan.utils.SocialUtil;
 
+/**
+ * @author vule
+ *
+ */
 public class SettingActivity extends Activity implements
 		MenuSlidingClickListener, OnSwitchChangeListener, OnClickListener {
 
