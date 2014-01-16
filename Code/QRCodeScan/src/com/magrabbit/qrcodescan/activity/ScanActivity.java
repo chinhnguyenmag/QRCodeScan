@@ -22,6 +22,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.magrabbit.qrcodescan.R;
 import com.magrabbit.qrcodescan.control.DatabaseHandler;
@@ -50,6 +52,8 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	private SlidingMenuCustom mSlidingMenu;
 	// Save scanned QRCode into local database by SQLite
 	private DatabaseHandler mDataHandler;
+	private TextView mTvTitle;
+	private ImageButton mBtRight;
 
 	static {
 		System.loadLibrary("iconv");
@@ -62,11 +66,15 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_scan);
+		mTvTitle = (TextView) findViewById(R.id.header_tv_title);
+		mBtRight = (ImageButton) findViewById(R.id.header_bt_right);
+		mTvTitle.setText(R.string.header_title_scan);
+		mBtRight.setVisibility(View.GONE);
 
 		mPreference = new AppPreferences(ScanActivity.this);
-		
+
 		mDataHandler = new DatabaseHandler(this);
-		
+
 		mFrameCamera = (FrameLayout) findViewById(R.id.activity_scan_camera);
 		mSlidingMenu = new SlidingMenuCustom(this, this);
 		if (!isCameraAvailable()) {
@@ -173,10 +181,10 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 				if (!TextUtils.isEmpty(symData)) {
 					// Save into Database
 					Format formatter = new SimpleDateFormat("EEE, MMM dd yyyy");
-					
+
 					String date = formatter.format(new Date());
 					mDataHandler.addQRCode(new QRCode(date, symData));
-					
+
 					// Get the QR Code after scanning and put it to Browser for
 					// searching on WebSite
 
@@ -199,7 +207,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 						// Stop scanning
 						mCamera.cancelAutoFocus();
 						mCamera.setPreviewCallback(null);
-						
+
 						DialogConfirm dialog = new DialogConfirm(
 								ScanActivity.this,
 								android.R.drawable.ic_dialog_alert,

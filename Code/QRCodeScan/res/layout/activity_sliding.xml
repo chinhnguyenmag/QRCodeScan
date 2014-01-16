@@ -7,35 +7,56 @@
     android:orientation="vertical"
     android:padding="20dp" >
 
-    <Button
-        android:id="@+id/activity_sliding_bt_scanner"
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginBottom="20dp"
-        android:layout_weight="1"
-        android:text="Scanner" />
+        android:layout_height="wrap_content"
+        android:layout_weight="1" >
 
-    <Button
-        android:id="@+id/activity_sliding_bt_history"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginBottom="20dp"
-        android:layout_weight="1"
-        android:text="History" />
+        <Button
+            android:id="@+id/activity_sliding_bt_scanner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/ic_bt_scan" />
+    </RelativeLayout>
 
-    <Button
-        android:id="@+id/activity_sliding_bt_setting"
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginBottom="20dp"
-        android:layout_weight="1"
-        android:text="Setting" />
+        android:layout_height="wrap_content"
+        android:layout_weight="1" >
 
-    <Button
-        android:id="@+id/activity_sliding_bt_about"
+        <Button
+            android:id="@+id/activity_sliding_bt_history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/ic_bt_history" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="About" />
+        android:layout_height="wrap_content"
+        android:layout_weight="1" >
+
+        <Button
+            android:id="@+id/activity_sliding_bt_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/ic_bt_settings" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" >
+
+        <Button
+            android:id="@+id/activity_sliding_bt_about"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/ic_bt_about" />
+    </RelativeLayout>
 
 </LinearLayout>

@@ -87,6 +87,5 @@ public class SlidingMenuCustom {
 		menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 	}
 	public void setTouchModeAboveCustom(){
-		menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_CUSTOM);
 	}
 }

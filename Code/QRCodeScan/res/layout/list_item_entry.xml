@@ -18,7 +18,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Delete" />
-        
     </LinearLayout>
 
     <RelativeLayout
@@ -52,9 +51,11 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_toLeftOf="@id/list_item_entry_arrow"
             android:layout_toRightOf="@id/list_item_entry_icon"
-            android:ellipsize="marquee"
+            android:ellipsize="end"
             android:fadingEdge="horizontal"
             android:gravity="center"
             android:singleLine="true"

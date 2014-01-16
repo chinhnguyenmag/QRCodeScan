@@ -15,31 +15,9 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="60dp"
-                android:background="@color/Orange" >
-
-                <ImageButton
-                    android:id="@+id/setting_ib_menu"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
-                    android:background="@drawable/ic_menu"
-                    android:contentDescription="@string/common_imagebutton_description"
-                    android:onClick="onClick_Menu" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="5dp"
-                    android:gravity="center"
-                    android:text="@string/setting"
-                    android:textColor="@color/White"
-                    android:textSize="20sp" />
-            </LinearLayout>
+            <include
+                android:id="@+id/activity_setting_title"
+                layout="@layout/header" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -56,13 +34,15 @@
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:padding="5dp" >
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
                     android:layout_weight="1"
                     android:gravity="left"
                     android:text="@string/sound" />
@@ -83,13 +63,15 @@
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:padding="5dp" >
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
                     android:layout_weight="1"
                     android:gravity="left"
                     android:text="@string/auto_open_url" />
@@ -112,14 +94,14 @@
                 android:id="@+id/setting_ll_url_profile"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp" >
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:padding="5dp" >
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
                     android:gravity="left"
                     android:text="@string/url_profile" />
 
@@ -143,16 +125,16 @@
                 android:id="@+id/setting_ll_auto_close_by_time"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:onClick="onClick_AutoClose"
                 android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp" >
+                android:padding="5dp" >
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
                     android:gravity="left"
                     android:text="@string/auto_close" />
 
@@ -170,7 +152,6 @@
                     android:id="@+id/settings_ib_auto_close"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:layout_marginRight="20dp"
                     android:background="@drawable/ic_next"
                     android:contentDescription="@string/common_imagebutton_description"
                     android:onClick="onClick_AutoClose" />
@@ -223,9 +204,9 @@
                     android:id="@+id/settings_ib_share_message"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:layout_gravity="center_vertical"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginRight="20dp"
                     android:background="@drawable/ic_next"
                     android:contentDescription="@string/common_imagebutton_description" />
@@ -236,8 +217,8 @@
                 android:layout_height="2dp"
                 android:layout_marginLeft="20dp"
                 android:background="@color/background_gray" />
-            
-             <RelativeLayout
+
+            <RelativeLayout
                 android:id="@+id/setting_ll_social_mail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -270,7 +251,7 @@
                 <ImageButton
                     android:id="@+id/settings_ib_share_mail"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
@@ -285,8 +266,8 @@
                 android:layout_height="2dp"
                 android:layout_marginLeft="20dp"
                 android:background="@color/background_gray" />
-            
-             <RelativeLayout
+
+            <RelativeLayout
                 android:id="@+id/setting_ll_social_twitter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -320,9 +301,9 @@
                     android:id="@+id/settings_ib_share_twitter"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:layout_gravity="center_vertical"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginRight="20dp"
                     android:background="@drawable/ic_next"
                     android:contentDescription="@string/common_imagebutton_description" />
@@ -333,8 +314,8 @@
                 android:layout_height="2dp"
                 android:layout_marginLeft="20dp"
                 android:background="@color/background_gray" />
-            
-             <RelativeLayout
+
+            <RelativeLayout
                 android:id="@+id/setting_ll_social_facebook"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -368,9 +349,9 @@
                     android:id="@+id/settings_ib_share_facebook"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:layout_gravity="center_vertical"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginRight="20dp"
                     android:background="@drawable/ic_next"
                     android:contentDescription="@string/common_imagebutton_description" />
