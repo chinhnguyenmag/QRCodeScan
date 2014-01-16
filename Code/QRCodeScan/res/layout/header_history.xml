@@ -25,6 +25,8 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:text="Clear"
+        android:clickable="true"
+        android:onClick="onClick_ClearAll"
         android:textColor="@color/White" />
 
 </RelativeLayout>

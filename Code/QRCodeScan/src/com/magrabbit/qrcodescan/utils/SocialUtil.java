@@ -56,7 +56,13 @@ public class SocialUtil {
 	public static final String TWITTER_REQUEST_URL = "https://api.twitter.com/oauth/request_token";
 
 	/* Facebook Constans */
-	public static final String FACEBOOK_APPID = "421493571306328";
+	
+	/**
+	 * This is vu's facebook appid
+	 */
+	public static final String FACEBOOK_APPID = "476007965837161";
+	
+	
 	public static final String FACEBOOK_SECRET_APPID = "d39c6c15302f553251f9949c40b0ea21";
 	public static final String FACEBOOK_ACCESS_TOKEN = "facebook_access_token";
 	public static final String FACEBOOK_EXPIRES = "facebook_expires_in";
