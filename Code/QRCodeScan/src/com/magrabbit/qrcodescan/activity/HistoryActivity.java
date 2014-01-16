@@ -1,6 +1,11 @@
 package com.magrabbit.qrcodescan.activity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
@@ -16,6 +21,8 @@ import com.magrabbit.qrcodescan.R;
 import com.magrabbit.qrcodescan.adapter.HistoryAdapter;
 import com.magrabbit.qrcodescan.adapter.HistoryAdapter.HistoryAdapter_Process;
 import com.magrabbit.qrcodescan.control.DatabaseHandler;
+import com.magrabbit.qrcodescan.customview.DialogConfirm;
+import com.magrabbit.qrcodescan.customview.DialogConfirm.ProcessDialogConfirm;
 import com.magrabbit.qrcodescan.customview.SlidingMenuCustom;
 import com.magrabbit.qrcodescan.listener.MenuSlidingClickListener;
 import com.magrabbit.qrcodescan.model.HistoryItem;
@@ -59,6 +66,28 @@ public class HistoryActivity extends ParentActivity implements
 		mDataHandler = new DatabaseHandler(this);
 		mListQRCodes = new ArrayList<QRCode>();
 		mListQRCodes.addAll(mDataHandler.getAllQRCodes());
+		Collections.sort(mListQRCodes, new Comparator<QRCode>() {
+
+			@Override
+			public int compare(QRCode lhs, QRCode rhs) {
+				SimpleDateFormat form = new SimpleDateFormat("EEE, MMM dd yyyy");
+
+				Date d1 = null;
+				Date d2 = null;
+				try {
+					d1 = form.parse(lhs.getDate());
+					d2 = form.parse(rhs.getDate());
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				if (d1.compareTo(d2) > 0) {
+					return -1;
+				} else if (d1.compareTo(d2) < 0) {
+					return 1;
+				} else
+					return 0;
+			}
+		});
 		// add the first section and item into list view
 		if (mListQRCodes.size() != 0) {
 			items.add(new HistorySectionItem(mListQRCodes.get(0).getDate()));
@@ -82,12 +111,35 @@ public class HistoryActivity extends ParentActivity implements
 				new HistoryAdapter_Process() {
 
 					@Override
-					public void delete_item(int position) {
-						// delete from database
-						mDataHandler.deleteQRCode(mListQRCodes.get(position));
-						items.remove(position);
-						mAdapter.notifyDataSetChanged();
-						mSwipeListView.setAdapter(mAdapter);
+					public void delete_item(final int position) {
+						DialogConfirm dialog = new DialogConfirm(
+								HistoryActivity.this,
+								android.R.drawable.ic_dialog_alert,
+								HistoryActivity.this
+										.getString(R.string.activity_history_delete_history_title),
+								HistoryActivity.this
+										.getString(R.string.activity_history_delete_history_confirm),
+								true, new ProcessDialogConfirm() {
+
+									@Override
+									public void click_Ok() {
+
+										// delete from database
+										mDataHandler.deleteQRCode(mListQRCodes
+												.get(position));
+										items.remove(position);
+										mAdapter.notifyDataSetChanged();
+										mSwipeListView.setAdapter(mAdapter);
+
+									}
+
+									@Override
+									public void click_Cancel() {
+
+									}
+								});
+						dialog.show();
+
 					}
 
 					@Override
@@ -262,13 +314,34 @@ public class HistoryActivity extends ParentActivity implements
 	}
 
 	public void onClick_ClearAll(View v) {
-		// delete all QR Code from Database
-		for (QRCode code : mListQRCodes) {
-			mDataHandler.deleteQRCode(code);
-		}
-		items.clear();
-		mAdapter.notifyDataSetChanged();
-		mSwipeListView.setAdapter(mAdapter);
+		DialogConfirm dialog = new DialogConfirm(
+				HistoryActivity.this,
+				android.R.drawable.ic_dialog_alert,
+				HistoryActivity.this
+						.getString(R.string.activity_history_delete_all_history_title),
+				HistoryActivity.this
+						.getString(R.string.activity_history_delete_all_history_confirm),
+				true, new ProcessDialogConfirm() {
+
+					@Override
+					public void click_Ok() {
+
+						// delete all QR Code from Database
+						for (QRCode code : mListQRCodes) {
+							mDataHandler.deleteQRCode(code);
+						}
+						items.clear();
+						mAdapter.notifyDataSetChanged();
+						mSwipeListView.setAdapter(mAdapter);
+
+					}
+
+					@Override
+					public void click_Cancel() {
+
+					}
+				});
+		dialog.show();
 
 	}
 
