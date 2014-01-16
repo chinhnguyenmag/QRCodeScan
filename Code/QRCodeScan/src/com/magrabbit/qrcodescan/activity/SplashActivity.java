@@ -16,7 +16,7 @@ public class SplashActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_splash);
 		Message msg = new Message();
 		msg.what = STOPSPLASH;
 		try {

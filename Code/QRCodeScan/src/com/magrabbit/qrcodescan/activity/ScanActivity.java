@@ -28,6 +28,7 @@ import android.widget.TextView;
 import com.magrabbit.qrcodescan.R;
 import com.magrabbit.qrcodescan.control.DatabaseHandler;
 import com.magrabbit.qrcodescan.customview.CameraPreview;
+import com.magrabbit.qrcodescan.customview.CameraPreviewNew;
 import com.magrabbit.qrcodescan.customview.DialogConfirm;
 import com.magrabbit.qrcodescan.customview.DialogConfirm.ProcessDialogConfirm;
 import com.magrabbit.qrcodescan.customview.SlidingMenuCustom;
@@ -90,6 +91,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 
 		// Create a RelativeLayout container that will hold a SurfaceView,
 		// and set it as the content of our activity.
+		
 		mPreview = new CameraPreview(this, this, autoFocusCB);
 		mFrameCamera.addView(mPreview);
 	}
