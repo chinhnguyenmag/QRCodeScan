@@ -224,7 +224,7 @@ public class Utils {
 	 */
 	public static String exchangeRateGetExtra(float value) {
 		String valueString = "";
-		if (value <= 1.5)
+		if ((value <= 1.5) && (value > 0))
 			valueString = "A+";
 		else if (value <= 2.5)
 			valueString = "A";

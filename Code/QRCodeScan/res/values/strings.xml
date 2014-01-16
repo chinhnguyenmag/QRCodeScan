@@ -32,18 +32,18 @@
     <string name="cancel">Cancel</string>
 
     <!-- EverNote -->
-    <string name="label_select_notebook_button">Select Notebook</string>
-    <string name="title">Note Title</string>
-    <string name="content">Note Content</string>
-    <string name="error_listing_notebooks">Error listing notebooks</string>
-    <string name="error_creating_notestore">Error creating notestore</string>
-    <string name="error_saving_note">Error saving note</string>
-    <string name="error_listing_notes">Error listing note</string>
-    <string name="empty_content_error">Note title and content cannot be empty</string>
-    <string name="note_saved">Note saved to Evernote</string>
+    <string name="activity_create_evernote_btn_select_notebook">Select Notebook</string>
+    <string name="activity_create_evernote_title">Note Title</string>
+    <string name="activity_create_evernote_content">Note Content</string>
+    <string name="activity_create_evernote_error_listing_notebooks">Error listing notebooks</string>
+    <string name="activity_create_evernote_error_creating_notestore">Error creating notestore</string>
+    <string name="activity_create_evernote_error_saving_note">Error saving note</string>
+    <string name="activity_create_evernote_error_listing_notes">Error listing note</string>
+    <string name="activity_create_evernote_empty_content_error">Note title and content cannot be empty</string>
+    <string name="activity_create_evernote_note_saved">Note saved to Evernote</string>
+    
 
     <drawable name="red_drawable">#CCAA1883</drawable>
-
     <!-- Scan Activity -->
     <string name="activity_scan_open_url_confirm">Would you like to browse scanned result?</string>
 
