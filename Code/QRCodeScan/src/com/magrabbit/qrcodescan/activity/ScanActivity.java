@@ -304,17 +304,20 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	public void onHistoryClickListener() {
 		startActivity(new Intent(ScanActivity.this, HistoryActivity.class));
 		finish();
+		overridePendingTransition(0,0);
 	}
 
 	@Override
 	public void onAboutClickListener() {
 		startActivity(new Intent(this, AboutActivity.class));
 		finish();
+		overridePendingTransition(0,0);
 	}
 
 	@Override
 	public void onSettingClickListener() {
 		startActivity(new Intent(ScanActivity.this, SettingActivity.class));
 		finish();
+		overridePendingTransition(0,0);
 	}
 }

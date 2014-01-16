@@ -203,6 +203,7 @@ public class HistoryActivity extends Activity implements
 	public void onScannerClickListener() {
 		startActivity(new Intent(this, ScanActivity.class));
 		finish();
+		overridePendingTransition(0,0);
 	}
 
 	@Override
@@ -215,7 +216,7 @@ public class HistoryActivity extends Activity implements
 	public void onAboutClickListener() {
 		startActivity(new Intent(this, AboutActivity.class));
 		finish();
-
+		overridePendingTransition(0,0);
 	}
 
 	@Override
@@ -223,6 +224,7 @@ public class HistoryActivity extends Activity implements
 		startActivity(new Intent(this, SettingActivity.class));
 		overridePendingTransition(0, 0);
 		finish();
+		overridePendingTransition(0,0);
 	}
 
 	public void onClick_Right(View v) {
