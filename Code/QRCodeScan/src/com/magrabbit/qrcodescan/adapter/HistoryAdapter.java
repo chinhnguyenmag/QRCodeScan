@@ -91,7 +91,8 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 
 								@Override
 								public void onClick(View v) {
-									mProcess.click_evernote();
+									mProcess.click_evernote(position
+											- calculateNumberSectionBefore(position));
 
 								}
 							});
@@ -100,7 +101,8 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 
 						@Override
 						public void onClick(View v) {
-							mProcess.click_sms();
+							mProcess.click_sms(position
+									- calculateNumberSectionBefore(position));
 						}
 					});
 
@@ -108,7 +110,8 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 
 						@Override
 						public void onClick(View v) {
-							mProcess.click_email();
+							mProcess.click_email(position
+									- calculateNumberSectionBefore(position));
 						}
 					});
 
@@ -117,7 +120,8 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 
 								@Override
 								public void onClick(View v) {
-									mProcess.click_twitter();
+									mProcess.click_twitter(position
+											- calculateNumberSectionBefore(position));
 								}
 							});
 
@@ -126,7 +130,8 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 
 								@Override
 								public void onClick(View v) {
-									mProcess.click_facebook();
+									mProcess.click_facebook(position
+											- calculateNumberSectionBefore(position));
 								}
 							});
 				}
@@ -163,15 +168,15 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 	public abstract static class HistoryAdapter_Process {
 		public abstract void delete_item(int position);
 
-		public abstract void click_evernote();
+		public abstract void click_evernote(int position);
 
-		public abstract void click_facebook();
+		public abstract void click_facebook(int position);
 
-		public abstract void click_twitter();
+		public abstract void click_twitter(int position);
 
-		public abstract void click_sms();
+		public abstract void click_sms(int position);
 
-		public abstract void click_email();
+		public abstract void click_email(int position);
 	}
 
 }

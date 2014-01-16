@@ -91,30 +91,30 @@ public class HistoryActivity extends ParentActivity implements
 					}
 
 					@Override
-					public void click_evernote() {
+					public void click_evernote(int position) {
 						addEverNote(null);
 					}
 
 					@Override
-					public void click_facebook() {
+					public void click_facebook(int position) {
 						// TODO Auto-generated method stub
 
 					}
 
 					@Override
-					public void click_twitter() {
+					public void click_twitter(int position) {
 						// TODO Auto-generated method stub
 
 					}
 
 					@Override
-					public void click_sms() {
+					public void click_sms(int position) {
 						// TODO Auto-generated method stub
 
 					}
 
 					@Override
-					public void click_email() {
+					public void click_email(int position) {
 						// TODO Auto-generated method stub
 
 					}
