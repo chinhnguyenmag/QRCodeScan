@@ -60,7 +60,7 @@ public class SocialUtil {
 	/**
 	 * This is vu's facebook appid
 	 */
-	public static final String FACEBOOK_APPID = "1429627150606661";
+	public static final String FACEBOOK_APPID = "476007965837161";
 	
 	
 	public static final String FACEBOOK_SECRET_APPID = "d39c6c15302f553251f9949c40b0ea21";

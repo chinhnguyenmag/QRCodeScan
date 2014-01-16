@@ -1,11 +1,18 @@
 package com.magrabbit.qrcodescan.activity;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.Signature;
 import android.os.Bundle;
-import android.telephony.SmsManager;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
@@ -180,6 +187,29 @@ public class SettingActivity extends Activity implements
 	}
 
 	public void loginToFacebook() {
+		
+		try  {
+
+		      PackageInfo info = getPackageManager().
+		           getPackageInfo(this.getPackageName(), PackageManager.GET_SIGNATURES);
+
+		      for (Signature signature : info.signatures) {
+
+		          MessageDigest md = MessageDigest.getInstance("SHA");
+		          md.update(signature.toByteArray());
+		          Log.d("====Hash Key===",Base64.encodeToString(md.digest(), 
+		                   Base64.DEFAULT));
+		      }
+
+		  } catch (NameNotFoundException e) {
+
+		      e.printStackTrace();
+
+		  } catch (NoSuchAlgorithmException ex) {
+
+		      ex.printStackTrace();
+
+		  }
 		mSharedPreferences = getPreferences(MODE_PRIVATE);
 		String access_token = mSharedPreferences
 				.getString("access_token", null);
@@ -260,7 +290,7 @@ public class SettingActivity extends Activity implements
 
 	protected void sendSMS() {
 		Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-		smsIntent.putExtra("sms_body", "lucky");
+		smsIntent.putExtra("sms_body", "Please follow this link...");
 		smsIntent.setType("vnd.android-dir/mms-sms");
 
 		try {
