@@ -23,6 +23,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.magrabbit.qrcodescan.R;
@@ -46,7 +47,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	private ImageScanner mScanner;
 	private Handler mAutoFocusHandler;
 	private boolean mPreviewing = true;
-	private FrameLayout mFrameCamera;
+	private RelativeLayout mFrameCamera;
 	// Application Preference
 	private AppPreferences mPreference;
 	// For Sliding Menu
@@ -63,9 +64,6 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// Hide the window title.
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_scan);
 		mTvTitle = (TextView) findViewById(R.id.header_tv_title);
 		mBtRight = (ImageButton) findViewById(R.id.header_bt_right);
@@ -76,7 +74,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 
 		mDataHandler = new DatabaseHandler(this);
 
-		mFrameCamera = (FrameLayout) findViewById(R.id.activity_scan_camera);
+		mFrameCamera = (RelativeLayout) findViewById(R.id.activity_scan_camera);
 		mSlidingMenu = new SlidingMenuCustom(this, this);
 		if (!isCameraAvailable()) {
 			// Cancel request if there is no rear-facing camera.

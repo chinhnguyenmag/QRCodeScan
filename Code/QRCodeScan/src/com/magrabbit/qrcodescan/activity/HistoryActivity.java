@@ -5,11 +5,13 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
 import com.fortysevendeg.swipelistview.SwipeListView;
@@ -54,6 +56,23 @@ public class HistoryActivity extends Activity implements
 		mBtRight = (ImageButton) findViewById(R.id.header_bt_right);
 		mTvTitle.setText(R.string.header_title_history);
 
+		// Determine screen size
+		if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE) {
+			Toast.makeText(this, "Large screen", Toast.LENGTH_LONG).show();
+
+		} else if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_NORMAL) {
+			Toast.makeText(this, "Normal sized screen", Toast.LENGTH_LONG)
+					.show();
+			swipeOffsetLeft=250;
+		} else if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_SMALL) {
+			Toast.makeText(this, "Small sized screen", Toast.LENGTH_LONG)
+					.show();
+		} else {
+			Toast.makeText(this,
+					"Screen size is neither large, normal or small",
+					Toast.LENGTH_LONG).show();
+		}
+
 		// inflate layout for list view
 		mSwipeListView = (SwipeListView) findViewById(R.id.activity_history_lv);
 		mMenu = new SlidingMenuCustom(this, this);
@@ -67,7 +86,7 @@ public class HistoryActivity extends Activity implements
 		if (mListQRCodes.size() != 0) {
 			items.add(new HistorySectionItem(mListQRCodes.get(0).getDate()));
 			items.add(new HistoryItem(mListQRCodes.get(0).getUrl()));
-			
+
 			for (int i = 1; i < mListQRCodes.size(); i++) {
 				if (!mListQRCodes.get(i).getDate()
 						.equals(mListQRCodes.get(i - 1).getDate())) {
@@ -203,7 +222,7 @@ public class HistoryActivity extends Activity implements
 	public void onScannerClickListener() {
 		startActivity(new Intent(this, ScanActivity.class));
 		finish();
-		overridePendingTransition(0,0);
+		overridePendingTransition(0, 0);
 	}
 
 	@Override
@@ -216,7 +235,7 @@ public class HistoryActivity extends Activity implements
 	public void onAboutClickListener() {
 		startActivity(new Intent(this, AboutActivity.class));
 		finish();
-		overridePendingTransition(0,0);
+		overridePendingTransition(0, 0);
 	}
 
 	@Override
@@ -224,7 +243,7 @@ public class HistoryActivity extends Activity implements
 		startActivity(new Intent(this, SettingActivity.class));
 		overridePendingTransition(0, 0);
 		finish();
-		overridePendingTransition(0,0);
+		overridePendingTransition(0, 0);
 	}
 
 	public void onClick_Right(View v) {

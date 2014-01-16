@@ -17,6 +17,7 @@ limitations under the License.
 
 package com.magrabbit.qrcodescan.control;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -165,6 +166,7 @@ public class SwitchView extends View {
 		this.mSwitchChangeListener = mSwitchChangeListener;
 	}
 
+	@SuppressLint("WrongCall")
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
@@ -317,9 +319,17 @@ public class SwitchView extends View {
 		case MotionEvent.ACTION_UP:
 			if (isTouch) {
 				if (X >= (getWidth() - getPaddingLeft() - getPaddingRight()) / 2) {
-					isOn = true;
+					if(isOn){
+						isOn = false;
+					}else{
+						isOn = true;
+					}
 				} else {
-					isOn = false;
+					if(isOn){
+						isOn = false;
+					}else{
+						isOn = true;
+					}
 				}
 				if (mSwitchChangeListener != null) {
 					mSwitchChangeListener
