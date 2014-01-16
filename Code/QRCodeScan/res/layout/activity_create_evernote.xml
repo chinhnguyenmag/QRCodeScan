@@ -13,7 +13,7 @@
         android:layout_marginRight="10dip"
         android:layout_marginTop="10dip"
         android:singleLine="true"
-        android:hint="@string/title"
+        android:hint="@string/activity_create_evernote_title"
         />
 
     <EditText
@@ -23,7 +23,7 @@
         android:layout_weight="1"
         android:layout_margin="10dip"
         android:gravity="top"
-        android:hint="@string/content"
+        android:hint="@string/activity_create_evernote_content"
         />
 
     <LinearLayout android:id="@+id/image_button_wrapper"
@@ -38,7 +38,7 @@
             android:id="@+id/select_button"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
-            android:text="@string/label_select_notebook_button"
+            android:text="@string/activity_create_evernote_btn_select_notebook"
             android:onClick="selectNotebook"
             android:layout_weight="1"/>
 

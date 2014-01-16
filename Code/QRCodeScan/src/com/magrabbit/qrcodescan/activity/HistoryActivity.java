@@ -64,19 +64,23 @@ public class HistoryActivity extends Activity implements
 		mListQRCodes = new ArrayList<QRCode>();
 		mListQRCodes.addAll(mDataHandler.getAllQRCodes());
 		// add the first section and item into list view
-		items.add(new HistorySectionItem(mListQRCodes.get(0).getDate()));
-		items.add(new HistoryItem(mListQRCodes.get(0).getUrl()));
-
-		for (int i = 1; i < mListQRCodes.size(); i++) {
-			if (!mListQRCodes.get(i).getDate()
-					.equals(mListQRCodes.get(i - 1).getDate())) {
-				// section
-				items.add(new HistorySectionItem(mListQRCodes.get(i).getDate()));
-				items.add(new HistoryItem(mListQRCodes.get(i).getUrl()));
-			} else {
-				// item
-				items.add(new HistoryItem(mListQRCodes.get(i).getUrl()));
+		if (mListQRCodes.size() != 0) {
+			items.add(new HistorySectionItem(mListQRCodes.get(0).getDate()));
+			items.add(new HistoryItem(mListQRCodes.get(0).getUrl()));
+			
+			for (int i = 1; i < mListQRCodes.size(); i++) {
+				if (!mListQRCodes.get(i).getDate()
+						.equals(mListQRCodes.get(i - 1).getDate())) {
+					// section
+					items.add(new HistorySectionItem(mListQRCodes.get(i)
+							.getDate()));
+					items.add(new HistoryItem(mListQRCodes.get(i).getUrl()));
+				} else {
+					// item
+					items.add(new HistoryItem(mListQRCodes.get(i).getUrl()));
+				}
 			}
+
 		}
 
 		mAdapter = new HistoryAdapter(this, items);

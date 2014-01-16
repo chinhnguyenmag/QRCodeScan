@@ -258,6 +258,7 @@
                     android:layout_marginRight="20dp"
                     android:background="@drawable/ic_next"
                     android:contentDescription="@string/common_imagebutton_description" />
+
             </RelativeLayout>
 
             <View
