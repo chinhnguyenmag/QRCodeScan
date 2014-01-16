@@ -3,20 +3,17 @@ package com.magrabbit.qrcodescan.activity;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
-import com.evernote.client.android.EvernoteSession;
 import com.magrabbit.qrcodescan.R;
 import com.magrabbit.qrcodescan.model.AppPreferences;
 import com.magrabbit.qrcodescan.utils.StringExtraUtils;
 
-public class BrowserActivity extends ParentActivity {
+public class BrowserActivity extends BaseActivity {
 
 	private String mScanResult;
 	private WebView mWebView;
@@ -70,31 +67,6 @@ public class BrowserActivity extends ParentActivity {
 			}
 		});
 
-	}
-
-	/**
-	 * @param v
-	 * @Description Processing login and adding a new EverNote
-	 */
-	// public void addEverNote(View v) {
-	// mEvernoteSession.authenticate(BrowserActivity.this);
-	// }
-
-	/**
-	 * Called when the control returns from an activity that we launched.
-	 */
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		switch (requestCode) {
-		// Add a new EverNote when OAuth activity returns result
-		case EvernoteSession.REQUEST_CODE_OAUTH:
-			if (resultCode == Activity.RESULT_OK) {
-				startActivity(new Intent(BrowserActivity.this,
-						CreateEverNote.class));
-			}
-			break;
-		}
 	}
 
 	public void onClick_Back(View v) {

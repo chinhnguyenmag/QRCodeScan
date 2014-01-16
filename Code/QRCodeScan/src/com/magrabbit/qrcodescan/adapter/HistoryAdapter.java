@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.magrabbit.qrcodescan.R;
@@ -24,12 +23,15 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 	private Context context;
 	private List<Item> items;
 	private LayoutInflater vi;
+	private HistoryAdapter_Process mProcess;
 
-	public HistoryAdapter(Context context, ArrayList<Item> items) {
+	public HistoryAdapter(Context context, ArrayList<Item> items,
+			HistoryAdapter_Process process) {
 		super(context, 0, items);
 		this.context = context;
 		this.items = new ArrayList<Item>();
 		this.items.addAll(items);
+		this.mProcess = process;
 		vi = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
@@ -80,10 +82,8 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 
 						@Override
 						public void onClick(View v) {
-							// items.remove(position);
-							// notifyDataSetChanged();
-							Toast.makeText(context, "Delete",
-									Toast.LENGTH_SHORT).show();
+							mProcess.delete_item(position
+									- calculateNumberSectionBefore(position));
 						}
 					});
 					holder.mBtnEvernote
@@ -91,7 +91,7 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 
 								@Override
 								public void onClick(View v) {
-									// TODO Auto-generated method stub
+									mProcess.click_evernote();
 
 								}
 							});
@@ -100,8 +100,7 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 
 						@Override
 						public void onClick(View v) {
-							Toast.makeText(context, "Share via SMS",
-									Toast.LENGTH_SHORT).show();
+							mProcess.click_sms();
 						}
 					});
 
@@ -109,8 +108,7 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 
 						@Override
 						public void onClick(View v) {
-							Toast.makeText(context, "Share via Mail",
-									Toast.LENGTH_SHORT).show();
+							mProcess.click_email();
 						}
 					});
 
@@ -119,9 +117,7 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 
 								@Override
 								public void onClick(View v) {
-									Toast.makeText(context,
-											"Share via Twitter",
-											Toast.LENGTH_SHORT).show();
+									mProcess.click_twitter();
 								}
 							});
 
@@ -130,9 +126,7 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 
 								@Override
 								public void onClick(View v) {
-									Toast.makeText(context,
-											"Share via Facebook",
-											Toast.LENGTH_SHORT).show();
+									mProcess.click_facebook();
 								}
 							});
 				}
@@ -146,6 +140,16 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 
 	}
 
+	public int calculateNumberSectionBefore(int current_position) {
+		int numberSection = 0;
+		for (int i = 0; i < current_position; i++) {
+			if (items.get(i).isSection()) {
+				numberSection++;
+			}
+		}
+		return numberSection;
+	}
+
 	private class ViewHolder {
 		Button mBtnDelete;
 		Button mBtnSMS;
@@ -154,6 +158,20 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 		Button mBtnFacebook;
 		Button mBtnEvernote;
 		TextView mTvContent;
+	}
+
+	public abstract static class HistoryAdapter_Process {
+		public abstract void delete_item(int position);
+
+		public abstract void click_evernote();
+
+		public abstract void click_facebook();
+
+		public abstract void click_twitter();
+
+		public abstract void click_sms();
+
+		public abstract void click_email();
 	}
 
 }
