@@ -6,6 +6,6 @@
     <color name="Orange">#e67b1e</color>
      <color name="background_gray">#e3e3e3</color>
     <color name="transparent">@android:color/transparent</color>
-     <color name="color_bt_fc">#1b60a1</color>
-   <color name="color_bt">#3683c2</color>
+     <color name="color_bt_fc">#eb7134</color>
+   <color name="color_bt">#f09037</color>
 </resources>
