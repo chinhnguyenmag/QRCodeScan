@@ -14,6 +14,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.media.MediaPlayer;
@@ -24,7 +25,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.magrabbit.qrcodescan.R;
@@ -68,11 +68,15 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_scan);
+
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
 		mTvTitle = (TextView) findViewById(R.id.header_tv_title);
 		mBtRight = (ImageButton) findViewById(R.id.header_bt_right);
 		mTvTitle.setText(R.string.header_title_scan);
 		mBtRight.setVisibility(View.GONE);
-
+		mSlidingMenu = new SlidingMenuCustom(this, this);
+		
 		mPreference = new AppPreferences(ScanActivity.this);
 
 		mDataHandler = new DatabaseHandler(this);
@@ -100,7 +104,6 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 
 		// Show warning dialog for Invalid URL
 		showInvalidURLDialog(ScanActivity.this);
-		mSlidingMenu = new SlidingMenuCustom(this, this);
 	}
 
 	public void setupScanner() {
