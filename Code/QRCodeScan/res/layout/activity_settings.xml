@@ -96,7 +96,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:padding="5dp" >
+                android:paddingBottom="10dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="10dp" >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -128,8 +131,12 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:onClick="onClick_AutoClose"
+                android:background="@drawable/listview_selector"
                 android:orientation="horizontal"
-                android:padding="5dp" >
+                android:paddingBottom="10dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="10dp" >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -143,6 +150,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
                     android:gravity="right"
@@ -174,6 +182,7 @@
                 android:id="@+id/setting_ll_social_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/listview_selector"
                 android:orientation="horizontal"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp" >
@@ -222,6 +231,7 @@
                 android:id="@+id/setting_ll_social_mail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/listview_selector"
                 android:orientation="horizontal"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp" >
@@ -270,6 +280,7 @@
                 android:id="@+id/setting_ll_social_twitter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/listview_selector"
                 android:orientation="horizontal"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp" >
@@ -318,6 +329,7 @@
                 android:id="@+id/setting_ll_social_facebook"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/listview_selector"
                 android:orientation="horizontal"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp" >
@@ -355,6 +367,12 @@
                     android:background="@drawable/ic_arrow"
                     android:contentDescription="@string/common_imagebutton_description" />
             </RelativeLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="20dp"
+                android:background="@color/background_gray" />
         </LinearLayout>
     </ScrollView>
 
