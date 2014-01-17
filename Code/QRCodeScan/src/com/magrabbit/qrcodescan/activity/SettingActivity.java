@@ -173,8 +173,9 @@ public class SettingActivity extends Activity implements
 		}
 
 		case R.id.setting_ll_social_twitter: {
-			Toast.makeText(this, "Share via Twitter", Toast.LENGTH_SHORT)
-					.show();
+			Intent intent = new Intent(SettingActivity.this,
+					TwitterLoginActivity.class);
+			startActivity(intent);
 			break;
 		}
 

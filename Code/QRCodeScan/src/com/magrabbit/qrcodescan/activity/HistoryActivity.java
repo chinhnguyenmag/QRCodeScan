@@ -60,6 +60,7 @@ public class HistoryActivity extends ParentActivity implements
 	private int mSectionNumber = 0;
 	private Facebook mFacebook = new Facebook(SocialUtil.FACEBOOK_APPID);
 	private SharedPreferences mSharedPreferences;
+	private String mEverNoteContent;
 
 	// =============================================================
 	private int swipeMode = SwipeListView.SWIPE_MODE_BOTH;
@@ -188,6 +189,8 @@ public class HistoryActivity extends ParentActivity implements
 					@Override
 					public void click_evernote(int position) {
 						addEverNote(null);
+						HistoryItem item = (HistoryItem) items.get(position);
+						mEverNoteContent = item.getTitle();
 					}
 
 					@Override
@@ -198,8 +201,9 @@ public class HistoryActivity extends ParentActivity implements
 
 					@Override
 					public void click_twitter(int position) {
-						Toast.makeText(HistoryActivity.this,
-								"Share via Twitter", Toast.LENGTH_SHORT).show();
+						Intent intent = new Intent(HistoryActivity.this,
+								TwitterLoginActivity.class);
+						startActivity(intent);
 					}
 
 					@Override
@@ -423,8 +427,10 @@ public class HistoryActivity extends ParentActivity implements
 		// Add a new EverNote when OAuth activity returns result
 		case EvernoteSession.REQUEST_CODE_OAUTH:
 			if (resultCode == Activity.RESULT_OK) {
-				startActivity(new Intent(HistoryActivity.this,
-						CreateEverNote.class));
+				Intent intent = new Intent(HistoryActivity.this,
+						CreateEverNote.class);
+				intent.putExtra(StringExtraUtils.KEY_HISTORY_ITEM, mEverNoteContent);
+				startActivity(intent);
 			}
 			break;
 		}

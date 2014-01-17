@@ -43,9 +43,6 @@ public class ParentActivity extends Activity {
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// Hide the window title.
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		// Set up the Evernote Singleton Session
 		mEvernoteSession = EvernoteSession.getInstance(this, CONSUMER_KEY,

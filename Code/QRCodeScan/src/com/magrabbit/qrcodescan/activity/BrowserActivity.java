@@ -3,6 +3,7 @@ package com.magrabbit.qrcodescan.activity;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
@@ -73,8 +74,14 @@ public class BrowserActivity extends BaseActivity {
 		finish();
 	}
 
-	public void onClick_Bookmark(View v) {
+	public void onClick_Share(View v) {
 
+		Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+		sharingIntent.setType("text/plain");
+		sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
+				"Share QR Code");
+		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, mScanResult);
+		startActivity(Intent.createChooser(sharingIntent, "Share via"));
 	}
 
 	

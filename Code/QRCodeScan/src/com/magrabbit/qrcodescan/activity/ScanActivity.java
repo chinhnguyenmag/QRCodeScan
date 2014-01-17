@@ -14,6 +14,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.media.MediaPlayer;
@@ -22,12 +23,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.magrabbit.qrcodescan.R;
@@ -51,7 +47,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	private ImageScanner mScanner;
 	private Handler mAutoFocusHandler;
 	private boolean mPreviewing = true;
-	private RelativeLayout mFrameCamera;
+	private FrameLayout mFrameCamera;
 	// Application Preference
 	private AppPreferences mPreference;
 	// For Sliding Menu
@@ -60,6 +56,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	private DatabaseHandler mDataHandler;
 	private TextView mTvTitle;
 	private AlertDialog.Builder alertDialogBuilder;
+	private AlertDialog alertDialog;
 
 	static {
 		System.loadLibrary("iconv");
@@ -69,14 +66,18 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_scan);
+
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
 		mTvTitle = (TextView) findViewById(R.id.header_tv_title);
 		mTvTitle.setText(R.string.header_title_scan);
+		mSlidingMenu = new SlidingMenuCustom(this, this);
 
 		mPreference = new AppPreferences(ScanActivity.this);
 
 		mDataHandler = new DatabaseHandler(this);
 
-		mFrameCamera = (RelativeLayout) findViewById(R.id.activity_scan_camera);
+		mFrameCamera = (FrameLayout) findViewById(R.id.activity_scan_camera);
 
 		if (!isCameraAvailable()) {
 			// Cancel request if there is no rear-facing camera.
@@ -96,7 +97,9 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		mPreview = new CameraPreviewNew(this, this, autoFocusCB);
 
 		mFrameCamera.addView(mPreview);
-		mSlidingMenu = new SlidingMenuCustom(this, this);
+
+		// Show warning dialog for Invalid URL
+		showInvalidURLDialog(ScanActivity.this);
 	}
 
 	public void setupScanner() {
@@ -186,6 +189,13 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 			for (Symbol sym : syms) {
 				final String symData = sym.getData();
 				if (!TextUtils.isEmpty(symData)) {
+					// Check whether to play sound or not
+					if (mPreference.isSound()) {
+						playSound();
+					}
+					// Stop scanning
+					mCamera.cancelAutoFocus();
+					mCamera.setPreviewCallback(null);
 					if (symData.contains("cptr.it/?var=")
 							&& symData.contains("&id=")) {
 						// Save into Database
@@ -199,26 +209,13 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 						// for
 						// searching on WebSite
 
-						// Check whether to play sound or not
-						if (mPreference.isSound()) {
-							playSound();
-						}
-
 						if (mPreference.isOpenUrl()) {
-							// Stop scanning
-							mCamera.cancelAutoFocus();
-							mCamera.setPreviewCallback(null);
-
 							Intent dataIntent = new Intent(ScanActivity.this,
 									BrowserActivity.class);
 							dataIntent.putExtra(
 									StringExtraUtils.KEY_SCAN_RESULT, symData);
 							startActivity(dataIntent);
 						} else {
-							// Stop scanning
-							mCamera.cancelAutoFocus();
-							mCamera.setPreviewCallback(null);
-
 							DialogConfirm dialog = new DialogConfirm(
 									ScanActivity.this,
 									android.R.drawable.ic_dialog_alert,
@@ -253,11 +250,10 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 						break;
 
 					} else {
-						// Show warning dialog for Invalid URL
-						showComingSoonDialog(ScanActivity.this);
-						// Stop scanning
-						mCamera.cancelAutoFocus();
-						mCamera.setPreviewCallback(null);
+						// show it
+						if (!alertDialog.isShowing()) {
+							alertDialog.show();
+						}
 					}
 				}
 			}
@@ -270,7 +266,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 
 	/* INVALID URL DIALOG */
 
-	public void showComingSoonDialog(Context context) {
+	public void showInvalidURLDialog(Context context) {
 		alertDialogBuilder = new AlertDialog.Builder(context);
 
 		// set title
@@ -289,10 +285,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 						startPreviewAgain();
 					}
 				}); // create alert dialog
-		AlertDialog alertDialog = alertDialogBuilder.create();
-
-		// show it
-		alertDialog.show();
+		alertDialog = alertDialogBuilder.create();
 	}
 
 	public void startPreviewAgain() {
@@ -341,6 +334,12 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		super.onDestroy();
 		if (mPreference != null) {
 			mPreference = null;
+		}
+		if (mCamera != null) {
+			mCamera.stopPreview();
+			mCamera.setPreviewCallback(null);
+			mCamera.release();
+			mCamera = null;
 		}
 	}
 
