@@ -111,7 +111,6 @@
                     android:scheme="x-oauthflow-twitter" />
             </intent-filter>
         </activity>
->>>>>>> 92110f85ce6502d26d4fa9e6c070af5df2c61b8a
     </application>
 
 </manifest>
