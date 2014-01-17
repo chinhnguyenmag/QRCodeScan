@@ -40,9 +40,8 @@ public class TwitterLoginActivity extends Activity {
 
 	private static Twitter twitter;
 	private static RequestToken requestToken;
-	private SharedPreferences sharedPrefs;
+	public static SharedPreferences sharedPrefs;
 	private DialogPostToWall mDialogPostToWallTwitter;
-	private boolean mCheckSuccessfully = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +70,7 @@ public class TwitterLoginActivity extends Activity {
 				if (url.contains(Constants.TWITTER_CALLBACK_URL)) {
 					Uri uri = Uri.parse(url);
 					TwitterLoginActivity.this.saveAccessTokenAndFinish(uri);
+					// showTweetDialog();
 					return true;
 				}
 				return false;
@@ -78,7 +78,6 @@ public class TwitterLoginActivity extends Activity {
 
 			@Override
 			public void onPageFinished(WebView view, String url) {
-				// TODO Auto-generated method stub
 				super.onPageFinished(view, url);
 				if (mProgressDialog != null)
 					mProgressDialog.dismiss();
@@ -86,7 +85,6 @@ public class TwitterLoginActivity extends Activity {
 
 			@Override
 			public void onPageStarted(WebView view, String url, Bitmap favicon) {
-				// TODO Auto-generated method stub
 				super.onPageStarted(view, url, favicon);
 
 				if (mProgressDialog != null)
@@ -99,9 +97,7 @@ public class TwitterLoginActivity extends Activity {
 
 	@Override
 	protected void onDestroy() {
-		// TODO Auto-generated method stub
 		super.onDestroy();
-
 		if (mProgressDialog != null)
 			mProgressDialog.dismiss();
 	}
@@ -113,15 +109,19 @@ public class TwitterLoginActivity extends Activity {
 
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
 		super.onResume();
+	}
+
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		finish();
 	}
 
 	private void saveAccessTokenAndFinish(final Uri uri) {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				String verifier = uri
 						.getQueryParameter(Constants.IEXTRA_OAUTH_VERIFIER);
 				try {
@@ -146,27 +146,14 @@ public class TwitterLoginActivity extends Activity {
 					TwitterLoginActivity.this
 							.setResult(TWITTER_LOGIN_RESULT_CODE_FAILURE);
 				}
-				mCheckSuccessfully = true;
 			}
 		}).start();
 
-		if (mCheckSuccessfully) {
-			mDialogPostToWallTwitter = new DialogPostToWall(
-					TwitterLoginActivity.this,
-					new ProcessDialogPostToWallTwitter() {
+		Intent intent = new Intent(TwitterLoginActivity.this,
+				ActivityPostToWall.class);
+		startActivity(intent);
+		finish();
 
-						@Override
-						public void click_Post(String mMessage) {
-							new postToWall().execute(mMessage);
-						}
-
-						@Override
-						public void click_Cancel() {
-
-						}
-					});
-			mDialogPostToWallTwitter.show();
-		}
 	}
 
 	// ====== TWITTER HELPER METHODS ======
@@ -196,6 +183,24 @@ public class TwitterLoginActivity extends Activity {
 		SharedPreferences sharedPrefs = ctx.getSharedPreferences(
 				Constants.PREFERENCE_NAME, Context.MODE_PRIVATE);
 		return sharedPrefs.getString(Constants.PREF_KEY_SECRET, null);
+	}
+
+	public void showTweetDialog() {
+		mDialogPostToWallTwitter = new DialogPostToWall(
+				TwitterLoginActivity.this,
+				new ProcessDialogPostToWallTwitter() {
+
+					@Override
+					public void click_Post(String mMessage) {
+						new postToWall().execute(mMessage);
+					}
+
+					@Override
+					public void click_Cancel() {
+						finish();
+					}
+				});
+		mDialogPostToWallTwitter.show();
 	}
 
 	private void askOAuth() {
@@ -303,8 +308,8 @@ public class TwitterLoginActivity extends Activity {
 				@Override
 				public void run() {
 					Toast.makeText(getApplicationContext(),
-							"Status tweeted successfully", Toast.LENGTH_SHORT)
-							.show();
+							"Message has been posted successfully.",
+							Toast.LENGTH_SHORT).show();
 					finish();
 				}
 			});
