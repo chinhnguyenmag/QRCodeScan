@@ -47,7 +47,6 @@ public class SettingActivity extends Activity implements
 	private AppPreferences mAppPreferences;
 	private TextView mTvTime;
 	private TextView mTvTitle;
-	private ImageButton mBtRight;
 	private RelativeLayout mRlShareFacebook;
 	private RelativeLayout mRlShareSMS;
 	private RelativeLayout mRlShareMail;
@@ -60,9 +59,7 @@ public class SettingActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
 		mTvTitle = (TextView) findViewById(R.id.header_tv_title);
-		mBtRight = (ImageButton) findViewById(R.id.header_bt_right);
 		mTvTitle.setText(R.string.header_title_setting);
-		mBtRight.setVisibility(View.GONE);
 
 		mAppPreferences = new AppPreferences(this);
 		mMenu = new SlidingMenuCustom(this, this);

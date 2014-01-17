@@ -24,7 +24,6 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.magrabbit.qrcodescan.R;
@@ -56,7 +55,6 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	// Save scanned QRCode into local database by SQLite
 	private DatabaseHandler mDataHandler;
 	private TextView mTvTitle;
-	private ImageButton mBtRight;
 	private AlertDialog.Builder alertDialogBuilder;
 	private AlertDialog alertDialog;
 
@@ -72,11 +70,9 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 		mTvTitle = (TextView) findViewById(R.id.header_tv_title);
-		mBtRight = (ImageButton) findViewById(R.id.header_bt_right);
 		mTvTitle.setText(R.string.header_title_scan);
-		mBtRight.setVisibility(View.GONE);
 		mSlidingMenu = new SlidingMenuCustom(this, this);
-		
+
 		mPreference = new AppPreferences(ScanActivity.this);
 
 		mDataHandler = new DatabaseHandler(this);

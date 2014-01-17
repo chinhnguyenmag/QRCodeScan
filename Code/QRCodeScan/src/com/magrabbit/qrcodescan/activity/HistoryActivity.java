@@ -23,6 +23,7 @@ import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.evernote.client.android.EvernoteSession;
@@ -70,11 +71,18 @@ public class HistoryActivity extends ParentActivity implements
 	private float swipeOffsetRight = 100;
 	private int swipeActionLeft = SwipeListView.SWIPE_ACTION_REVEAL;
 	private int swipeActionRight = SwipeListView.SWIPE_ACTION_REVEAL;
+	private TextView mTvTitle;
+	private TextView mTvDelete;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_history);
+
+		mTvTitle = (TextView) findViewById(R.id.header_tv_title);
+		mTvTitle.setText(R.string.header_title_history);
+		mTvDelete = (TextView) findViewById(R.id.header_tv_right);
+		mTvDelete.setVisibility(View.VISIBLE);
 
 		// Determine screen size
 		if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE) {
@@ -351,7 +359,7 @@ public class HistoryActivity extends ParentActivity implements
 		overridePendingTransition(0, 0);
 	}
 
-	public void onClick_ClearAll(View v) {
+	public void onClick_DeleteAll(View v) {
 		DialogConfirm dialog = new DialogConfirm(
 				HistoryActivity.this,
 				android.R.drawable.ic_dialog_alert,

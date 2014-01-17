@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:background="@drawable/ic_top_left"
+                android:background="@drawable/ic_scan_frame1"
                 android:clipChildren="false" />
 
             <ImageView
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:background="@drawable/ic_top_right"
+                android:background="@drawable/ic_scan_frame2"
                 android:clipChildren="false" />
 
             <ImageView
@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
-                android:background="@drawable/ic_bot_left"
+                android:background="@drawable/ic_scan_frame3"
                 android:clipChildren="false" />
 
             <ImageView
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                android:background="@drawable/ic_bot_right"
+                android:background="@drawable/ic_scan_frame4"
                 android:clipChildren="false" />
         </RelativeLayout>
     </RelativeLayout>

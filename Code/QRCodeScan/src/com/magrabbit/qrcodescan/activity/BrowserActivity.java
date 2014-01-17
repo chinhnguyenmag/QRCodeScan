@@ -84,4 +84,5 @@ public class BrowserActivity extends BaseActivity {
 		startActivity(Intent.createChooser(sharingIntent, "Share via"));
 	}
 
+	
 }

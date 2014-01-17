@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:src="@android:drawable/ic_menu_preferences" />
+            android:src="@drawable/ic_qrcode" />
 
         <ImageView
             android:id="@+id/list_item_entry_arrow"
@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_next" />
+            android:src="@drawable/ic_arrow" />
 
         <TextView
             android:id="@+id/list_item_entry_title"
