@@ -22,11 +22,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -51,7 +48,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	private ImageScanner mScanner;
 	private Handler mAutoFocusHandler;
 	private boolean mPreviewing = true;
-	private RelativeLayout mFrameCamera;
+	private FrameLayout mFrameCamera;
 	// Application Preference
 	private AppPreferences mPreference;
 	// For Sliding Menu
@@ -80,8 +77,8 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 
 		mDataHandler = new DatabaseHandler(this);
 
-		mFrameCamera = (RelativeLayout) findViewById(R.id.activity_scan_camera);
-		
+		mFrameCamera = (FrameLayout) findViewById(R.id.activity_scan_camera);
+
 		if (!isCameraAvailable()) {
 			// Cancel request if there is no rear-facing camera.
 			cancelRequest();
@@ -100,7 +97,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		mPreview = new CameraPreviewNew(this, this, autoFocusCB);
 
 		mFrameCamera.addView(mPreview);
-		
+
 		// Show warning dialog for Invalid URL
 		showInvalidURLDialog(ScanActivity.this);
 		mSlidingMenu = new SlidingMenuCustom(this, this);
@@ -339,6 +336,12 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		if (mPreference != null) {
 			mPreference = null;
 		}
+		if (mCamera != null) {
+			mCamera.stopPreview();
+			mCamera.setPreviewCallback(null);
+			mCamera.release();
+			mCamera = null;
+		}
 	}
 
 	public void onClick_Menu(View view) {
@@ -357,20 +360,20 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	public void onHistoryClickListener() {
 		startActivity(new Intent(ScanActivity.this, HistoryActivity.class));
 		finish();
-		overridePendingTransition(0,0);
+		overridePendingTransition(0, 0);
 	}
 
 	@Override
 	public void onAboutClickListener() {
 		startActivity(new Intent(this, AboutActivity.class));
 		finish();
-		overridePendingTransition(0,0);
+		overridePendingTransition(0, 0);
 	}
 
 	@Override
 	public void onSettingClickListener() {
 		startActivity(new Intent(ScanActivity.this, SettingActivity.class));
 		finish();
-		overridePendingTransition(0,0);
+		overridePendingTransition(0, 0);
 	}
 }
