@@ -3,20 +3,21 @@
     android:layout_width="fill_parent"
     android:layout_height="45dp"
     android:background="@color/Orange"
-    android:paddingRight="20dp" >
+    android:padding="5dp" >
 
     <LinearLayout
         android:id="@+id/header_website_ib_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:clickable="true"
         android:gravity="center_vertical" >
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onClick_Back"
-            android:src="@drawable/ic_arrow_left" />
+            android:background="@drawable/ic_btn_back"
+            android:onClick="onClick_Back" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -31,8 +32,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:onClick="onClick_Bookmark"
-        android:src="@android:drawable/arrow_up_float" />
+        android:background="@drawable/ic_history"
+        android:onClick="onClick_Bookmark" />
 
     <TextView
         android:id="@+id/header_website_tv_title"
@@ -45,6 +46,7 @@
         android:layout_toRightOf="@id/header_website_ib_back"
         android:gravity="center"
         android:singleLine="true"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/White" />
 
 </RelativeLayout>

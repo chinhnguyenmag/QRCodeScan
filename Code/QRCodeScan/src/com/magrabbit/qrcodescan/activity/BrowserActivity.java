@@ -77,4 +77,5 @@ public class BrowserActivity extends BaseActivity {
 
 	}
 
+	
 }

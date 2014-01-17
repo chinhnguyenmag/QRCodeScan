@@ -51,7 +51,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	private ImageScanner mScanner;
 	private Handler mAutoFocusHandler;
 	private boolean mPreviewing = true;
-	private LinearLayout mFrameCamera;
+	private RelativeLayout mFrameCamera;
 	// Application Preference
 	private AppPreferences mPreference;
 	// For Sliding Menu
@@ -59,7 +59,6 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	// Save scanned QRCode into local database by SQLite
 	private DatabaseHandler mDataHandler;
 	private TextView mTvTitle;
-	private ImageButton mBtRight;
 	private AlertDialog.Builder alertDialogBuilder;
 
 	static {
@@ -71,16 +70,14 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_scan);
 		mTvTitle = (TextView) findViewById(R.id.header_tv_title);
-		mBtRight = (ImageButton) findViewById(R.id.header_bt_right);
 		mTvTitle.setText(R.string.header_title_scan);
-		mBtRight.setVisibility(View.GONE);
 
 		mPreference = new AppPreferences(ScanActivity.this);
 
 		mDataHandler = new DatabaseHandler(this);
 
-		mFrameCamera = (LinearLayout) findViewById(R.id.activity_scan_camera);
-		
+		mFrameCamera = (RelativeLayout) findViewById(R.id.activity_scan_camera);
+
 		if (!isCameraAvailable()) {
 			// Cancel request if there is no rear-facing camera.
 			cancelRequest();
@@ -283,9 +280,8 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		// set dialog message
 		alertDialogBuilder
 				.setMessage(
-						context.getResources()
-								.getString(
-										R.string.activity_scan_invalid_url_message))
+						context.getResources().getString(
+								R.string.activity_scan_invalid_url_message))
 				.setCancelable(false)
 				.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
@@ -364,20 +360,20 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	public void onHistoryClickListener() {
 		startActivity(new Intent(ScanActivity.this, HistoryActivity.class));
 		finish();
-		overridePendingTransition(0,0);
+		overridePendingTransition(0, 0);
 	}
 
 	@Override
 	public void onAboutClickListener() {
 		startActivity(new Intent(this, AboutActivity.class));
 		finish();
-		overridePendingTransition(0,0);
+		overridePendingTransition(0, 0);
 	}
 
 	@Override
 	public void onSettingClickListener() {
 		startActivity(new Intent(ScanActivity.this, SettingActivity.class));
 		finish();
-		overridePendingTransition(0,0);
+		overridePendingTransition(0, 0);
 	}
 }
