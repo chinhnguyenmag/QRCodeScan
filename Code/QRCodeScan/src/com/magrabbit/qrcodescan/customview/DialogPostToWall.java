@@ -98,6 +98,11 @@ public class DialogPostToWall extends Dialog implements
 	public String getContent() {
 		return mEtContent.getText().toString().trim();
 	}
+	
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+	}
 
 	/**
 	 * @author Thanh Vu
