@@ -193,8 +193,9 @@ public class HistoryActivity extends ParentActivity implements
 
 					@Override
 					public void click_twitter(int position) {
-						Toast.makeText(HistoryActivity.this,
-								"Share via Twitter", Toast.LENGTH_SHORT).show();
+						Intent intent = new Intent(HistoryActivity.this,
+								TwitterLoginActivity.class);
+						startActivity(intent);
 					}
 
 					@Override
