@@ -47,15 +47,16 @@ public class CreateEverNote extends ParentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_evernote);
 
+		mEditTextTitle = (EditText) findViewById(R.id.text_title);
+		mEditTextContent = (EditText) findViewById(R.id.text_content);
+		mBtnSelect = (Button) findViewById(R.id.select_button);
+		mBtnSave = (Button) findViewById(R.id.save_button);
+
 		Bundle bundle = getIntent().getExtras();
 		if (bundle != null) {
 			mEditTextContent.setText(bundle
 					.getString(StringExtraUtils.KEY_HISTORY_ITEM));
 		}
-		mEditTextTitle = (EditText) findViewById(R.id.text_title);
-		mEditTextContent = (EditText) findViewById(R.id.text_content);
-		mBtnSelect = (Button) findViewById(R.id.select_button);
-		mBtnSave = (Button) findViewById(R.id.save_button);
 	}
 
 	/**
