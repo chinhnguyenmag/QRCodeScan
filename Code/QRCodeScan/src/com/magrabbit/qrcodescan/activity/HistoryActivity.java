@@ -180,9 +180,8 @@ public class HistoryActivity extends ParentActivity implements
 
 					@Override
 					public void click_evernote(int position) {
+						mEverNoteContent = mListQRCodes.get(position).getUrl();
 						addEverNote(null);
-						HistoryItem item = (HistoryItem) items.get(position);
-						mEverNoteContent = item.getTitle();
 					}
 
 					@Override
@@ -421,7 +420,8 @@ public class HistoryActivity extends ParentActivity implements
 			if (resultCode == Activity.RESULT_OK) {
 				Intent intent = new Intent(HistoryActivity.this,
 						CreateEverNote.class);
-				intent.putExtra(StringExtraUtils.KEY_HISTORY_ITEM, mEverNoteContent);
+				intent.putExtra(StringExtraUtils.KEY_HISTORY_ITEM,
+						mEverNoteContent);
 				startActivity(intent);
 			}
 			break;
