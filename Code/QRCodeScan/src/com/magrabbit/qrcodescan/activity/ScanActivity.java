@@ -51,7 +51,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	private ImageScanner mScanner;
 	private Handler mAutoFocusHandler;
 	private boolean mPreviewing = true;
-	private LinearLayout mFrameCamera;
+	private RelativeLayout mFrameCamera;
 	// Application Preference
 	private AppPreferences mPreference;
 	// For Sliding Menu
@@ -79,7 +79,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 
 		mDataHandler = new DatabaseHandler(this);
 
-		mFrameCamera = (LinearLayout) findViewById(R.id.activity_scan_camera);
+		mFrameCamera = (RelativeLayout) findViewById(R.id.activity_scan_camera);
 		
 		if (!isCameraAvailable()) {
 			// Cancel request if there is no rear-facing camera.

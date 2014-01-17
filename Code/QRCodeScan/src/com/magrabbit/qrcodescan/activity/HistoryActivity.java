@@ -82,7 +82,7 @@ public class HistoryActivity extends ParentActivity implements
 		} else if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_NORMAL) {
 			Toast.makeText(this, "Normal sized screen", Toast.LENGTH_LONG)
 					.show();
-			swipeOffsetLeft=250;
+			swipeOffsetLeft = 250;
 		} else if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_SMALL) {
 			Toast.makeText(this, "Small sized screen", Toast.LENGTH_LONG)
 					.show();
@@ -190,8 +190,9 @@ public class HistoryActivity extends ParentActivity implements
 
 					@Override
 					public void click_twitter(int position) {
-						Toast.makeText(HistoryActivity.this,
-								"Share via Twitter", Toast.LENGTH_SHORT).show();
+						Intent intent = new Intent(HistoryActivity.this,
+								TwitterLoginActivity.class);
+						startActivity(intent);
 					}
 
 					@Override
