@@ -55,6 +55,7 @@
     <string name="activity_history_delete_all_history_confirm">Are you sure you want to delete all scan histories?</string>
     <string name="activity_history_delete_history_title">Clear History</string>
     <string name="activity_history_delete_all_history_title">Clear All Histories</string>
+    <string name="activity_history_header_deleteall">Delete All</string>
    
     <drawable name="red_drawable">#CCAA1883</drawable>
     <drawable name="green_drawable">#CC123Bff</drawable>

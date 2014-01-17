@@ -3,17 +3,24 @@ package com.magrabbit.qrcodescan.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.magrabbit.qrcodescan.R;
+import com.magrabbit.qrcodescan.listener.GetWidthListener;
 import com.magrabbit.qrcodescan.model.HistoryItem;
 import com.magrabbit.qrcodescan.model.HistorySectionItem;
 import com.magrabbit.qrcodescan.model.Item;
@@ -24,14 +31,17 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 	private List<Item> items;
 	private LayoutInflater vi;
 	private HistoryAdapter_Process mProcess;
+	private GetWidthListener mListener;
+	View v;
 
 	public HistoryAdapter(Context context, ArrayList<Item> items,
-			HistoryAdapter_Process process) {
+			HistoryAdapter_Process process,GetWidthListener listener ) {
 		super(context, 0, items);
 		this.context = context;
 		this.items = new ArrayList<Item>();
 		this.items.addAll(items);
 		this.mProcess = process;
+		this.mListener=listener;
 		vi = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
@@ -39,8 +49,8 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		try {
-			View v = convertView;
-			ViewHolder holder;
+			v = convertView;
+			final ViewHolder holder;
 			final Item i = items.get(position);
 			if (i != null) {
 				if (i.isSection()) {
@@ -61,19 +71,76 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 					v = vi.inflate(R.layout.list_item_entry, null);
 					holder.mBtnDelete = (Button) v
 							.findViewById(R.id.list_item_entry_btn_delete);
-					holder.mBtnSMS = (Button) v
+					holder.mBtnSMS = (ImageButton) v
 							.findViewById(R.id.list_item_entry_btn_sms);
-					holder.mBtnEmail = (Button) v
+					holder.mBtnEmail = (ImageButton) v
 							.findViewById(R.id.list_item_entry_btn_email);
-					holder.mBtnTwitter = (Button) v
+					holder.mBtnTwitter = (ImageButton) v
 
 					.findViewById(R.id.list_item_entry_btn_twitter);
-					holder.mBtnFacebook = (Button) v
+					holder.mBtnFacebook = (ImageButton) v
 							.findViewById(R.id.list_item_entry_btn_facebook);
-					holder.mBtnEvernote = (Button) v
+					holder.mBtnEvernote = (ImageButton) v
 							.findViewById(R.id.list_item_entry_btn_evernote);
 					holder.mTvContent = (TextView) v
 							.findViewById(R.id.list_item_entry_title);
+					holder.mRlSocial = (RelativeLayout) v.findViewById(R.id.list_item_entry_social);
+					
+					ViewTreeObserver vto = holder.mBtnDelete
+							.getViewTreeObserver();
+					vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+
+						@SuppressLint("NewApi")
+						@Override
+						public void onGlobalLayout() {
+							mListener.getWidthBtDelete(holder.mBtnDelete.getWidth());
+							if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+								holder.mBtnDelete.getViewTreeObserver()
+										.removeOnGlobalLayoutListener(this);
+							} else {
+								holder.mBtnDelete.getViewTreeObserver()
+										.removeGlobalOnLayoutListener(this);
+							}
+						}
+
+					});
+
+					ViewTreeObserver vto1 = v.getViewTreeObserver();
+					vto1.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+
+						@SuppressLint("NewApi")
+						@Override
+						public void onGlobalLayout() {
+							mListener.getWidthTotal(v.getWidth());
+							if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+								holder.mBtnDelete.getViewTreeObserver()
+										.removeOnGlobalLayoutListener(this);
+							} else {
+								holder.mBtnDelete.getViewTreeObserver()
+										.removeGlobalOnLayoutListener(this);
+							}
+						}
+
+					});
+					
+					ViewTreeObserver vto3 = holder.mRlSocial.getViewTreeObserver();
+					vto3.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+
+						@SuppressLint("NewApi")
+						@Override
+						public void onGlobalLayout() {
+							mListener.getWidthSocial(holder.mRlSocial.getWidth());
+							if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+								holder.mBtnDelete.getViewTreeObserver()
+										.removeOnGlobalLayoutListener(this);
+							} else {
+								holder.mBtnDelete.getViewTreeObserver()
+										.removeGlobalOnLayoutListener(this);
+							}
+						}
+
+					});
+
 					if (holder.mTvContent != null)
 						holder.mTvContent.setText(ei.getTitle());
 
@@ -156,12 +223,13 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 	}
 
 	private class ViewHolder {
+		RelativeLayout mRlSocial;
 		Button mBtnDelete;
-		Button mBtnSMS;
-		Button mBtnEmail;
-		Button mBtnTwitter;
-		Button mBtnFacebook;
-		Button mBtnEvernote;
+		ImageButton mBtnSMS;
+		ImageButton mBtnEmail;
+		ImageButton mBtnTwitter;
+		ImageButton mBtnFacebook;
+		ImageButton mBtnEvernote;
 		TextView mTvContent;
 	}
 
@@ -178,5 +246,4 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 
 		public abstract void click_email(int position);
 	}
-
 }

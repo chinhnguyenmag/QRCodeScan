@@ -23,6 +23,7 @@ import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.evernote.client.android.EvernoteSession;
@@ -39,6 +40,7 @@ import com.magrabbit.qrcodescan.control.DatabaseHandler;
 import com.magrabbit.qrcodescan.customview.DialogConfirm;
 import com.magrabbit.qrcodescan.customview.DialogConfirm.ProcessDialogConfirm;
 import com.magrabbit.qrcodescan.customview.SlidingMenuCustom;
+import com.magrabbit.qrcodescan.listener.GetWidthListener;
 import com.magrabbit.qrcodescan.listener.MenuSlidingClickListener;
 import com.magrabbit.qrcodescan.model.HistoryItem;
 import com.magrabbit.qrcodescan.model.HistorySectionItem;
@@ -48,7 +50,7 @@ import com.magrabbit.qrcodescan.utils.SocialUtil;
 import com.magrabbit.qrcodescan.utils.StringExtraUtils;
 
 public class HistoryActivity extends ParentActivity implements
-		MenuSlidingClickListener {
+		MenuSlidingClickListener, GetWidthListener {
 
 	private HistoryAdapter mAdapter;
 	private ArrayList<Item> items = new ArrayList<Item>();
@@ -59,41 +61,36 @@ public class HistoryActivity extends ParentActivity implements
 	private int mSectionNumber = 0;
 	private Facebook mFacebook = new Facebook(SocialUtil.FACEBOOK_APPID);
 	private SharedPreferences mSharedPreferences;
+	private String mEverNoteContent;
 
 	// =============================================================
 	private int swipeMode = SwipeListView.SWIPE_MODE_BOTH;
 	private boolean swipeOpenOnLongPress = true;
 	private boolean swipeCloseAllItemsWhenMoveList = true;
 	private long swipeAnimationTime = 0;
-	private float swipeOffsetLeft = 250;
+	private float swipeOffsetLeft = 300;
 	private float swipeOffsetRight = 100;
 	private int swipeActionLeft = SwipeListView.SWIPE_ACTION_REVEAL;
 	private int swipeActionRight = SwipeListView.SWIPE_ACTION_REVEAL;
+	private TextView mTvTitle;
+	private TextView mTvDelete;
+	private int mWidthBtDelete;
+	private int mWidthSocial;
+	private int mWidthTotal;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_history);
 
-		// Determine screen size
-		if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE) {
-			Toast.makeText(this, "Large screen", Toast.LENGTH_LONG).show();
-
-		} else if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_NORMAL) {
-			Toast.makeText(this, "Normal sized screen", Toast.LENGTH_LONG)
-					.show();
-			swipeOffsetLeft=250;
-		} else if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_SMALL) {
-			Toast.makeText(this, "Small sized screen", Toast.LENGTH_LONG)
-					.show();
-		} else {
-			Toast.makeText(this,
-					"Screen size is neither large, normal or small",
-					Toast.LENGTH_LONG).show();
-		}
+		mTvTitle = (TextView) findViewById(R.id.header_tv_title);
+		mTvTitle.setText(R.string.header_title_history);
+		mTvDelete = (TextView) findViewById(R.id.header_tv_right);
+		mTvDelete.setVisibility(View.VISIBLE);
 
 		// inflate layout for list view
 		mSwipeListView = (SwipeListView) findViewById(R.id.activity_history_lv);
+
 		mMenu = new SlidingMenuCustom(this, this);
 		mMenu.setTouchModeAboveMargin();
 
@@ -179,6 +176,7 @@ public class HistoryActivity extends ParentActivity implements
 
 					@Override
 					public void click_evernote(int position) {
+						mEverNoteContent = mListQRCodes.get(position).getUrl();
 						addEverNote(null);
 					}
 
@@ -190,8 +188,9 @@ public class HistoryActivity extends ParentActivity implements
 
 					@Override
 					public void click_twitter(int position) {
-						Toast.makeText(HistoryActivity.this,
-								"Share via Twitter", Toast.LENGTH_SHORT).show();
+						Intent intent = new Intent(HistoryActivity.this,
+								TwitterLoginActivity.class);
+						startActivity(intent);
 					}
 
 					@Override
@@ -204,7 +203,7 @@ public class HistoryActivity extends ParentActivity implements
 						sendMail(mListQRCodes.get(position).getUrl().trim());
 					}
 
-				});
+				}, this);
 		mSwipeListView
 				.setSwipeListViewListener(new BaseSwipeListViewListener() {
 
@@ -309,7 +308,6 @@ public class HistoryActivity extends ParentActivity implements
 		// Set Adapter for List View
 		mSwipeListView.setAdapter(mAdapter);
 		mAdapter.notifyDataSetChanged();
-		reload();
 
 	}
 
@@ -348,7 +346,7 @@ public class HistoryActivity extends ParentActivity implements
 		overridePendingTransition(0, 0);
 	}
 
-	public void onClick_ClearAll(View v) {
+	public void onClick_DeleteAll(View v) {
 		DialogConfirm dialog = new DialogConfirm(
 				HistoryActivity.this,
 				android.R.drawable.ic_dialog_alert,
@@ -384,16 +382,10 @@ public class HistoryActivity extends ParentActivity implements
 		mSwipeListView.setSwipeMode(swipeMode);
 		mSwipeListView.setSwipeActionLeft(swipeActionLeft);
 		mSwipeListView.setSwipeActionRight(swipeActionRight);
-		mSwipeListView.setOffsetLeft(convertDpToPixel(swipeOffsetLeft));
-		mSwipeListView.setOffsetRight(convertDpToPixel(swipeOffsetRight));
+		mSwipeListView.setOffsetLeft(mWidthTotal-mWidthBtDelete);
+		mSwipeListView.setOffsetRight(mWidthTotal-mWidthSocial);
 		mSwipeListView.setAnimationTime(swipeAnimationTime);
 		mSwipeListView.setSwipeOpenOnLongPress(swipeOpenOnLongPress);
-	}
-
-	public int convertDpToPixel(float dp) {
-		DisplayMetrics metrics = getResources().getDisplayMetrics();
-		float px = dp * (metrics.densityDpi / 160f);
-		return (int) px;
 	}
 
 	/**
@@ -415,8 +407,11 @@ public class HistoryActivity extends ParentActivity implements
 		// Add a new EverNote when OAuth activity returns result
 		case EvernoteSession.REQUEST_CODE_OAUTH:
 			if (resultCode == Activity.RESULT_OK) {
-				startActivity(new Intent(HistoryActivity.this,
-						CreateEverNote.class));
+				Intent intent = new Intent(HistoryActivity.this,
+						CreateEverNote.class);
+				intent.putExtra(StringExtraUtils.KEY_HISTORY_ITEM,
+						mEverNoteContent);
+				startActivity(intent);
 			}
 			break;
 		}
@@ -550,5 +545,21 @@ public class HistoryActivity extends ParentActivity implements
 			Toast.makeText(this, "There are no email clients installed.",
 					Toast.LENGTH_SHORT).show();
 		}
+	}
+
+	@Override
+	public void getWidthBtDelete(int widthBtDelete) {
+		mWidthBtDelete = widthBtDelete;
+		reload();
+	}
+
+	@Override
+	public void getWidthSocial(int widthSocial) {
+		mWidthSocial = widthSocial;
+	}
+
+	@Override
+	public void getWidthTotal(int widthTotal) {
+		mWidthTotal = widthTotal;
 	}
 }

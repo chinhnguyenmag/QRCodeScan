@@ -1,10 +1,8 @@
-
 /**
  * @author baonguyen
  */
 package com.magrabbit.qrcodescan.customview;
 
-import java.io.IOException;
 import java.util.List;
 
 import android.content.Context;
@@ -32,7 +30,7 @@ public class CameraPreviewNew extends SurfaceView implements
 		super(context);
 		previewCallback = previewCb;
 		autoFocusCallback = autoFocusCb;
-		
+
 		// Install a SurfaceHolder.Callback so we get notified when the
 		// underlying surface is created and destroyed.
 		mHolder = getHolder();
@@ -162,6 +160,8 @@ public class CameraPreviewNew extends SurfaceView implements
 	public void stop() {
 		if (mCamera != null) {
 			mCamera.stopPreview();
+			mCamera.setPreviewCallback(null);
+			mCamera.release();
 			mCamera = null;
 		}
 	}

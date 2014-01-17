@@ -27,8 +27,8 @@ public class ParentActivity extends Activity {
 
 	// Your EverNote API key. See http://dev.evernote.com/documentation/cloud/
 	// Please obfuscate your code to help keep these values secret.
-	private static final String CONSUMER_KEY = "baocatsamac-77";
-	private static final String CONSUMER_SECRET = "f64deddad7fbf30f";
+	private static final String CONSUMER_KEY = "baocatsamac_77-3750";
+	private static final String CONSUMER_SECRET = "b87fff551b10093d";
 
 	private static final EvernoteSession.EvernoteService EVERNOTE_SERVICE = EvernoteSession.EvernoteService.SANDBOX;
 
@@ -43,9 +43,6 @@ public class ParentActivity extends Activity {
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// Hide the window title.
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		// Set up the Evernote Singleton Session
 		mEvernoteSession = EvernoteSession.getInstance(this, CONSUMER_KEY,

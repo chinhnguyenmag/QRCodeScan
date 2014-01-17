@@ -36,7 +36,7 @@ import com.magrabbit.qrcodescan.utils.SocialUtil;
 
 /**
  * @author vule
- *
+ * 
  */
 public class SettingActivity extends Activity implements
 		MenuSlidingClickListener, OnSwitchChangeListener, OnClickListener {
@@ -47,7 +47,6 @@ public class SettingActivity extends Activity implements
 	private AppPreferences mAppPreferences;
 	private TextView mTvTime;
 	private TextView mTvTitle;
-	private ImageButton mBtRight;
 	private RelativeLayout mRlShareFacebook;
 	private RelativeLayout mRlShareSMS;
 	private RelativeLayout mRlShareMail;
@@ -60,9 +59,7 @@ public class SettingActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
 		mTvTitle = (TextView) findViewById(R.id.header_tv_title);
-		mBtRight = (ImageButton) findViewById(R.id.header_bt_right);
 		mTvTitle.setText(R.string.header_title_setting);
-		mBtRight.setVisibility(View.GONE);
 
 		mAppPreferences = new AppPreferences(this);
 		mMenu = new SlidingMenuCustom(this, this);
@@ -102,21 +99,21 @@ public class SettingActivity extends Activity implements
 	public void onScannerClickListener() {
 		startActivity(new Intent(this, ScanActivity.class));
 		finish();
-		overridePendingTransition(0,0);
+		overridePendingTransition(0, 0);
 	}
 
 	@Override
 	public void onHistoryClickListener() {
 		startActivity(new Intent(this, HistoryActivity.class));
 		finish();
-		overridePendingTransition(0,0);
+		overridePendingTransition(0, 0);
 	}
 
 	@Override
 	public void onAboutClickListener() {
 		startActivity(new Intent(this, AboutActivity.class));
 		finish();
-		overridePendingTransition(0,0);
+		overridePendingTransition(0, 0);
 	}
 
 	@Override
@@ -176,8 +173,9 @@ public class SettingActivity extends Activity implements
 		}
 
 		case R.id.setting_ll_social_twitter: {
-			Toast.makeText(this, "Share via Twitter", Toast.LENGTH_SHORT)
-					.show();
+			Intent intent = new Intent(SettingActivity.this,
+					TwitterLoginActivity.class);
+			startActivity(intent);
 			break;
 		}
 
@@ -192,29 +190,29 @@ public class SettingActivity extends Activity implements
 	}
 
 	public void loginToFacebook() {
-		
-		try  {
 
-		      PackageInfo info = getPackageManager().
-		           getPackageInfo(this.getPackageName(), PackageManager.GET_SIGNATURES);
+		try {
 
-		      for (Signature signature : info.signatures) {
+			PackageInfo info = getPackageManager().getPackageInfo(
+					this.getPackageName(), PackageManager.GET_SIGNATURES);
 
-		          MessageDigest md = MessageDigest.getInstance("SHA");
-		          md.update(signature.toByteArray());
-		          Log.d("====Hash Key===",Base64.encodeToString(md.digest(), 
-		                   Base64.DEFAULT));
-		      }
+			for (Signature signature : info.signatures) {
 
-		  } catch (NameNotFoundException e) {
+				MessageDigest md = MessageDigest.getInstance("SHA");
+				md.update(signature.toByteArray());
+				Log.d("====Hash Key===",
+						Base64.encodeToString(md.digest(), Base64.DEFAULT));
+			}
 
-		      e.printStackTrace();
+		} catch (NameNotFoundException e) {
 
-		  } catch (NoSuchAlgorithmException ex) {
+			e.printStackTrace();
 
-		      ex.printStackTrace();
+		} catch (NoSuchAlgorithmException ex) {
 
-		  }
+			ex.printStackTrace();
+
+		}
 		mSharedPreferences = getPreferences(MODE_PRIVATE);
 		String access_token = mSharedPreferences
 				.getString("access_token", null);
@@ -317,13 +315,14 @@ public class SettingActivity extends Activity implements
 		Intent emailIntent = new Intent(Intent.ACTION_SEND);
 		emailIntent.setType("message/rfc822");
 		emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Follow this link");
-		emailIntent.putExtra(Intent.EXTRA_TEXT, "QRcode link http://qrcode.com");
+		emailIntent
+				.putExtra(Intent.EXTRA_TEXT, "QRcode link http://qrcode.com");
 		try {
-			startActivity(Intent.createChooser(emailIntent, "Choose an Email client:"));
+			startActivity(Intent.createChooser(emailIntent,
+					"Choose an Email client:"));
 		} catch (android.content.ActivityNotFoundException ex) {
-			Toast.makeText(this,
-					"There are no email clients installed.", Toast.LENGTH_SHORT)
-					.show();
+			Toast.makeText(this, "There are no email clients installed.",
+					Toast.LENGTH_SHORT).show();
 		}
 	}
 

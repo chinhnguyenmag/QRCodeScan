@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:background="@drawable/ic_bt_scan" />
+            android:background="@drawable/button_menu_scan" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:background="@drawable/ic_bt_history" />
+            android:background="@drawable/button_menu_history" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:background="@drawable/ic_bt_settings" />
+            android:background="@drawable/button_menu_setting" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -56,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:background="@drawable/ic_bt_about" />
+            android:background="@drawable/button_menu_about" />
     </RelativeLayout>
 
 </LinearLayout>
