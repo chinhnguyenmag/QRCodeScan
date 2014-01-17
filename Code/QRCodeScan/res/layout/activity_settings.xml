@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res/com.magrabbit.qrcodescan"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:orientation="vertical" >
 
     <ScrollView
@@ -129,9 +130,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:onClick="onClick_AutoClose"
                 android:background="@drawable/listview_selector"
+                android:onClick="onClick_AutoClose"
                 android:orientation="horizontal"
                 android:paddingBottom="10dp"
                 android:paddingLeft="5dp"
@@ -159,7 +159,8 @@
                 <ImageButton
                     android:id="@+id/settings_ib_auto_close"
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
                     android:background="@drawable/ic_arrow"
                     android:contentDescription="@string/common_imagebutton_description"
                     android:onClick="onClick_AutoClose" />
@@ -182,6 +183,7 @@
                 android:id="@+id/setting_ll_social_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:background="@drawable/listview_selector"
                 android:orientation="horizontal"
                 android:paddingBottom="10dp"
@@ -194,7 +196,6 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
                     android:background="@drawable/ic_setting_sms"
                     android:contentDescription="@string/common_imagebutton_description" />
 
@@ -212,7 +213,7 @@
                 <ImageButton
                     android:id="@+id/settings_ib_share_message"
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
@@ -231,6 +232,7 @@
                 android:id="@+id/setting_ll_social_mail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:background="@drawable/listview_selector"
                 android:orientation="horizontal"
                 android:paddingBottom="10dp"
@@ -243,7 +245,6 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
                     android:background="@drawable/ic_setting_mail"
                     android:contentDescription="@string/common_imagebutton_description" />
 
@@ -280,6 +281,7 @@
                 android:id="@+id/setting_ll_social_twitter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:background="@drawable/listview_selector"
                 android:orientation="horizontal"
                 android:paddingBottom="10dp"
@@ -292,7 +294,6 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
                     android:background="@drawable/ic_setting_twitter"
                     android:contentDescription="@string/common_imagebutton_description" />
 
@@ -310,7 +311,7 @@
                 <ImageButton
                     android:id="@+id/settings_ib_share_twitter"
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
@@ -329,6 +330,7 @@
                 android:id="@+id/setting_ll_social_facebook"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:background="@drawable/listview_selector"
                 android:orientation="horizontal"
                 android:paddingBottom="10dp"
@@ -341,7 +343,6 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
                     android:background="@drawable/ic_setting_fb"
                     android:contentDescription="@string/common_imagebutton_description" />
 
@@ -359,7 +360,7 @@
                 <ImageButton
                     android:id="@+id/settings_ib_share_facebook"
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
