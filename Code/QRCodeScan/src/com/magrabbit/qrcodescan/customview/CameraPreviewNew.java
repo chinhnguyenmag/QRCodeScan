@@ -54,7 +54,7 @@ public class CameraPreviewNew extends SurfaceView implements
 		// preview.
 		try {
 			mCamera.setPreviewDisplay(holder);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			Log.d("DBG", "Error setting camera preview: " + e.getMessage());
 		}
 	}

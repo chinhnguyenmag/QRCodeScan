@@ -102,20 +102,21 @@ public class SettingActivity extends Activity implements
 	public void onScannerClickListener() {
 		startActivity(new Intent(this, ScanActivity.class));
 		finish();
-
+		overridePendingTransition(0,0);
 	}
 
 	@Override
 	public void onHistoryClickListener() {
 		startActivity(new Intent(this, HistoryActivity.class));
 		finish();
-
+		overridePendingTransition(0,0);
 	}
 
 	@Override
 	public void onAboutClickListener() {
 		startActivity(new Intent(this, AboutActivity.class));
 		finish();
+		overridePendingTransition(0,0);
 	}
 
 	@Override

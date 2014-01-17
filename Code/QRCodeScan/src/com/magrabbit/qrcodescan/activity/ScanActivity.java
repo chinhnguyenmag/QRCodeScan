@@ -26,6 +26,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.magrabbit.qrcodescan.R;
@@ -49,7 +51,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	private ImageScanner mScanner;
 	private Handler mAutoFocusHandler;
 	private boolean mPreviewing = true;
-	private FrameLayout mFrameCamera;
+	private LinearLayout mFrameCamera;
 	// Application Preference
 	private AppPreferences mPreference;
 	// For Sliding Menu
@@ -68,9 +70,6 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// Hide the window title.
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_scan);
 		mTvTitle = (TextView) findViewById(R.id.header_tv_title);
 		mBtRight = (ImageButton) findViewById(R.id.header_bt_right);
@@ -81,8 +80,8 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 
 		mDataHandler = new DatabaseHandler(this);
 
-		mFrameCamera = (FrameLayout) findViewById(R.id.activity_scan_camera);
-		mSlidingMenu = new SlidingMenuCustom(this, this);
+		mFrameCamera = (LinearLayout) findViewById(R.id.activity_scan_camera);
+		
 		if (!isCameraAvailable()) {
 			// Cancel request if there is no rear-facing camera.
 			cancelRequest();
@@ -104,6 +103,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		
 		// Show warning dialog for Invalid URL
 		showInvalidURLDialog(ScanActivity.this);
+		mSlidingMenu = new SlidingMenuCustom(this, this);
 	}
 
 	public void setupScanner() {
@@ -357,17 +357,20 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	public void onHistoryClickListener() {
 		startActivity(new Intent(ScanActivity.this, HistoryActivity.class));
 		finish();
+		overridePendingTransition(0,0);
 	}
 
 	@Override
 	public void onAboutClickListener() {
 		startActivity(new Intent(this, AboutActivity.class));
 		finish();
+		overridePendingTransition(0,0);
 	}
 
 	@Override
 	public void onSettingClickListener() {
 		startActivity(new Intent(ScanActivity.this, SettingActivity.class));
 		finish();
+		overridePendingTransition(0,0);
 	}
 }

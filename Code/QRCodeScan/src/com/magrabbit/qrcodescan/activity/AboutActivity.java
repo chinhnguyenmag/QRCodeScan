@@ -44,14 +44,14 @@ public class AboutActivity extends Activity implements MenuSlidingClickListener 
 	public void onScannerClickListener() {
 		startActivity(new Intent(this, ScanActivity.class));
 		finish();
-
+		overridePendingTransition(0,0);
 	}
 
 	@Override
 	public void onHistoryClickListener() {
 		startActivity(new Intent(this, HistoryActivity.class));
 		finish();
-
+		overridePendingTransition(0,0);
 	}
 
 	@Override
@@ -64,6 +64,6 @@ public class AboutActivity extends Activity implements MenuSlidingClickListener 
 	public void onSettingClickListener() {
 		startActivity(new Intent(this, SettingActivity.class));
 		finish();
-
+		overridePendingTransition(0,0);
 	}
 }

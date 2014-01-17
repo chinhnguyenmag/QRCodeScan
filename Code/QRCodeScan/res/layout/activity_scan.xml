@@ -13,11 +13,11 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/activity_scan_title" >
 
-        <FrameLayout
+        <RelativeLayout
             android:id="@+id/activity_scan_camera"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
-        </FrameLayout>
+        </RelativeLayout>
         <!-- Autofocus crosshairs -->
 
         <RelativeLayout

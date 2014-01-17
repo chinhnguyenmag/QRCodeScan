@@ -17,6 +17,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.DisplayMetrics;
@@ -73,6 +74,23 @@ public class HistoryActivity extends ParentActivity implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_history);
+
+		// Determine screen size
+		if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE) {
+			Toast.makeText(this, "Large screen", Toast.LENGTH_LONG).show();
+
+		} else if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_NORMAL) {
+			Toast.makeText(this, "Normal sized screen", Toast.LENGTH_LONG)
+					.show();
+			swipeOffsetLeft=250;
+		} else if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_SMALL) {
+			Toast.makeText(this, "Small sized screen", Toast.LENGTH_LONG)
+					.show();
+		} else {
+			Toast.makeText(this,
+					"Screen size is neither large, normal or small",
+					Toast.LENGTH_LONG).show();
+		}
 
 		// inflate layout for list view
 		mSwipeListView = (SwipeListView) findViewById(R.id.activity_history_lv);
@@ -306,6 +324,7 @@ public class HistoryActivity extends ParentActivity implements
 	public void onScannerClickListener() {
 		startActivity(new Intent(this, ScanActivity.class));
 		finish();
+		overridePendingTransition(0, 0);
 	}
 
 	@Override
@@ -318,7 +337,7 @@ public class HistoryActivity extends ParentActivity implements
 	public void onAboutClickListener() {
 		startActivity(new Intent(this, AboutActivity.class));
 		finish();
-
+		overridePendingTransition(0, 0);
 	}
 
 	@Override
@@ -326,6 +345,7 @@ public class HistoryActivity extends ParentActivity implements
 		startActivity(new Intent(this, SettingActivity.class));
 		overridePendingTransition(0, 0);
 		finish();
+		overridePendingTransition(0, 0);
 	}
 
 	public void onClick_ClearAll(View v) {
