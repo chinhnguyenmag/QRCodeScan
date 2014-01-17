@@ -40,7 +40,7 @@ public class TwitterLoginActivity extends Activity {
 
 	private static Twitter twitter;
 	private static RequestToken requestToken;
-	private SharedPreferences sharedPrefs;
+	public static SharedPreferences sharedPrefs;
 	private DialogPostToWall mDialogPostToWallTwitter;
 
 	@Override
@@ -70,7 +70,7 @@ public class TwitterLoginActivity extends Activity {
 				if (url.contains(Constants.TWITTER_CALLBACK_URL)) {
 					Uri uri = Uri.parse(url);
 					TwitterLoginActivity.this.saveAccessTokenAndFinish(uri);
-					showTweetDialog();
+					// showTweetDialog();
 					return true;
 				}
 				return false;
@@ -112,6 +112,12 @@ public class TwitterLoginActivity extends Activity {
 		super.onResume();
 	}
 
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		finish();
+	}
+
 	private void saveAccessTokenAndFinish(final Uri uri) {
 		new Thread(new Runnable() {
 			@Override
@@ -142,6 +148,11 @@ public class TwitterLoginActivity extends Activity {
 				}
 			}
 		}).start();
+
+		Intent intent = new Intent(TwitterLoginActivity.this,
+				ActivityPostToWall.class);
+		startActivity(intent);
+		finish();
 
 	}
 
