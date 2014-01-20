@@ -15,7 +15,6 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -189,6 +188,9 @@ public class SettingActivity extends Activity implements
 		}
 	}
 
+	/**
+	 * This method use to login facebook
+	 */
 	public void loginToFacebook() {
 
 		try {
@@ -259,12 +261,18 @@ public class SettingActivity extends Activity implements
 		}
 	}
 
+	/**
+	 * This method use to get access token from facebook 
+	 */
 	public void getAccessToken() {
 		String access_token = mFacebook.getAccessToken();
 		Toast.makeText(getApplicationContext(),
 				"Access Token: " + access_token, Toast.LENGTH_LONG).show();
 	}
 
+	/**
+	 * This method use to post to wall on facebook
+	 */
 	public void postToWall() {
 		Bundle parameters = new Bundle();
 		parameters.putString("link", "http://toitesthuthoi.com");
@@ -291,6 +299,9 @@ public class SettingActivity extends Activity implements
 		});
 	}
 
+	/**
+	 * This method use to call intent sms system to send
+	 */
 	protected void sendSMS() {
 		Intent smsIntent = new Intent(Intent.ACTION_VIEW);
 		smsIntent.putExtra("sms_body", "Please follow this link...");
@@ -311,6 +322,9 @@ public class SettingActivity extends Activity implements
 		mFacebook.authorizeCallback(requestCode, resultCode, data);
 	}
 
+	/**
+	 * This method use to call intent email system to send
+	 */
 	protected void sendMail() {
 		Intent emailIntent = new Intent(Intent.ACTION_SEND);
 		emailIntent.setType("message/rfc822");

@@ -1,7 +1,9 @@
 package com.magrabbit.qrcodescan.utils;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -602,9 +604,36 @@ public class Utils {
 	}
 
 	public static int parseIndex(int value, int step) {
-		if(value==-1) {
+		if (value == -1) {
 			return 19;
 		}
 		return value / step;
 	}
+
+	/**
+	 * Gets html content from the assets folder.
+	 */
+	public static String getHtmlFromAsset(Context context, int html_file) {
+		InputStream is;
+		StringBuilder builder = new StringBuilder();
+		String htmlString = "";
+		try {
+			is = context.getAssets().open(context.getString(html_file));
+			if (is != null) {
+				BufferedReader reader = new BufferedReader(
+						new InputStreamReader(is));
+				String line;
+				while ((line = reader.readLine()) != null) {
+					builder.append(line);
+				}
+
+				htmlString = builder.toString();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return htmlString;
+	}
+
 }

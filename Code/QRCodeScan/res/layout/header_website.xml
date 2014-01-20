@@ -10,14 +10,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
+        android:background="@drawable/button_forcus_browser"
         android:clickable="true"
-        android:gravity="center_vertical" >
+        android:gravity="center_vertical"
+        android:onClick="onClick_Back"
+        android:padding="5dp" >
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/ic_btn_back"
-            android:onClick="onClick_Back" />
+            android:background="@drawable/ic_btn_back" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -33,7 +35,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:background="@drawable/ic_history"
-        android:onClick="onClick_Bookmark" />
+        android:onClick="onClick_Share" />
 
     <TextView
         android:id="@+id/header_website_tv_title"

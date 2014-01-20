@@ -17,10 +17,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -82,11 +80,9 @@ public class HistoryActivity extends ParentActivity implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_history);
-
 		mTvTitle = (TextView) findViewById(R.id.header_tv_title);
 		mTvTitle.setText(R.string.header_title_history);
 		mTvDelete = (TextView) findViewById(R.id.header_tv_right);
-		mTvDelete.setVisibility(View.VISIBLE);
 
 		// inflate layout for list view
 		mSwipeListView = (SwipeListView) findViewById(R.id.activity_history_lv);
@@ -122,6 +118,7 @@ public class HistoryActivity extends ParentActivity implements
 		});
 		// add the first section and item into list view
 		if (mListQRCodes.size() != 0) {
+			mTvDelete.setVisibility(View.VISIBLE);
 			items.add(new HistorySectionItem(mListQRCodes.get(0).getDate()));
 			items.add(new HistoryItem(mListQRCodes.get(0).getUrl()));
 
@@ -347,34 +344,39 @@ public class HistoryActivity extends ParentActivity implements
 	}
 
 	public void onClick_DeleteAll(View v) {
-		DialogConfirm dialog = new DialogConfirm(
-				HistoryActivity.this,
-				android.R.drawable.ic_dialog_alert,
-				HistoryActivity.this
-						.getString(R.string.activity_history_delete_all_history_title),
-				HistoryActivity.this
-						.getString(R.string.activity_history_delete_all_history_confirm),
-				true, new ProcessDialogConfirm() {
+		if (mListQRCodes != null && mListQRCodes.size() > 0) {
+			DialogConfirm dialog = new DialogConfirm(
+					HistoryActivity.this,
+					android.R.drawable.ic_dialog_alert,
+					HistoryActivity.this
+							.getString(R.string.activity_history_delete_all_history_title),
+					HistoryActivity.this
+							.getString(R.string.activity_history_delete_all_history_confirm),
+					true, new ProcessDialogConfirm() {
 
-					@Override
-					public void click_Ok() {
+						@Override
+						public void click_Ok() {
 
-						// delete all QR Code from Database
-						for (QRCode code : mListQRCodes) {
-							mDataHandler.deleteQRCode(code);
+							// delete all QR Code from Database
+							for (QRCode code : mListQRCodes) {
+								mDataHandler.deleteQRCode(code);
+							}
+							items.clear();
+							mAdapter.notifyDataSetChanged();
+							mSwipeListView.setAdapter(mAdapter);
+
 						}
-						items.clear();
-						mAdapter.notifyDataSetChanged();
-						mSwipeListView.setAdapter(mAdapter);
 
-					}
+						@Override
+						public void click_Cancel() {
 
-					@Override
-					public void click_Cancel() {
-
-					}
-				});
-		dialog.show();
+						}
+					});
+			dialog.show();
+		} else {
+			Toast.makeText(this, "There are no history to delete.",
+					Toast.LENGTH_SHORT).show();
+		}
 
 	}
 
@@ -382,8 +384,8 @@ public class HistoryActivity extends ParentActivity implements
 		mSwipeListView.setSwipeMode(swipeMode);
 		mSwipeListView.setSwipeActionLeft(swipeActionLeft);
 		mSwipeListView.setSwipeActionRight(swipeActionRight);
-		mSwipeListView.setOffsetLeft(mWidthTotal-mWidthBtDelete);
-		mSwipeListView.setOffsetRight(mWidthTotal-mWidthSocial);
+		mSwipeListView.setOffsetLeft(mWidthTotal - mWidthBtDelete);
+		mSwipeListView.setOffsetRight(mWidthTotal - mWidthSocial);
 		mSwipeListView.setAnimationTime(swipeAnimationTime);
 		mSwipeListView.setSwipeOpenOnLongPress(swipeOpenOnLongPress);
 	}

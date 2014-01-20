@@ -30,6 +30,7 @@
     <string name="save">Save</string>
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
+     <string name="about">      This letter should state directly that you are applying for a specific position. After the introduction, the body of the letter should focus on your qualifications that best match the requirements for the position. Use statements noting your accomplishments whenever possible. This letter should state directly that you are applying for a specific position. After the introduction, the body of the letter should focus on your qualifications that best match the requirements for the position. Use statements noting your accomplishments whenever possible. This letter should state directly that you are applying for a specific position. After the introduction, the body of the letter should focus on your qualifications that best match the requirements for the position. Use statements noting your accomplishments whenever possible. This letter should state directly that you are applying for a specific position. After the introduction, the body of the letter should focus on your qualifications that best match the requirements for the position. Use statements noting your accomplishments whenever possible. This letter should state directly that you are applying for a specific position. After the introduction, the body of the letter should focus on your qualifications that best match the requirements for the position. Use statements noting your accomplishments whenever possible. This letter should state directly that you are applying for a specific position. After the introduction, the body of the letter should focus on your qualifications that best match the requirements for the position. Use statements noting your accomplishments whenever possible. This letter should state directly that you are applying for a specific position. After the introduction, the body of the letter should focus on your qualifications that best match the requirements for the position. Use statements noting your accomplishments whenever possible. This letter should state directly that you are applying for a specific position. After the introduction, the body of the letter should focus on your qualifications that best match the requirements for the position. Use statements noting your accomplishments whenever possible.</string>
 
     <!-- EverNote -->
     <string name="activity_create_evernote_btn_select_notebook">Select Notebook</string>
@@ -41,7 +42,6 @@
     <string name="activity_create_evernote_error_listing_notes">Error listing note</string>
     <string name="activity_create_evernote_empty_content_error">Note title and content cannot be empty</string>
     <string name="activity_create_evernote_note_saved">Note saved to Evernote</string>
-    
 
     <drawable name="red_drawable">#CCAA1883</drawable>
     <!-- Scan Activity -->
@@ -56,8 +56,10 @@
     <string name="activity_history_delete_history_title">Delete History</string>
     <string name="activity_history_delete_all_history_title">Delete All Histories</string>
     <string name="activity_history_header_deleteall">Delete All</string>
-   
+
     <drawable name="red_drawable">#CCAA1883</drawable>
     <drawable name="green_drawable">#CC123Bff</drawable>
+
+    <string name="content_html">content_detail.html</string>
 
 </resources>

@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.magrabbit.qrcodescan.R;
 import com.magrabbit.qrcodescan.customview.SlidingMenuCustom;
 import com.magrabbit.qrcodescan.listener.MenuSlidingClickListener;
+import com.magrabbit.qrcodescan.utils.Utils;
 
 /**
  * @author vu le
@@ -18,6 +20,8 @@ public class AboutActivity extends Activity implements MenuSlidingClickListener 
 
 	private SlidingMenuCustom mMenu;
 	private TextView mTvTitle;
+	WebView mWvContent;
+	String mContent = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +29,13 @@ public class AboutActivity extends Activity implements MenuSlidingClickListener 
 		setContentView(R.layout.activity_about);
 		mTvTitle = (TextView) findViewById(R.id.header_tv_title);
 		mTvTitle.setText(R.string.header_title_about);
+
+		mContent = Utils.getHtmlFromAsset(this, R.string.content_html);
+		mWvContent = (WebView) findViewById(R.id.about_wv_introduce);
+		mWvContent.setBackgroundColor(0x00000000);
+
+		mWvContent.loadDataWithBaseURL("file:///android_asset", mContent,
+				"text/html", "UTF-8", null);
 
 		mMenu = new SlidingMenuCustom(this, this);
 	}

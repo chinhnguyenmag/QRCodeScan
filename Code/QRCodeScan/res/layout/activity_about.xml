@@ -5,35 +5,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
+    <include
+        android:id="@+id/activity_about_title"
+        layout="@layout/header" />
 
-        <include
-            android:id="@+id/activity_about_title"
-            layout="@layout/header" />
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" >
-
-            <ScrollView
-                android:id="@+id/about_sv_introduce"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" >
-
-                <TextView
-                    android:id="@+id/about_tv_introduce"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:text="This letter should state directly that you are applying for a specific position. After the introduction, the body of the letter should focus on your qualifications that best match the requirements for the position. Use statements noting your accomplishments whenever possible. This letter should state directly that you are applying for a specific position. After the introduction, the body of the letter should focus on your qualifications that best match the requirements for the position. Use statements noting your accomplishments whenever possible. This letter should state directly that you are applying for a specific position. After the introduction, the body of the letter should focus on your qualifications that best match the requirements for the position. Use statements noting your accomplishments whenever possible. This letter should state directly that you are applying for a specific position. After the introduction, the body of the letter should focus on your qualifications that best match the requirements for the position. Use statements noting your accomplishments whenever possible. This letter should state directly that you are applying for a specific position. After the introduction, the body of the letter should focus on your qualifications that best match the requirements for the position. Use statements noting your accomplishments whenever possible. This letter should state directly that you are applying for a specific position. After the introduction, the body of the letter should focus on your qualifications that best match the requirements for the position. Use statements noting your accomplishments whenever possible. This letter should state directly that you are applying for a specific position. After the introduction, the body of the letter should focus on your qualifications that best match the requirements for the position. Use statements noting your accomplishments whenever possible. This letter should state directly that you are applying for a specific position. After the introduction, the body of the letter should focus on your qualifications that best match the requirements for the position. Use statements noting your accomplishments whenever possible." />
-            </ScrollView>
-        </LinearLayout>
-    </LinearLayout>
+    <WebView
+        android:id="@+id/about_wv_introduce"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none" />
 
 </LinearLayout>
