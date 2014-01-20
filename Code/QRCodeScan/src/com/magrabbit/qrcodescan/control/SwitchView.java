@@ -105,9 +105,9 @@ public class SwitchView extends View {
 		img = BitmapFactory.decodeResource(getContext().getResources(),
 				R.drawable.com_appsphere_button_switch);
 		this.npd = (NinePatchDrawable) getResources().getDrawable(
-				R.drawable.com_appsphere_bg_switch_act);
+				R.drawable.bg_switch_on);
 		this.npd1 = (NinePatchDrawable) getResources().getDrawable(
-				R.drawable.com_appsphere_bg_switch_inact);
+				R.drawable.bg_switch_off);
 		TypedArray a = getContext().obtainStyledAttributes(attrs,
 				R.styleable.SwitchView);
 		int indexCount = a.getIndexCount();
