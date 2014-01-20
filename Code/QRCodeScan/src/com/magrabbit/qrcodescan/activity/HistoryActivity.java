@@ -347,6 +347,7 @@ public class HistoryActivity extends ParentActivity implements
 	}
 
 	public void onClick_DeleteAll(View v) {
+		// if (mListQRCodes.size() > 0) {
 		DialogConfirm dialog = new DialogConfirm(
 				HistoryActivity.this,
 				android.R.drawable.ic_dialog_alert,
@@ -375,6 +376,10 @@ public class HistoryActivity extends ParentActivity implements
 					}
 				});
 		dialog.show();
+		// } else {
+		// Toast.makeText(this, "There are no history to delete.",
+		// Toast.LENGTH_SHORT).show();
+		// }
 
 	}
 
@@ -382,8 +387,8 @@ public class HistoryActivity extends ParentActivity implements
 		mSwipeListView.setSwipeMode(swipeMode);
 		mSwipeListView.setSwipeActionLeft(swipeActionLeft);
 		mSwipeListView.setSwipeActionRight(swipeActionRight);
-		mSwipeListView.setOffsetLeft(mWidthTotal-mWidthBtDelete);
-		mSwipeListView.setOffsetRight(mWidthTotal-mWidthSocial);
+		mSwipeListView.setOffsetLeft(mWidthTotal - mWidthBtDelete);
+		mSwipeListView.setOffsetRight(mWidthTotal - mWidthSocial);
 		mSwipeListView.setAnimationTime(swipeAnimationTime);
 		mSwipeListView.setSwipeOpenOnLongPress(swipeOpenOnLongPress);
 	}
