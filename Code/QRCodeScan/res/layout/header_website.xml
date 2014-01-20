@@ -33,7 +33,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:background="@drawable/ic_history"
-        android:onClick="onClick_Bookmark" />
+        android:onClick="onClick_Share" />
 
     <TextView
         android:id="@+id/header_website_tv_title"

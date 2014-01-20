@@ -82,11 +82,9 @@ public class HistoryActivity extends ParentActivity implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_history);
-
 		mTvTitle = (TextView) findViewById(R.id.header_tv_title);
 		mTvTitle.setText(R.string.header_title_history);
 		mTvDelete = (TextView) findViewById(R.id.header_tv_right);
-		mTvDelete.setVisibility(View.VISIBLE);
 
 		// inflate layout for list view
 		mSwipeListView = (SwipeListView) findViewById(R.id.activity_history_lv);
@@ -122,6 +120,7 @@ public class HistoryActivity extends ParentActivity implements
 		});
 		// add the first section and item into list view
 		if (mListQRCodes.size() != 0) {
+			mTvDelete.setVisibility(View.VISIBLE);
 			items.add(new HistorySectionItem(mListQRCodes.get(0).getDate()));
 			items.add(new HistoryItem(mListQRCodes.get(0).getUrl()));
 
@@ -347,6 +346,9 @@ public class HistoryActivity extends ParentActivity implements
 	}
 
 	public void onClick_DeleteAll(View v) {
+		if (mListQRCodes == null || mListQRCodes.size() == 0) {
+			return;
+		}
 		DialogConfirm dialog = new DialogConfirm(
 				HistoryActivity.this,
 				android.R.drawable.ic_dialog_alert,
@@ -382,8 +384,8 @@ public class HistoryActivity extends ParentActivity implements
 		mSwipeListView.setSwipeMode(swipeMode);
 		mSwipeListView.setSwipeActionLeft(swipeActionLeft);
 		mSwipeListView.setSwipeActionRight(swipeActionRight);
-		mSwipeListView.setOffsetLeft(mWidthTotal-mWidthBtDelete);
-		mSwipeListView.setOffsetRight(mWidthTotal-mWidthSocial);
+		mSwipeListView.setOffsetLeft(mWidthTotal - mWidthBtDelete);
+		mSwipeListView.setOffsetRight(mWidthTotal - mWidthSocial);
 		mSwipeListView.setAnimationTime(swipeAnimationTime);
 		mSwipeListView.setSwipeOpenOnLongPress(swipeOpenOnLongPress);
 	}

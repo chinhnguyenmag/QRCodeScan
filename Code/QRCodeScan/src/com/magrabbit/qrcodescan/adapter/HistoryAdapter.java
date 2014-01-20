@@ -12,11 +12,9 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.magrabbit.qrcodescan.R;
@@ -35,13 +33,13 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 	View v;
 
 	public HistoryAdapter(Context context, ArrayList<Item> items,
-			HistoryAdapter_Process process,GetWidthListener listener ) {
+			HistoryAdapter_Process process, GetWidthListener listener) {
 		super(context, 0, items);
 		this.context = context;
 		this.items = new ArrayList<Item>();
 		this.items.addAll(items);
 		this.mProcess = process;
-		this.mListener=listener;
+		this.mListener = listener;
 		vi = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
@@ -69,7 +67,7 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 					holder = new ViewHolder();
 					HistoryItem ei = (HistoryItem) i;
 					v = vi.inflate(R.layout.list_item_entry, null);
-					holder.mBtnDelete = (Button) v
+					holder.mBtnDelete = (ImageButton) v
 							.findViewById(R.id.list_item_entry_btn_delete);
 					holder.mBtnSMS = (ImageButton) v
 							.findViewById(R.id.list_item_entry_btn_sms);
@@ -84,8 +82,9 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 							.findViewById(R.id.list_item_entry_btn_evernote);
 					holder.mTvContent = (TextView) v
 							.findViewById(R.id.list_item_entry_title);
-					holder.mRlSocial = (RelativeLayout) v.findViewById(R.id.list_item_entry_social);
-					
+					holder.mRlSocial = (RelativeLayout) v
+							.findViewById(R.id.list_item_entry_social);
+
 					ViewTreeObserver vto = holder.mBtnDelete
 							.getViewTreeObserver();
 					vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
@@ -93,7 +92,8 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 						@SuppressLint("NewApi")
 						@Override
 						public void onGlobalLayout() {
-							mListener.getWidthBtDelete(holder.mBtnDelete.getWidth());
+							mListener.getWidthBtDelete(holder.mBtnDelete
+									.getWidth());
 							if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
 								holder.mBtnDelete.getViewTreeObserver()
 										.removeOnGlobalLayoutListener(this);
@@ -122,14 +122,16 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 						}
 
 					});
-					
-					ViewTreeObserver vto3 = holder.mRlSocial.getViewTreeObserver();
+
+					ViewTreeObserver vto3 = holder.mRlSocial
+							.getViewTreeObserver();
 					vto3.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
 
 						@SuppressLint("NewApi")
 						@Override
 						public void onGlobalLayout() {
-							mListener.getWidthSocial(holder.mRlSocial.getWidth());
+							mListener.getWidthSocial(holder.mRlSocial
+									.getWidth());
 							if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
 								holder.mBtnDelete.getViewTreeObserver()
 										.removeOnGlobalLayoutListener(this);
@@ -224,7 +226,7 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 
 	private class ViewHolder {
 		RelativeLayout mRlSocial;
-		Button mBtnDelete;
+		ImageButton mBtnDelete;
 		ImageButton mBtnSMS;
 		ImageButton mBtnEmail;
 		ImageButton mBtnTwitter;
