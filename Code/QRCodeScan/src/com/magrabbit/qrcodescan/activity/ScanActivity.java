@@ -99,7 +99,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		mFrameCamera.addView(mPreview);
 
 		// Show warning dialog for Invalid URL
-		showInvalidURLDialog(ScanActivity.this);
+		createInvalidURLDialog(ScanActivity.this);
 	}
 
 	public void setupScanner() {
@@ -266,7 +266,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 
 	/* INVALID URL DIALOG */
 
-	public void showInvalidURLDialog(Context context) {
+	public void createInvalidURLDialog(Context context) {
 		alertDialogBuilder = new AlertDialog.Builder(context);
 
 		// set title

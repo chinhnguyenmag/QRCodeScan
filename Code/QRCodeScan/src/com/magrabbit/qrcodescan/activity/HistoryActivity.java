@@ -40,6 +40,7 @@ import com.magrabbit.qrcodescan.control.DatabaseHandler;
 import com.magrabbit.qrcodescan.customview.DialogConfirm;
 import com.magrabbit.qrcodescan.customview.DialogConfirm.ProcessDialogConfirm;
 import com.magrabbit.qrcodescan.customview.SlidingMenuCustom;
+import com.magrabbit.qrcodescan.listener.GetWidthListener;
 import com.magrabbit.qrcodescan.listener.MenuSlidingClickListener;
 import com.magrabbit.qrcodescan.model.HistoryItem;
 import com.magrabbit.qrcodescan.model.HistorySectionItem;
@@ -49,7 +50,7 @@ import com.magrabbit.qrcodescan.utils.SocialUtil;
 import com.magrabbit.qrcodescan.utils.StringExtraUtils;
 
 public class HistoryActivity extends ParentActivity implements
-		MenuSlidingClickListener {
+		MenuSlidingClickListener, GetWidthListener {
 
 	private HistoryAdapter mAdapter;
 	private ArrayList<Item> items = new ArrayList<Item>();
@@ -67,12 +68,15 @@ public class HistoryActivity extends ParentActivity implements
 	private boolean swipeOpenOnLongPress = true;
 	private boolean swipeCloseAllItemsWhenMoveList = true;
 	private long swipeAnimationTime = 0;
-	private float swipeOffsetLeft = 250;
+	private float swipeOffsetLeft = 300;
 	private float swipeOffsetRight = 100;
 	private int swipeActionLeft = SwipeListView.SWIPE_ACTION_REVEAL;
 	private int swipeActionRight = SwipeListView.SWIPE_ACTION_REVEAL;
 	private TextView mTvTitle;
 	private TextView mTvDelete;
+	private int mWidthBtDelete;
+	private int mWidthSocial;
+	private int mWidthTotal;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -84,25 +88,9 @@ public class HistoryActivity extends ParentActivity implements
 		mTvDelete = (TextView) findViewById(R.id.header_tv_right);
 		mTvDelete.setVisibility(View.VISIBLE);
 
-		// Determine screen size
-		if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE) {
-			Toast.makeText(this, "Large screen", Toast.LENGTH_LONG).show();
-
-		} else if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_NORMAL) {
-			Toast.makeText(this, "Normal sized screen", Toast.LENGTH_LONG)
-					.show();
-			swipeOffsetLeft = 250;
-		} else if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_SMALL) {
-			Toast.makeText(this, "Small sized screen", Toast.LENGTH_LONG)
-					.show();
-		} else {
-			Toast.makeText(this,
-					"Screen size is neither large, normal or small",
-					Toast.LENGTH_LONG).show();
-		}
-
 		// inflate layout for list view
 		mSwipeListView = (SwipeListView) findViewById(R.id.activity_history_lv);
+
 		mMenu = new SlidingMenuCustom(this, this);
 		mMenu.setTouchModeAboveMargin();
 
@@ -215,7 +203,7 @@ public class HistoryActivity extends ParentActivity implements
 						sendMail(mListQRCodes.get(position).getUrl().trim());
 					}
 
-				});
+				}, this);
 		mSwipeListView
 				.setSwipeListViewListener(new BaseSwipeListViewListener() {
 
@@ -320,7 +308,6 @@ public class HistoryActivity extends ParentActivity implements
 		// Set Adapter for List View
 		mSwipeListView.setAdapter(mAdapter);
 		mAdapter.notifyDataSetChanged();
-		reload();
 
 	}
 
@@ -395,16 +382,10 @@ public class HistoryActivity extends ParentActivity implements
 		mSwipeListView.setSwipeMode(swipeMode);
 		mSwipeListView.setSwipeActionLeft(swipeActionLeft);
 		mSwipeListView.setSwipeActionRight(swipeActionRight);
-		mSwipeListView.setOffsetLeft(convertDpToPixel(swipeOffsetLeft));
-		mSwipeListView.setOffsetRight(convertDpToPixel(swipeOffsetRight));
+		mSwipeListView.setOffsetLeft(mWidthTotal-mWidthBtDelete);
+		mSwipeListView.setOffsetRight(mWidthTotal-mWidthSocial);
 		mSwipeListView.setAnimationTime(swipeAnimationTime);
 		mSwipeListView.setSwipeOpenOnLongPress(swipeOpenOnLongPress);
-	}
-
-	public int convertDpToPixel(float dp) {
-		DisplayMetrics metrics = getResources().getDisplayMetrics();
-		float px = dp * (metrics.densityDpi / 160f);
-		return (int) px;
 	}
 
 	/**
@@ -564,5 +545,21 @@ public class HistoryActivity extends ParentActivity implements
 			Toast.makeText(this, "There are no email clients installed.",
 					Toast.LENGTH_SHORT).show();
 		}
+	}
+
+	@Override
+	public void getWidthBtDelete(int widthBtDelete) {
+		mWidthBtDelete = widthBtDelete;
+		reload();
+	}
+
+	@Override
+	public void getWidthSocial(int widthSocial) {
+		mWidthSocial = widthSocial;
+	}
+
+	@Override
+	public void getWidthTotal(int widthTotal) {
+		mWidthTotal = widthTotal;
 	}
 }

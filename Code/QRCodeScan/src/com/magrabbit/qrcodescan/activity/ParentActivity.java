@@ -4,10 +4,9 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.evernote.client.android.EvernoteSession;
+import com.evernote.client.android.EvernoteSession.EvernoteService;
 import com.magrabbit.qrcodescan.R;
 
 /**
@@ -30,7 +29,7 @@ public class ParentActivity extends Activity {
 	private static final String CONSUMER_KEY = "baocatsamac_77-3750";
 	private static final String CONSUMER_SECRET = "b87fff551b10093d";
 
-	private static final EvernoteSession.EvernoteService EVERNOTE_SERVICE = EvernoteSession.EvernoteService.SANDBOX;
+	private static final EvernoteSession.EvernoteService EVERNOTE_SERVICE = EvernoteSession.EvernoteService.PRODUCTION;
 
 	/**
 	 * ************************************************************************
