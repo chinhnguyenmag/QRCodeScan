@@ -104,13 +104,20 @@
             android:windowSoftInputMode="stateAlwaysHidden" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
                     android:host="twitterlogin"
                     android:scheme="x-oauthflow-twitter" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.ActivityPostToWall"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.Light.NoTitleBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
     </application>
 
 </manifest>
