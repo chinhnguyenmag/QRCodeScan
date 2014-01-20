@@ -17,10 +17,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -346,37 +344,39 @@ public class HistoryActivity extends ParentActivity implements
 	}
 
 	public void onClick_DeleteAll(View v) {
-		if (mListQRCodes == null || mListQRCodes.size() == 0) {
-			return;
-		}
-		DialogConfirm dialog = new DialogConfirm(
-				HistoryActivity.this,
-				android.R.drawable.ic_dialog_alert,
-				HistoryActivity.this
-						.getString(R.string.activity_history_delete_all_history_title),
-				HistoryActivity.this
-						.getString(R.string.activity_history_delete_all_history_confirm),
-				true, new ProcessDialogConfirm() {
+		if (mListQRCodes != null && mListQRCodes.size() > 0) {
+			DialogConfirm dialog = new DialogConfirm(
+					HistoryActivity.this,
+					android.R.drawable.ic_dialog_alert,
+					HistoryActivity.this
+							.getString(R.string.activity_history_delete_all_history_title),
+					HistoryActivity.this
+							.getString(R.string.activity_history_delete_all_history_confirm),
+					true, new ProcessDialogConfirm() {
 
-					@Override
-					public void click_Ok() {
+						@Override
+						public void click_Ok() {
 
-						// delete all QR Code from Database
-						for (QRCode code : mListQRCodes) {
-							mDataHandler.deleteQRCode(code);
+							// delete all QR Code from Database
+							for (QRCode code : mListQRCodes) {
+								mDataHandler.deleteQRCode(code);
+							}
+							items.clear();
+							mAdapter.notifyDataSetChanged();
+							mSwipeListView.setAdapter(mAdapter);
+
 						}
-						items.clear();
-						mAdapter.notifyDataSetChanged();
-						mSwipeListView.setAdapter(mAdapter);
 
-					}
+						@Override
+						public void click_Cancel() {
 
-					@Override
-					public void click_Cancel() {
-
-					}
-				});
-		dialog.show();
+						}
+					});
+			dialog.show();
+		} else {
+			Toast.makeText(this, "There are no history to delete.",
+					Toast.LENGTH_SHORT).show();
+		}
 
 	}
 

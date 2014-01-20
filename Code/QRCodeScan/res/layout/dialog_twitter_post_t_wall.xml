@@ -7,13 +7,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_bt"
+        android:background="@color/Orange"
         android:orientation="vertical" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/color_bt"
+            android:background="@color/Orange"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
             android:orientation="horizontal" >
@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:background="@drawable/button_forcus"
+                android:background="@drawable/button_forcus_browser"
                 android:padding="10dp"
                 android:textStyle="bold"
                 android:text="Cancel"
@@ -43,7 +43,7 @@
                 android:id="@+id/post_to_wall_bt_post"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_forcus"
+                android:background="@drawable/button_forcus_browser"
                 android:layout_marginRight="10dp"
                 android:padding="10dp"
                 android:textStyle="bold"
