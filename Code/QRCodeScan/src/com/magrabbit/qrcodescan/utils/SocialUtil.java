@@ -41,8 +41,8 @@ public class SocialUtil {
 	public static final String GOOGLE_APP_NAME = "MyMenu";
 
 	/* Twitter Constanst */
-	public static final String TWITTER_CONSUMER_KEY = "n5Uxq7r0n2imgb48UO5fBA";
-	public static final String TWITTER_CONSUMER_SECRET = "EDA35k4DwQrlR5C0tb8kebvTZUN2Ioxi2NSZCfpGo";
+//	public static final String TWITTER_CONSUMER_KEY = "n5Uxq7r0n2imgb48UO5fBA";
+//	public static final String TWITTER_CONSUMER_SECRET = "EDA35k4DwQrlR5C0tb8kebvTZUN2Ioxi2NSZCfpGo";
 
 	public static final String TWITTER_AUTH_KEY = "twitter_auth_key";
 	public static final String TWITTER_AUTH_SECRET_KEY = "twitter_auth_secret_key";
@@ -56,13 +56,12 @@ public class SocialUtil {
 	public static final String TWITTER_REQUEST_URL = "https://api.twitter.com/oauth/request_token";
 
 	/* Facebook Constans */
-	
+
 	/**
 	 * This is vu's facebook appid
 	 */
-	public static final String FACEBOOK_APPID = "476007965837161";
-	
-	
+	public static final String FACEBOOK_APPID = "1413450295564258";
+
 	public static final String FACEBOOK_SECRET_APPID = "d39c6c15302f553251f9949c40b0ea21";
 	public static final String FACEBOOK_ACCESS_TOKEN = "facebook_access_token";
 	public static final String FACEBOOK_EXPIRES = "facebook_expires_in";

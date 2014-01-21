@@ -31,7 +31,7 @@ public class PickTimeAdapter extends NumericWheelAdapter {
 			if (value == 95) {
 				return "Nerver";
 			}
-			return Integer.toString(value);
+			return Integer.toString(value)+"s";
 		}
 		return null;
 	}

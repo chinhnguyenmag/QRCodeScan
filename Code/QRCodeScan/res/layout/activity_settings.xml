@@ -48,12 +48,13 @@
                     android:gravity="left"
                     android:text="@string/sound" />
 
-                <com.magrabbit.qrcodescan.control.SwitchView
+                <ToggleButton
                     android:id="@+id/activity_settings_sv_sound"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:text_off=""
-                    app:text_on="" />
+                    android:background="@drawable/btn_toggle_bg"
+                    android:textOff=""
+                    android:textOn="" />
             </LinearLayout>
 
             <View
@@ -77,12 +78,13 @@
                     android:gravity="left"
                     android:text="@string/auto_open_url" />
 
-                <com.magrabbit.qrcodescan.control.SwitchView
+                <ToggleButton
                     android:id="@+id/activity_settings_sv_open_url"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:text_off=""
-                    app:text_on="" />
+                    android:background="@drawable/btn_toggle_bg"
+                    android:textOff=""
+                    android:textOn="" />
             </LinearLayout>
 
             <View
@@ -131,6 +133,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:background="@drawable/listview_selector"
+                android:gravity="center_vertical"
                 android:onClick="onClick_AutoClose"
                 android:orientation="horizontal"
                 android:paddingBottom="10dp"

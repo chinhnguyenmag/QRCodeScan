@@ -32,8 +32,8 @@ public class TwitterLoginActivity extends Activity {
 	public static final int TWITTER_LOGIN_RESULT_CODE_SUCCESS = 1;
 	public static final int TWITTER_LOGIN_RESULT_CODE_FAILURE = 2;
 
-	public static final String TWITTER_CONSUMER_KEY = "NAidezhC2jM3CZ5TV1lQg";
-	public static final String TWITTER_CONSUMER_SECRET = "IN6dec5mfLSbpE2tEBcEmejDfcNR9tM2DBvN8QFHxQ";
+	public static final String TWITTER_CONSUMER_KEY = "n5Uxq7r0n2imgb48UO5fBA";
+	public static final String TWITTER_CONSUMER_SECRET = "EDA35k4DwQrlR5C0tb8kebvTZUN2Ioxi2NSZCfpGo";
 
 	private WebView twitterLoginWebView;
 	private ProgressDialog mProgressDialog;

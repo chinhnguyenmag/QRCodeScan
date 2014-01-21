@@ -15,17 +15,18 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.facebook.android.DialogError;
 import com.facebook.android.Facebook;
 import com.facebook.android.Facebook.DialogListener;
 import com.facebook.android.FacebookError;
 import com.magrabbit.qrcodescan.R;
-import com.magrabbit.qrcodescan.control.SwitchView;
-import com.magrabbit.qrcodescan.control.SwitchView.OnSwitchChangeListener;
 import com.magrabbit.qrcodescan.customview.DialogPickTime;
 import com.magrabbit.qrcodescan.customview.DialogPickTime.ProcessDialogPickTime;
 import com.magrabbit.qrcodescan.customview.SlidingMenuCustom;
@@ -38,11 +39,11 @@ import com.magrabbit.qrcodescan.utils.SocialUtil;
  * 
  */
 public class SettingActivity extends Activity implements
-		MenuSlidingClickListener, OnSwitchChangeListener, OnClickListener {
+		MenuSlidingClickListener, OnClickListener {
 
 	private SlidingMenuCustom mMenu;
-	private SwitchView mSwitchViewSound;
-	private SwitchView mSwitchViewOpenUrl;
+	private ToggleButton mSwitchViewSound;
+	private ToggleButton mSwitchViewOpenUrl;
 	private AppPreferences mAppPreferences;
 	private TextView mTvTime;
 	private TextView mTvTitle;
@@ -63,8 +64,8 @@ public class SettingActivity extends Activity implements
 		mAppPreferences = new AppPreferences(this);
 		mMenu = new SlidingMenuCustom(this, this);
 		mMenu.setTouchModeAboveMargin();
-		mSwitchViewSound = (SwitchView) findViewById(R.id.activity_settings_sv_sound);
-		mSwitchViewOpenUrl = (SwitchView) findViewById(R.id.activity_settings_sv_open_url);
+		mSwitchViewSound = (ToggleButton) findViewById(R.id.activity_settings_sv_sound);
+		mSwitchViewOpenUrl = (ToggleButton) findViewById(R.id.activity_settings_sv_open_url);
 		mTvTime = (TextView) findViewById(R.id.activity_setting_tv_time);
 		mRlShareFacebook = (RelativeLayout) findViewById(R.id.setting_ll_social_facebook);
 		mRlShareSMS = (RelativeLayout) findViewById(R.id.setting_ll_social_message);
@@ -75,11 +76,26 @@ public class SettingActivity extends Activity implements
 		mRlShareTwitter.setOnClickListener(this);
 		mRlShareFacebook.setOnClickListener(this);
 
-		mSwitchViewSound.setOnSwitchChangeListener(this);
-		mSwitchViewOpenUrl.setOnSwitchChangeListener(this);
+		mSwitchViewSound
+				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
-		mSwitchViewSound.setSwitchOn(mAppPreferences.isSound());
-		mSwitchViewOpenUrl.setSwitchOn(mAppPreferences.isOpenUrl());
+					@Override
+					public void onCheckedChanged(CompoundButton arg0,
+							boolean isOn) {
+						mAppPreferences.setSound(isOn);
+					}
+				});
+
+		mSwitchViewOpenUrl
+				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+					@Override
+					public void onCheckedChanged(CompoundButton arg0,
+							boolean isOn) {
+						mAppPreferences.setOpenUrl(isOn);
+					}
+				});
+
 		if (mAppPreferences.getCloseUrlTime() == -1) {
 			mTvTime.setText("Nerver");
 		} else {
@@ -118,21 +134,6 @@ public class SettingActivity extends Activity implements
 	@Override
 	public void onSettingClickListener() {
 
-	}
-
-	@Override
-	public void onSwitchChanged(View view, boolean isOn) {
-
-		switch (view.getId()) {
-		case R.id.activity_settings_sv_sound:
-			mAppPreferences.setSound(isOn);
-			break;
-		case R.id.activity_settings_sv_open_url:
-			mAppPreferences.setOpenUrl(isOn);
-			break;
-		default:
-			break;
-		}
 	}
 
 	public void onClick_AutoClose(View v) {
@@ -262,7 +263,7 @@ public class SettingActivity extends Activity implements
 	}
 
 	/**
-	 * This method use to get access token from facebook 
+	 * This method use to get access token from facebook
 	 */
 	public void getAccessToken() {
 		String access_token = mFacebook.getAccessToken();

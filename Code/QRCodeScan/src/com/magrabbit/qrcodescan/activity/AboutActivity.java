@@ -1,9 +1,10 @@
 package com.magrabbit.qrcodescan.activity;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
 import android.widget.TextView;
 
@@ -16,7 +17,8 @@ import com.magrabbit.qrcodescan.utils.Utils;
  * @author vu le
  * 
  */
-public class AboutActivity extends Activity implements MenuSlidingClickListener {
+public class AboutActivity extends BaseActivity implements
+		MenuSlidingClickListener {
 
 	private SlidingMenuCustom mMenu;
 	private TextView mTvTitle;
@@ -30,14 +32,11 @@ public class AboutActivity extends Activity implements MenuSlidingClickListener 
 		mTvTitle = (TextView) findViewById(R.id.header_tv_title);
 		mTvTitle.setText(R.string.header_title_about);
 
-		mContent = Utils.getHtmlFromAsset(this, R.string.content_html);
 		mWvContent = (WebView) findViewById(R.id.about_wv_introduce);
-		mWvContent.setBackgroundColor(0x00000000);
-
-		mWvContent.loadDataWithBaseURL("file:///android_asset", mContent,
-				"text/html", "UTF-8", null);
-
+		setTransparentBackground();
 		mMenu = new SlidingMenuCustom(this, this);
+
+		new loadTask().execute();
 	}
 
 	public void onClick_Menu(View view) {
@@ -72,5 +71,38 @@ public class AboutActivity extends Activity implements MenuSlidingClickListener 
 		startActivity(new Intent(this, SettingActivity.class));
 		finish();
 		overridePendingTransition(0, 0);
+	}
+
+	public class loadTask extends AsyncTask<Void, Void, Void> {
+
+		@Override
+		protected void onPreExecute() {
+			showProgress();
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+
+			mContent = Utils.getHtmlFromAsset(AboutActivity.this,
+					R.string.content_html);
+
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
+			mWvContent.loadDataWithBaseURL("file:///android_asset", mContent,
+					"text/html", "UTF-8", null);
+			dismissProgress();
+		}
+
+	}
+
+	public void setTransparentBackground() {
+		mWvContent.setBackgroundColor(0x00000000);
+		mWvContent.getSettings().setLayoutAlgorithm(
+				LayoutAlgorithm.SINGLE_COLUMN);
+		mWvContent.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
 	}
 }

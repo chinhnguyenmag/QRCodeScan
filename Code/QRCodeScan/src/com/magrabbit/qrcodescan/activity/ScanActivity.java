@@ -66,54 +66,72 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_scan);
+		try {
 
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-		mTvTitle = (TextView) findViewById(R.id.header_tv_title);
-		mTvTitle.setText(R.string.header_title_scan);
-		mSlidingMenu = new SlidingMenuCustom(this, this);
+			mTvTitle = (TextView) findViewById(R.id.header_tv_title);
+			mTvTitle.setText(R.string.header_title_scan);
+			mSlidingMenu = new SlidingMenuCustom(this, this);
 
-		mPreference = new AppPreferences(ScanActivity.this);
+			mPreference = new AppPreferences(ScanActivity.this);
 
-		mDataHandler = new DatabaseHandler(this);
+			mDataHandler = new DatabaseHandler(this);
 
-		mFrameCamera = (FrameLayout) findViewById(R.id.activity_scan_camera);
+			mFrameCamera = (FrameLayout) findViewById(R.id.activity_scan_camera);
 
-		if (!isCameraAvailable()) {
-			// Cancel request if there is no rear-facing camera.
-			cancelRequest();
-			return;
+			if (!isCameraAvailable()) {
+				// Cancel request if there is no rear-facing camera.
+				cancelRequest();
+				return;
+			}
+
+			mAutoFocusHandler = new Handler();
+			mCamera = getCameraInstance();
+			// Create and configure the ImageScanner;
+			setupScanner();
+
+			// Create a RelativeLayout container that will hold a SurfaceView,
+			// and set it as the content of our activity.
+
+			// mPreview = new CameraPreview(this, this, autoFocusCB);
+			mPreview = new CameraPreviewNew(this, this, autoFocusCB);
+
+			mFrameCamera.addView(mPreview);
+
+			// Show warning dialog for Invalid URL
+			createInvalidURLDialog(ScanActivity.this);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
-		mAutoFocusHandler = new Handler();
-
-		// Create and configure the ImageScanner;
-		setupScanner();
-
-		// Create a RelativeLayout container that will hold a SurfaceView,
-		// and set it as the content of our activity.
-
-		// mPreview = new CameraPreview(this, this, autoFocusCB);
-		mPreview = new CameraPreviewNew(this, this, autoFocusCB);
-
-		mFrameCamera.addView(mPreview);
-
-		// Show warning dialog for Invalid URL
-		createInvalidURLDialog(ScanActivity.this);
 	}
 
 	public void setupScanner() {
-		mScanner = new ImageScanner();
-		mScanner.setConfig(0, Config.X_DENSITY, 3);
-		mScanner.setConfig(0, Config.Y_DENSITY, 3);
+		try {
+			mScanner = new ImageScanner();
+			mScanner.setConfig(0, Config.X_DENSITY, 3);
+			mScanner.setConfig(0, Config.Y_DENSITY, 3);
 
-		int[] symbols = new int[] { Symbol.QRCODE };
-		if (symbols != null) {
-			mScanner.setConfig(Symbol.NONE, Config.ENABLE, 0);
-			for (int symbol : symbols) {
-				mScanner.setConfig(symbol, Config.ENABLE, 1);
+			int[] symbols = new int[] { Symbol.QRCODE };
+			if (symbols != null) {
+				mScanner.setConfig(Symbol.NONE, Config.ENABLE, 0);
+				for (int symbol : symbols) {
+					mScanner.setConfig(symbol, Config.ENABLE, 1);
+				}
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+	}
+
+	/** A safe way to get an instance of the Camera object. */
+	public static Camera getCameraInstance() {
+		Camera c = null;
+		try {
+			c = Camera.open();
+		} catch (Exception e) {
+		}
+		return c;
 	}
 
 	@Override
@@ -121,7 +139,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		try {
 			super.onResume();
 			// Open the default i.e. the first rear facing camera.
-			mCamera = Camera.open();
+
 			if (mCamera == null) {
 				// Cancel request if mCamera is null.
 				cancelRequest();
@@ -142,21 +160,42 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	@Override
 	protected void onPause() {
 		super.onPause();
+		try {
+			// Because the Camera object is a shared resource, it's very
+			// important to release it when the activity is paused.
+			if (mCamera != null) {
+				mPreview.setCamera(null);
+				mCamera.cancelAutoFocus();
+				mCamera.setPreviewCallback(null);
+				mCamera.stopPreview();
+				mCamera.release();
 
-		// Because the Camera object is a shared resource, it's very
-		// important to release it when the activity is paused.
-		if (mCamera != null) {
-			mPreview.setCamera(null);
-			mCamera.cancelAutoFocus();
-			mCamera.setPreviewCallback(null);
-			mCamera.stopPreview();
-			mCamera.release();
+				/* Please Uncomment */
+				// mPreview.hideSurfaceView();
 
-			/* Please Uncomment */
-			// mPreview.hideSurfaceView();
+				mPreviewing = false;
+				mCamera = null;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-			mPreviewing = false;
-			mCamera = null;
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		try {
+			if (mPreference != null) {
+				mPreference = null;
+			}
+			if (mCamera != null) {
+				mCamera.stopPreview();
+				mCamera.setPreviewCallback(null);
+				mCamera.release();
+				mCamera = null;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -166,134 +205,155 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	}
 
 	public void cancelRequest() {
-		Intent dataIntent = new Intent();
-		dataIntent.putExtra(ERROR_INFO, "Camera unavailable");
-		setResult(Activity.RESULT_CANCELED, dataIntent);
-		finish();
+		try {
+			Intent dataIntent = new Intent();
+			dataIntent.putExtra(ERROR_INFO, "Camera unavailable");
+			setResult(Activity.RESULT_CANCELED, dataIntent);
+			finish();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void onPreviewFrame(byte[] data, Camera camera) {
-		Camera.Parameters parameters = camera.getParameters();
-		Camera.Size size = parameters.getPreviewSize();
+		try {
+			Camera.Parameters parameters = camera.getParameters();
+			Camera.Size size = parameters.getPreviewSize();
 
-		Image barcode = new Image(size.width, size.height, "Y800");
-		barcode.setData(data);
+			Image barcode = new Image(size.width, size.height, "Y800");
+			barcode.setData(data);
 
-		int result = mScanner.scanImage(barcode);
+			int result = mScanner.scanImage(barcode);
 
-		if (result != 0) {
-			// Turn off Camera Preview
-			mCamera.stopPreview();
-			mPreviewing = false;
-			SymbolSet syms = mScanner.getResults();
-			for (Symbol sym : syms) {
-				final String symData = sym.getData();
-				if (!TextUtils.isEmpty(symData)) {
-					// Check whether to play sound or not
-					if (mPreference.isSound()) {
-						playSound();
-					}
-					// Stop scanning
-					mCamera.cancelAutoFocus();
-					mCamera.setPreviewCallback(null);
-					if (symData.contains("cptr.it/?var=")
-							&& symData.contains("&id=")) {
-						// Save into Database
-						Format formatter = new SimpleDateFormat(
-								"EEE, MMM dd yyyy");
-
-						String date = formatter.format(new Date());
-						mDataHandler.addQRCode(new QRCode(date, symData));
-
-						// Get the QR Code after scanning and put it to Browser
-						// for
-						// searching on WebSite
-
-						if (mPreference.isOpenUrl()) {
-							Intent dataIntent = new Intent(ScanActivity.this,
-									BrowserActivity.class);
-							dataIntent.putExtra(
-									StringExtraUtils.KEY_SCAN_RESULT, symData);
-							startActivity(dataIntent);
-						} else {
-							DialogConfirm dialog = new DialogConfirm(
-									ScanActivity.this,
-									android.R.drawable.ic_dialog_alert,
-									ScanActivity.this
-											.getString(R.string.activity_scan_open_browser_title),
-									ScanActivity.this
-											.getString(R.string.activity_scan_open_url_confirm),
-									true, new ProcessDialogConfirm() {
-
-										@Override
-										public void click_Ok() {
-
-											Intent dataIntent = new Intent(
-													ScanActivity.this,
-													BrowserActivity.class);
-											dataIntent
-													.putExtra(
-															StringExtraUtils.KEY_SCAN_RESULT,
-															symData);
-											startActivity(dataIntent);
-
-										}
-
-										@Override
-										public void click_Cancel() {
-											// Start scanning again
-											mCamera.setPreviewCallback(ScanActivity.this);
-										}
-									});
-							dialog.show();
+			if (result != 0) {
+				// Turn off Camera Preview
+				mCamera.stopPreview();
+				mPreviewing = false;
+				SymbolSet syms = mScanner.getResults();
+				for (Symbol sym : syms) {
+					final String symData = sym.getData();
+					if (!TextUtils.isEmpty(symData)) {
+						// Check whether to play sound or not
+						if (mPreference.isSound()) {
+							playSound();
 						}
-						break;
+						// Stop scanning
+						mCamera.cancelAutoFocus();
+						mCamera.setPreviewCallback(null);
+						if (symData.contains("cptr.it/?var=")
+								&& symData.contains("&id=")) {
+							// Save into Database
+							Format formatter = new SimpleDateFormat(
+									"EEE, MMM dd yyyy");
 
-					} else {
-						// show it
-						if (!alertDialog.isShowing()) {
-							alertDialog.show();
+							String date = formatter.format(new Date());
+							mDataHandler.addQRCode(new QRCode(date, symData));
+
+							// Get the QR Code after scanning and put it to
+							// Browser
+							// for
+							// searching on WebSite
+
+							if (mPreference.isOpenUrl()) {
+								Intent dataIntent = new Intent(
+										ScanActivity.this,
+										BrowserActivity.class);
+								dataIntent.putExtra(
+										StringExtraUtils.KEY_SCAN_RESULT,
+										symData);
+								startActivity(dataIntent);
+							} else {
+								DialogConfirm dialog = new DialogConfirm(
+										ScanActivity.this,
+										android.R.drawable.ic_dialog_alert,
+										ScanActivity.this
+												.getString(R.string.activity_scan_open_browser_title),
+										ScanActivity.this
+												.getString(R.string.activity_scan_open_url_confirm),
+										true, new ProcessDialogConfirm() {
+
+											@Override
+											public void click_Ok() {
+
+												Intent dataIntent = new Intent(
+														ScanActivity.this,
+														BrowserActivity.class);
+												dataIntent
+														.putExtra(
+																StringExtraUtils.KEY_SCAN_RESULT,
+																symData);
+												startActivity(dataIntent);
+
+											}
+
+											@Override
+											public void click_Cancel() {
+												// Start scanning again
+												mCamera.setPreviewCallback(ScanActivity.this);
+											}
+										});
+								dialog.show();
+							}
+							break;
+
+						} else {
+							// show it
+							if (!alertDialog.isShowing()) {
+								alertDialog.show();
+							}
 						}
 					}
 				}
-			}
-			// Turn on Camera Preview
-			mCamera.startPreview();
-			mPreviewing = true;
+				// Turn on Camera Preview
+				mCamera.startPreview();
+				mPreviewing = true;
 
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
 	/* INVALID URL DIALOG */
 
 	public void createInvalidURLDialog(Context context) {
-		alertDialogBuilder = new AlertDialog.Builder(context);
+		try {
+			alertDialogBuilder = new AlertDialog.Builder(context);
 
-		// set title
-		alertDialogBuilder.setTitle(context.getResources().getString(
-				R.string.activity_scan_invalid_url_title));
+			// set title
+			alertDialogBuilder.setTitle(context.getResources().getString(
+					R.string.activity_scan_invalid_url_title));
 
-		// set dialog message
-		alertDialogBuilder
-				.setMessage(
-						context.getResources().getString(
-								R.string.activity_scan_invalid_url_message))
-				.setCancelable(false)
-				.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.cancel();
-						startPreviewAgain();
-					}
-				}); // create alert dialog
-		alertDialog = alertDialogBuilder.create();
+			// set dialog message
+			alertDialogBuilder
+					.setMessage(
+							context.getResources().getString(
+									R.string.activity_scan_invalid_url_message))
+					.setCancelable(false)
+					.setPositiveButton("Ok",
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+									dialog.cancel();
+									startPreviewAgain();
+								}
+							}); // create alert dialog
+			alertDialog = alertDialogBuilder.create();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void startPreviewAgain() {
-		// Turn on Camera Preview
-		mCamera.startPreview();
-		mPreviewing = true;
-		// Start scanning again
-		mCamera.setPreviewCallback(ScanActivity.this);
+		try {
+			// Turn on Camera Preview
+			mCamera.startPreview();
+			mPreviewing = true;
+			// Start scanning again
+			mCamera.setPreviewCallback(ScanActivity.this);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private Runnable doAutoFocus = new Runnable() {
@@ -329,50 +389,56 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 
 	}
 
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		if (mPreference != null) {
-			mPreference = null;
-		}
-		if (mCamera != null) {
-			mCamera.stopPreview();
-			mCamera.setPreviewCallback(null);
-			mCamera.release();
-			mCamera = null;
-		}
-	}
-
 	public void onClick_Menu(View view) {
-		if (mSlidingMenu == null) {
-			mSlidingMenu = new SlidingMenuCustom(this, this);
+		try {
+			if (mSlidingMenu == null) {
+				mSlidingMenu = new SlidingMenuCustom(this, this);
+			}
+			mSlidingMenu.toggle();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		mSlidingMenu.toggle();
 	}
 
 	@Override
 	public void onScannerClickListener() {
-		mSlidingMenu.toggle();
+		try {
+			mSlidingMenu.toggle();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void onHistoryClickListener() {
-		startActivity(new Intent(ScanActivity.this, HistoryActivity.class));
-		finish();
-		overridePendingTransition(0, 0);
+		try {
+			startActivity(new Intent(ScanActivity.this, HistoryActivity.class));
+			finish();
+			overridePendingTransition(0, 0);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void onAboutClickListener() {
-		startActivity(new Intent(this, AboutActivity.class));
-		finish();
-		overridePendingTransition(0, 0);
+		try {
+			startActivity(new Intent(this, AboutActivity.class));
+			finish();
+			overridePendingTransition(0, 0);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void onSettingClickListener() {
-		startActivity(new Intent(ScanActivity.this, SettingActivity.class));
-		finish();
-		overridePendingTransition(0, 0);
+		try {
+			startActivity(new Intent(ScanActivity.this, SettingActivity.class));
+			finish();
+			overridePendingTransition(0, 0);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
