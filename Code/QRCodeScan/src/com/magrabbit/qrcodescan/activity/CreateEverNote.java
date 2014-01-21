@@ -76,8 +76,8 @@ public class CreateEverNote extends ParentActivity {
 		note.setTitle(title);
 
 		// TODO: line breaks need to be converted to render in ENML
-		note.setContent(EvernoteUtil.NOTE_PREFIX + content
-				+ EvernoteUtil.NOTE_SUFFIX);
+		note.setContent(EvernoteUtil.NOTE_PREFIX
+				+ content.replace("&", "&amp;") + EvernoteUtil.NOTE_SUFFIX);
 
 		// If User has selected a notebook guid, assign it now
 		if (!TextUtils.isEmpty(mSelectedNotebookGuid)) {
