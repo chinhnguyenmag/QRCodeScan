@@ -87,7 +87,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 			}
 
 			mAutoFocusHandler = new Handler();
-			mCamera = getCameraInstance();
+			// mCamera = getCameraInstance();
 			// Create and configure the ImageScanner;
 			setupScanner();
 
@@ -139,7 +139,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		try {
 			super.onResume();
 			// Open the default i.e. the first rear facing camera.
-
+			mCamera = Camera.open();
 			if (mCamera == null) {
 				// Cancel request if mCamera is null.
 				cancelRequest();

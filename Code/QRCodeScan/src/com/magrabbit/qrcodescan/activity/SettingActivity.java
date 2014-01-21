@@ -76,6 +76,8 @@ public class SettingActivity extends Activity implements
 		mRlShareTwitter.setOnClickListener(this);
 		mRlShareFacebook.setOnClickListener(this);
 
+		mSwitchViewSound.setChecked(mAppPreferences.isSound());
+		mSwitchViewOpenUrl.setChecked(mAppPreferences.isOpenUrl());
 		mSwitchViewSound
 				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
