@@ -24,6 +24,7 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.magrabbit.qrcodescan.R;
@@ -47,7 +48,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	private ImageScanner mScanner;
 	private Handler mAutoFocusHandler;
 	private boolean mPreviewing = true;
-	private FrameLayout mFrameCamera;
+	private RelativeLayout mFrameCamera;
 	// Application Preference
 	private AppPreferences mPreference;
 	// For Sliding Menu
@@ -77,7 +78,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 
 		mDataHandler = new DatabaseHandler(this);
 
-		mFrameCamera = (FrameLayout) findViewById(R.id.activity_scan_camera);
+		mFrameCamera = (RelativeLayout) findViewById(R.id.activity_scan_camera);
 
 		if (!isCameraAvailable()) {
 			// Cancel request if there is no rear-facing camera.
