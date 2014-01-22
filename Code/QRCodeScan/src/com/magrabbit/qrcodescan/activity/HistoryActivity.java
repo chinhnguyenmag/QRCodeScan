@@ -204,6 +204,7 @@ public class HistoryActivity extends ParentActivity implements
 					}
 
 				}, this);
+		
 		mSwipeListView
 				.setSwipeListViewListener(new BaseSwipeListViewListener() {
 
