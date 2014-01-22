@@ -35,7 +35,7 @@ public class SplashActivity extends Activity {
 			try {
 
 				startActivity(new Intent(SplashActivity.this,
-						ScanActivity.class));
+						HistoryActivity.class));
 				finish();
 
 			} catch (Exception e) {
