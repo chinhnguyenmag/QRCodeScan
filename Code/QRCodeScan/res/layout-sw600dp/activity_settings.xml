@@ -168,7 +168,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
-                    android:gravity="right"
+                    android:gravity="right|center_vertical"
                     android:textColor="@android:color/darker_gray"
                     android:textSize="@dimen/campaign_textfontsize" />
 
@@ -176,6 +176,7 @@
                     android:id="@+id/settings_ib_auto_close"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginRight="15dp"
                     android:background="@drawable/ic_arrow"
                     android:contentDescription="@string/common_imagebutton_description"
