@@ -98,7 +98,8 @@ public class HistoryActivity extends ParentActivity implements
 
 			@Override
 			public int compare(QRCode lhs, QRCode rhs) {
-				SimpleDateFormat form = new SimpleDateFormat("EEE, MMM dd yyyy");
+				SimpleDateFormat form = new SimpleDateFormat(
+						"EEEE, MMMM dd yyyy");
 
 				Date d1 = null;
 				Date d2 = null;
@@ -140,7 +141,7 @@ public class HistoryActivity extends ParentActivity implements
 				new HistoryAdapter_Process() {
 
 					@Override
-					public void delete_item(final int position) {
+					public void delete_item(final int position_view,final int position_codes) {
 						DialogConfirm dialog = new DialogConfirm(
 								HistoryActivity.this,
 								android.R.drawable.ic_dialog_alert,
@@ -152,14 +153,23 @@ public class HistoryActivity extends ParentActivity implements
 
 									@Override
 									public void click_Ok() {
-
+										int pos1 = position_view; 
+										int pos2 = position_codes;
 										// delete from database
+										mListQRCodes.remove(position_codes);
 										mDataHandler.deleteQRCode(mListQRCodes
-												.get(position));
-										items.remove(position);
+												.get(position_codes));
+										
+										items.remove(position_view);
+										if(items.size() == 1){
+											items.clear();
+										}
 										mAdapter.notifyDataSetChanged();
 										mSwipeListView.setAdapter(mAdapter);
-
+										// Disable Delete All Button
+										if (mListQRCodes.size() == 0) {
+											mTvDelete.setVisibility(View.INVISIBLE);
+										}
 									}
 
 									@Override
@@ -305,6 +315,11 @@ public class HistoryActivity extends ParentActivity implements
 		// Set Adapter for List View
 		mSwipeListView.setAdapter(mAdapter);
 		mAdapter.notifyDataSetChanged();
+
+		// Disable Delete All Button
+		if (mListQRCodes.size() == 0) {
+			mTvDelete.setVisibility(View.INVISIBLE);
+		}
 
 	}
 

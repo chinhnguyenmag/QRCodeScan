@@ -3,6 +3,7 @@ package com.magrabbit.qrcodescan.activity;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import net.sourceforge.zbar.Config;
 import net.sourceforge.zbar.Image;
@@ -67,7 +68,6 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_scan);
 		try {
-
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 			mTvTitle = (TextView) findViewById(R.id.header_tv_title);
@@ -90,14 +90,6 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 			// mCamera = getCameraInstance();
 			// Create and configure the ImageScanner;
 			setupScanner();
-
-			// Create a RelativeLayout container that will hold a SurfaceView,
-			// and set it as the content of our activity.
-
-			// mPreview = new CameraPreview(this, this, autoFocusCB);
-			mPreview = new CameraPreviewNew(this, this, autoFocusCB);
-
-			mFrameCamera.addView(mPreview);
 
 			// Show warning dialog for Invalid URL
 			createInvalidURLDialog(ScanActivity.this);
@@ -145,10 +137,11 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 				cancelRequest();
 				return;
 			}
-
+			/* create layout for SurfaceView here */
+			mPreview = new CameraPreviewNew(this, this, autoFocusCB);
+			mFrameCamera.addView(mPreview);
+			
 			mPreview.setCamera(mCamera);
-			/* Please Uncomment */
-			// mPreview.showSurfaceView();
 
 			mPreviewing = true;
 		} catch (Exception e) {
@@ -170,8 +163,9 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 				mCamera.stopPreview();
 				mCamera.release();
 
-				/* Please Uncomment */
-				// mPreview.hideSurfaceView();
+				// remove layout Camera
+				mFrameCamera.removeView(mPreview);
+				mPreview = null;
 
 				mPreviewing = false;
 				mCamera = null;
@@ -244,8 +238,11 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 								&& symData.contains("&id=")) {
 							// Save into Database
 							Format formatter = new SimpleDateFormat(
-									"EEE, MMM dd yyyy");
+									"EEEE, MMMM dd yyyy", Locale.US);
 
+							// DateFormat formatter =
+							// DateFormat.getDateInstance(
+							// DateFormat.LONG, Locale.US);
 							String date = formatter.format(new Date());
 							mDataHandler.addQRCode(new QRCode(date, symData));
 

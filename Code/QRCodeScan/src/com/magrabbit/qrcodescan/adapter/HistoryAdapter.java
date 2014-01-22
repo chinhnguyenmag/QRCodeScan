@@ -151,8 +151,11 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 
 						@Override
 						public void onClick(View v) {
-							mProcess.delete_item(position
+							mProcess.delete_item(position,position
 									- calculateNumberSectionBefore(position));
+							int pos1 = position;
+							int pos2 = position
+									- calculateNumberSectionBefore(position);
 						}
 					});
 					holder.mBtnEvernote
@@ -236,7 +239,7 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 	}
 
 	public abstract static class HistoryAdapter_Process {
-		public abstract void delete_item(int position);
+		public abstract void delete_item(int position_view, int position_codes);
 
 		public abstract void click_evernote(int position);
 
