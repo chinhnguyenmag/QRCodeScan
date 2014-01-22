@@ -30,6 +30,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="5dp"
+                    android:textSize="@dimen/campaign_textfont_title"
                     android:text="@string/scanner" />
             </LinearLayout>
 
@@ -49,7 +50,8 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:text="@string/sound" />
+                    android:text="@string/sound"
+                    android:textSize="@dimen/campaign_textfontsize" />
 
                 <ToggleButton
                     android:id="@+id/activity_settings_sv_sound"
@@ -82,7 +84,8 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:text="@string/auto_open_url" />
+                    android:text="@string/auto_open_url"
+                    android:textSize="@dimen/campaign_textfontsize" />
 
                 <ToggleButton
                     android:id="@+id/activity_settings_sv_open_url"
@@ -115,7 +118,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="left"
-                    android:text="@string/url_profile" />
+                    android:text="@string/url_profile"
+                    android:textSize="@dimen/campaign_textfontsize" />
 
                 <TextView
                     android:layout_width="fill_parent"
@@ -124,7 +128,8 @@
                     android:layout_marginRight="25dp"
                     android:gravity="right"
                     android:text="@string/link"
-                    android:textColor="@android:color/darker_gray" />
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/campaign_textfontsize" />
             </LinearLayout>
 
             <View
@@ -152,7 +157,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="left"
-                    android:text="@string/auto_close" />
+                    android:text="@string/auto_close"
+                    android:textSize="@dimen/campaign_textfontsize" />
 
                 <TextView
                     android:id="@+id/activity_setting_tv_time"
@@ -163,7 +169,8 @@
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:textColor="@android:color/darker_gray" />
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/campaign_textfontsize" />
 
                 <ImageButton
                     android:id="@+id/settings_ib_auto_close"
@@ -185,6 +192,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="5dp"
+                    android:textSize="@dimen/campaign_textfont_title"
                     android:text="@string/share" />
             </LinearLayout>
 
@@ -219,7 +227,8 @@
                     android:layout_toLeftOf="@+id/settings_ib_share_message"
                     android:layout_toRightOf="@+id/setting_ic_sms"
                     android:gravity="left"
-                    android:text="@string/message" />
+                    android:text="@string/message"
+                    android:textSize="@dimen/campaign_textfontsize" />
 
                 <ImageButton
                     android:id="@+id/settings_ib_share_message"
@@ -246,7 +255,7 @@
                 android:layout_marginLeft="20dp"
                 android:background="@drawable/listview_selector"
                 android:orientation="horizontal"
-                 android:paddingBottom="15dp"
+                android:paddingBottom="15dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:paddingTop="15dp" >
@@ -270,7 +279,8 @@
                     android:layout_toLeftOf="@+id/settings_ib_share_mail"
                     android:layout_toRightOf="@+id/setting_ic_mail"
                     android:gravity="left"
-                    android:text="@string/mail" />
+                    android:text="@string/mail"
+                    android:textSize="@dimen/campaign_textfontsize" />
 
                 <ImageButton
                     android:id="@+id/settings_ib_share_mail"
@@ -304,7 +314,7 @@
 
                 <ImageView
                     android:id="@+id/setting_ic_twitter"
-                   android:layout_width="40dp"
+                    android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
@@ -321,7 +331,8 @@
                     android:layout_toLeftOf="@+id/settings_ib_share_twitter"
                     android:layout_toRightOf="@+id/setting_ic_twitter"
                     android:gravity="left"
-                    android:text="@string/twitter" />
+                    android:text="@string/twitter"
+                    android:textSize="@dimen/campaign_textfontsize" />
 
                 <ImageButton
                     android:id="@+id/settings_ib_share_twitter"
@@ -355,7 +366,7 @@
 
                 <ImageView
                     android:id="@+id/setting_ic_facebook"
-                   android:layout_width="40dp"
+                    android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
@@ -372,7 +383,8 @@
                     android:layout_toLeftOf="@+id/settings_ib_share_facebook"
                     android:layout_toRightOf="@+id/setting_ic_facebook"
                     android:gravity="left"
-                    android:text="@string/facebook" />
+                    android:text="@string/facebook"
+                    android:textSize="@dimen/campaign_textfontsize" />
 
                 <ImageButton
                     android:id="@+id/settings_ib_share_facebook"

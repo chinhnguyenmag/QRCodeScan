@@ -14,6 +14,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
+             android:textSize="@dimen/campaign_textfont_title"
             android:textColor="#9E9E9E" />
     </LinearLayout>
 

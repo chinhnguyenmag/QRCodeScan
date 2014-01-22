@@ -24,7 +24,7 @@
         android:layout_toLeftOf="@+id/header_tv_right"
         android:layout_toRightOf="@+id/header_bt_menu"
         android:gravity="center"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="@dimen/campaign_textfont_header"
         android:textColor="@color/White" />
 
     <TextView
@@ -38,6 +38,7 @@
         android:clickable="true"
         android:gravity="center_vertical"
         android:onClick="onClick_DeleteAll"
+        android:textSize="@dimen/campaign_textfont_title"
         android:text="@string/activity_history_header_deleteall"
         android:textColor="@android:color/white"
         android:visibility="gone" />
