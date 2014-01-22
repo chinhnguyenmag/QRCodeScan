@@ -3,10 +3,12 @@ package com.magrabbit.qrcodescan.activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.magrabbit.qrcodescan.R;
 import com.magrabbit.qrcodescan.customview.SlidingMenuCustom;
@@ -24,6 +26,8 @@ public class AboutActivity extends BaseActivity implements
 	private TextView mTvTitle;
 	WebView mWvContent;
 	String mContent = "";
+	private long lastPressedTime;
+	private static final int PERIOD = 2000;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -104,5 +108,23 @@ public class AboutActivity extends BaseActivity implements
 		mWvContent.getSettings().setLayoutAlgorithm(
 				LayoutAlgorithm.SINGLE_COLUMN);
 		mWvContent.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+			switch (event.getAction()) {
+			case KeyEvent.ACTION_DOWN:
+				if (event.getDownTime() - lastPressedTime < PERIOD) {
+					finish();
+				} else {
+					Toast.makeText(getApplicationContext(),
+							"Press again to exit.", Toast.LENGTH_SHORT).show();
+					lastPressedTime = event.getEventTime();
+				}
+				return true;
+			}
+		}
+		return false;
 	}
 }
