@@ -240,8 +240,8 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 						// Stop scanning
 						mCamera.cancelAutoFocus();
 						mCamera.setPreviewCallback(null);
-						if (symData.contains("cptr.it/?var=")
-								&& symData.contains("&id=")) {
+						// if (symData.contains("cptr.it/?var=")
+						// && symData.contains("&id=")) {
 							// Save into Database
 							Format formatter = new SimpleDateFormat(
 									"EEE, MMM dd yyyy");
@@ -296,12 +296,12 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 							}
 							break;
 
-						} else {
-							// show it
-							if (!alertDialog.isShowing()) {
-								alertDialog.show();
-							}
-						}
+//						} else {
+//							// show it
+//							if (!alertDialog.isShowing()) {
+//								alertDialog.show();
+//							}
+//						}
 					}
 				}
 				// Turn on Camera Preview
