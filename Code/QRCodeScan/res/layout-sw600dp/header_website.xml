@@ -25,6 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Back"
+            android:textSize="@dimen/campaign_textfontsize"
             android:textColor="@color/White" />
     </LinearLayout>
 
@@ -49,7 +50,7 @@
         android:layout_toRightOf="@id/header_website_ib_back"
         android:gravity="center"
         android:singleLine="true"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+         android:textSize="@dimen/campaign_textfont_title"
         android:textColor="@color/White" />
 
 </RelativeLayout>

@@ -24,8 +24,8 @@
                 android:background="@drawable/button_forcus_browser"
                 android:padding="10dp"
                 android:text="Cancel"
-                android:textSize="24sp"
                 android:textColor="@android:color/white"
+                android:textSize="@dimen/campaign_textfont_header"
                 android:textStyle="bold" />
 
             <TextView
@@ -35,7 +35,7 @@
                 android:gravity="center"
                 android:text="Post To Wall"
                 android:textColor="@android:color/white"
-                android:textSize="20sp"
+                android:textSize="@dimen/campaign_textfont_header"
                 android:textStyle="bold" />
 
             <Button
@@ -45,9 +45,9 @@
                 android:layout_marginRight="10dp"
                 android:background="@drawable/button_forcus_browser"
                 android:padding="30dp"
-                android:textSize="24sp"
                 android:text="Post"
                 android:textColor="@android:color/white"
+                android:textSize="@dimen/campaign_textfont_header"
                 android:textStyle="bold" />
         </LinearLayout>
 
