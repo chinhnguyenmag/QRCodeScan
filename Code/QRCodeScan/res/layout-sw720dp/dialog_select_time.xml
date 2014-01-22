@@ -37,8 +37,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:text="Pick time"
-                     android:textSize="@dimen/campaign_textfont_header"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/campaign_textfont_header" />
             </LinearLayout>
 
             <View
@@ -68,8 +68,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/button_cancel"
                 android:text="@string/cancel"
-                 android:textSize="@dimen/campaign_textfont_title"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/campaign_textfontsize" />
 
             <Button
                 android:id="@+id/dialog_select_time_bt_Ok"
@@ -79,8 +79,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/button_submit"
                 android:text="@string/ok"
-                android:textSize="@dimen/campaign_textfont_title"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/campaign_textfontsize" />
         </LinearLayout>
     </LinearLayout>
 
