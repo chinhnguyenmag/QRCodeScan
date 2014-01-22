@@ -13,6 +13,7 @@ import android.content.pm.Signature;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CompoundButton;
@@ -53,6 +54,8 @@ public class SettingActivity extends Activity implements
 	private RelativeLayout mRlShareTwitter;
 	private Facebook mFacebook = new Facebook(SocialUtil.FACEBOOK_APPID);
 	private SharedPreferences mSharedPreferences;
+	private long lastPressedTime;
+	private static final int PERIOD = 2000;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +79,8 @@ public class SettingActivity extends Activity implements
 		mRlShareTwitter.setOnClickListener(this);
 		mRlShareFacebook.setOnClickListener(this);
 
+		mSwitchViewSound.setChecked(mAppPreferences.isSound());
+		mSwitchViewOpenUrl.setChecked(mAppPreferences.isOpenUrl());
 		mSwitchViewSound
 				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
@@ -315,6 +320,37 @@ public class SettingActivity extends Activity implements
 			Toast.makeText(this, "Please insert your simcard.",
 					Toast.LENGTH_SHORT).show();
 		}
+	}
+
+	// @Override
+	// public void onBackPressed() {
+	// if (count == 1) {
+	// count = 0;
+	// finish();
+	// } else {
+	// Toast.makeText(this, "Press Back again to exit", Toast.LENGTH_SHORT)
+	// .show();
+	// count++;
+	// }
+	// return;
+	// }
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+			switch (event.getAction()) {
+			case KeyEvent.ACTION_DOWN:
+				if (event.getDownTime() - lastPressedTime < PERIOD) {
+					finish();
+				} else {
+					Toast.makeText(getApplicationContext(),
+							"Press again to exit.", Toast.LENGTH_SHORT).show();
+					lastPressedTime = event.getEventTime();
+				}
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override

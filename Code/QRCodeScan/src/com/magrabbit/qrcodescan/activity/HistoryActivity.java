@@ -20,6 +20,7 @@ import android.content.pm.Signature;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -75,6 +76,8 @@ public class HistoryActivity extends ParentActivity implements
 	private int mWidthBtDelete;
 	private int mWidthSocial;
 	private int mWidthTotal;
+	private long lastPressedTime;
+	private static final int PERIOD = 2000;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -564,5 +567,23 @@ public class HistoryActivity extends ParentActivity implements
 	@Override
 	public void getWidthTotal(int widthTotal) {
 		mWidthTotal = widthTotal;
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+			switch (event.getAction()) {
+			case KeyEvent.ACTION_DOWN:
+				if (event.getDownTime() - lastPressedTime < PERIOD) {
+					finish();
+				} else {
+					Toast.makeText(getApplicationContext(),
+							"Press again to exit.", Toast.LENGTH_SHORT).show();
+					lastPressedTime = event.getEventTime();
+				}
+				return true;
+			}
+		}
+		return false;
 	}
 }

@@ -22,11 +22,13 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.magrabbit.qrcodescan.R;
 import com.magrabbit.qrcodescan.control.DatabaseHandler;
@@ -59,6 +61,8 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	private TextView mTvTitle;
 	private AlertDialog.Builder alertDialogBuilder;
 	private AlertDialog alertDialog;
+	private long lastPressedTime;
+	private static final int PERIOD = 2000;
 
 	static {
 		System.loadLibrary("iconv");
@@ -87,7 +91,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 			}
 
 			mAutoFocusHandler = new Handler();
-			mCamera = getCameraInstance();
+			// mCamera = getCameraInstance();
 			// Create and configure the ImageScanner;
 			setupScanner();
 
@@ -138,7 +142,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		try {
 			super.onResume();
 			// Open the default i.e. the first rear facing camera.
-
+			mCamera = Camera.open();
 			if (mCamera == null) {
 				// Cancel request if mCamera is null.
 				cancelRequest();
@@ -239,8 +243,8 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 						// Stop scanning
 						mCamera.cancelAutoFocus();
 						mCamera.setPreviewCallback(null);
-						if (symData.contains("cptr.it/?var=")
-								&& symData.contains("&id=")) {
+						// if (symData.contains("cptr.it/?var=")
+						// && symData.contains("&id=")) {
 							// Save into Database
 							Format formatter = new SimpleDateFormat(
 									"EEE, MMM dd yyyy");
@@ -295,12 +299,12 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 							}
 							break;
 
-						} else {
-							// show it
-							if (!alertDialog.isShowing()) {
-								alertDialog.show();
-							}
-						}
+//						} else {
+//							// show it
+//							if (!alertDialog.isShowing()) {
+//								alertDialog.show();
+//							}
+//						}
 					}
 				}
 				// Turn on Camera Preview
@@ -439,5 +443,23 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+			switch (event.getAction()) {
+			case KeyEvent.ACTION_DOWN:
+				if (event.getDownTime() - lastPressedTime < PERIOD) {
+					finish();
+				} else {
+					Toast.makeText(getApplicationContext(),
+							"Press again to exit.", Toast.LENGTH_SHORT).show();
+					lastPressedTime = event.getEventTime();
+				}
+				return true;
+			}
+		}
+		return false;
 	}
 }
