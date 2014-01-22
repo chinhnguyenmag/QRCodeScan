@@ -17,6 +17,7 @@ limitations under the License.
 
 package com.appspheregroup.android.swichview;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -96,8 +97,8 @@ public class SwitchView extends View {
 		mTextPaint.setTextSize(DEFAULT_TEXT_SIZE);
 		mTextPaint.setColor(Color.WHITE);
 		img = BitmapFactory.decodeResource(getContext().getResources(),R.drawable.com_appsphere_button_switch);
-		this.npd = (NinePatchDrawable) getResources().getDrawable(R.drawable.com_appsphere_bg_switch_act);
-		this.npd1 = (NinePatchDrawable) getResources().getDrawable(R.drawable.com_appsphere_bg_switch_inact);
+		this.npd = (NinePatchDrawable) getResources().getDrawable(R.drawable.bg_switch_on);
+		this.npd1 = (NinePatchDrawable) getResources().getDrawable(R.drawable.bg_switch_off);
 		TypedArray a = getContext().obtainStyledAttributes(attrs,R.styleable.SwitchView);
 		int indexCount=a.getIndexCount();
 		for(int i=0;i<indexCount;++i)
@@ -153,6 +154,7 @@ public class SwitchView extends View {
 		this.mSwitchChangeListener = mSwitchChangeListener;
 	}
 
+	@SuppressLint("WrongCall")
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);

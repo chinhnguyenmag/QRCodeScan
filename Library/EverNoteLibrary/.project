@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
+<<<<<<< HEAD
 	<name>EverNoteLibrary</name>
+=======
+	<name>libraryEverNote</name>
+>>>>>>> 7d2bd105b2f8d4f0bb631b29f9fe304185689142
 	<comment></comment>
 	<projects>
 	</projects>

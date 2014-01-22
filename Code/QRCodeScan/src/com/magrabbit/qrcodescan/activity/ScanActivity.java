@@ -25,6 +25,8 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -79,10 +81,8 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 			mSlidingMenu = new SlidingMenuCustom(this, this);
 
 			mPreference = new AppPreferences(ScanActivity.this);
-
-			mDataHandler = new DatabaseHandler(this);
-
 			mFrameCamera = (FrameLayout) findViewById(R.id.activity_scan_camera);
+			mDataHandler = new DatabaseHandler(this);
 
 			if (!isCameraAvailable()) {
 				// Cancel request if there is no rear-facing camera.
@@ -100,9 +100,8 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 
 			// mPreview = new CameraPreview(this, this, autoFocusCB);
 			mPreview = new CameraPreviewNew(this, this, autoFocusCB);
-
 			mFrameCamera.addView(mPreview);
-
+			mPreview.setCamera(mCamera);
 			// Show warning dialog for Invalid URL
 			createInvalidURLDialog(ScanActivity.this);
 		} catch (Exception e) {
