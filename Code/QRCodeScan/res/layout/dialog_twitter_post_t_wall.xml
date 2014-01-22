@@ -14,8 +14,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/Orange"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
             android:orientation="horizontal" >
 
             <Button
@@ -25,9 +23,9 @@
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/button_forcus_browser"
                 android:padding="10dp"
-                android:textStyle="bold"
                 android:text="Cancel"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="0dp"
@@ -43,12 +41,12 @@
                 android:id="@+id/post_to_wall_bt_post"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_forcus_browser"
                 android:layout_marginRight="10dp"
+                android:background="@drawable/button_forcus_browser"
                 android:padding="10dp"
-                android:textStyle="bold"
                 android:text="Post"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -59,11 +57,11 @@
                 android:id="@+id/post_to_wall_et_content"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:ems="10"
                 android:background="@color/White"
-                android:textColor="@color/Black"
+                android:ems="10"
                 android:gravity="left"
-                android:singleLine="false" >
+                android:singleLine="false"
+                android:textColor="@color/Black" >
             </EditText>
         </LinearLayout>
     </LinearLayout>

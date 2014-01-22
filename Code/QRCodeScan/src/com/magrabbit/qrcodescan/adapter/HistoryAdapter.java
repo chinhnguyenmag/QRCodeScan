@@ -61,8 +61,8 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 					v.setLongClickable(false);
 
 					final TextView sectionView = (TextView) v
-							.findViewById(R.id.list_item_section_text);
-					sectionView.setText(si.getTitle());
+							.findViewById(R.id.list_item_entry_tv_header);
+					sectionView.setText(si.getTitle().toUpperCase());
 				} else {
 					holder = new ViewHolder();
 					HistoryItem ei = (HistoryItem) i;
