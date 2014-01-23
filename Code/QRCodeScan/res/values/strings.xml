@@ -23,6 +23,7 @@
     <string name="facebook">Facebook</string>
     <string name="common_imagebutton_description">imagebutton</string>
     <string name="cancel">Cancel</string>
+    <string name="mess_error_network">No Internet connection, please check your network.</string>
 
     <!-- text use to show in layout not important -->
     <string name="link">cptr.it</string>
