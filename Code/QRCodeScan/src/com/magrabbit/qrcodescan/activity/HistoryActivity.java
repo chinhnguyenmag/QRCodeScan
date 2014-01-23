@@ -47,6 +47,7 @@ import com.magrabbit.qrcodescan.model.Item;
 import com.magrabbit.qrcodescan.model.QRCode;
 import com.magrabbit.qrcodescan.utils.SocialUtil;
 import com.magrabbit.qrcodescan.utils.StringExtraUtils;
+import com.magrabbit.qrcodescan.utils.Utils;
 
 public class HistoryActivity extends ParentActivity implements
 		MenuSlidingClickListener, GetWidthListener {
@@ -144,7 +145,8 @@ public class HistoryActivity extends ParentActivity implements
 				new HistoryAdapter_Process() {
 
 					@Override
-					public void delete_item(final int position_view,final int position_codes) {
+					public void delete_item(final int position_view,
+							final int position_codes) {
 						DialogConfirm dialog = new DialogConfirm(
 								HistoryActivity.this,
 								android.R.drawable.ic_dialog_alert,
@@ -156,22 +158,23 @@ public class HistoryActivity extends ParentActivity implements
 
 									@Override
 									public void click_Ok() {
-										int pos1 = position_view; 
+										int pos1 = position_view;
 										int pos2 = position_codes;
 										// delete from database
 										mDataHandler.deleteQRCode(mListQRCodes
 												.get(position_codes));
 										mListQRCodes.remove(position_codes);
-										
+
 										items.remove(position_view);
-										if(items.size() == 1){
+										if (items.size() == 1) {
 											items.clear();
 										}
 										mAdapter.notifyDataSetChanged();
 										mSwipeListView.setAdapter(mAdapter);
 										// Disable Delete All Button
 										if (mListQRCodes.size() == 0) {
-											mTvDelete.setVisibility(View.INVISIBLE);
+											mTvDelete
+													.setVisibility(View.INVISIBLE);
 										}
 									}
 
@@ -186,21 +189,43 @@ public class HistoryActivity extends ParentActivity implements
 
 					@Override
 					public void click_evernote(int position) {
-						mEverNoteContent = mListQRCodes.get(position).getUrl();
-						addEverNote(null);
+						if (Utils.isNetworkConnected(HistoryActivity.this)) {
+							mEverNoteContent = mListQRCodes.get(position)
+									.getUrl();
+							addEverNote(null);
+						} else {
+							Toast.makeText(HistoryActivity.this,
+									getString(R.string.mess_error_network),
+									Toast.LENGTH_LONG).show();
+						}
+
 					}
 
 					@Override
 					public void click_facebook(int position) {
-						loginToFacebook(mListQRCodes.get(position).getUrl()
-								.trim());
+						if (Utils.isNetworkConnected(HistoryActivity.this)) {
+							loginToFacebook(mListQRCodes.get(position).getUrl()
+									.trim());
+						} else {
+							Toast.makeText(HistoryActivity.this,
+									getString(R.string.mess_error_network),
+									Toast.LENGTH_LONG).show();
+						}
+
 					}
 
 					@Override
 					public void click_twitter(int position) {
-						Intent intent = new Intent(HistoryActivity.this,
-								TwitterLoginActivity.class);
-						startActivity(intent);
+						if (Utils.isNetworkConnected(HistoryActivity.this)) {
+							Intent intent = new Intent(HistoryActivity.this,
+									TwitterLoginActivity.class);
+							startActivity(intent);
+						} else {
+							Toast.makeText(HistoryActivity.this,
+									getString(R.string.mess_error_network),
+									Toast.LENGTH_LONG).show();
+						}
+
 					}
 
 					@Override
@@ -214,7 +239,7 @@ public class HistoryActivity extends ParentActivity implements
 					}
 
 				}, this);
-		
+
 		mSwipeListView
 				.setSwipeListViewListener(new BaseSwipeListViewListener() {
 
@@ -583,7 +608,7 @@ public class HistoryActivity extends ParentActivity implements
 	public void getWidthTotal(int widthTotal) {
 		mWidthTotal = widthTotal;
 	}
-	
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {

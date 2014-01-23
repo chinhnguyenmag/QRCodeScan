@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="slidingmenu_offset">250dp</dimen>
+    <dimen name="slidingmenu_offset">225dp</dimen>
 </resources>

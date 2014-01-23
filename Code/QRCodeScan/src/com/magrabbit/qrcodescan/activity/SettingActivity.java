@@ -3,7 +3,6 @@ package com.magrabbit.qrcodescan.activity;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -34,12 +33,14 @@ import com.magrabbit.qrcodescan.customview.SlidingMenuCustom;
 import com.magrabbit.qrcodescan.listener.MenuSlidingClickListener;
 import com.magrabbit.qrcodescan.model.AppPreferences;
 import com.magrabbit.qrcodescan.utils.SocialUtil;
+import com.magrabbit.qrcodescan.utils.Utils;
 
 /**
  * @author vule
+ * @description: This class use to setting application
  * 
  */
-public class SettingActivity extends Activity implements
+public class SettingActivity extends BaseActivity implements
 		MenuSlidingClickListener, OnClickListener {
 
 	private SlidingMenuCustom mMenu;
@@ -173,19 +174,32 @@ public class SettingActivity extends Activity implements
 		}
 
 		case R.id.setting_ll_social_mail: {
-			sendMail();
+			if (Utils.isNetworkConnected(this)) {
+				sendMail();
+			} else {
+				showToastMessage(getString(R.string.mess_error_network));
+			}
+
 			break;
 		}
 
 		case R.id.setting_ll_social_twitter: {
-			Intent intent = new Intent(SettingActivity.this,
-					TwitterLoginActivity.class);
-			startActivity(intent);
+			if (Utils.isNetworkConnected(this)) {
+				Intent intent = new Intent(SettingActivity.this,
+						TwitterLoginActivity.class);
+				startActivity(intent);
+			} else {
+				showToastMessage(getString(R.string.mess_error_network));
+			}
 			break;
 		}
 
 		case R.id.setting_ll_social_facebook: {
-			loginToFacebook();
+			if (Utils.isNetworkConnected(this)) {
+				loginToFacebook();
+			} else {
+				showToastMessage(getString(R.string.mess_error_network));
+			}
 			break;
 		}
 
