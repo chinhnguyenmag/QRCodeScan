@@ -161,16 +161,16 @@ public class HistoryActivity extends ParentActivity implements
 										int pos1 = position_view;
 										int pos2 = position_codes;
 										// delete from database
-										mListQRCodes.remove(position_codes);
 										mDataHandler.deleteQRCode(mListQRCodes
 												.get(position_codes));
+										mListQRCodes.remove(position_codes);
 
 										items.remove(position_view);
 										if (items.size() == 1) {
 											items.clear();
 										}
 										mAdapter.notifyDataSetChanged();
-										mSwipeListView.setAdapter(mAdapter);
+										// mSwipeListView.setAdapter(mAdapter);
 										// Disable Delete All Button
 										if (mListQRCodes.size() == 0) {
 											mTvDelete
