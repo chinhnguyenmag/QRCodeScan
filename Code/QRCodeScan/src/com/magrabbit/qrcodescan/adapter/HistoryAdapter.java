@@ -32,7 +32,7 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 	private GetWidthListener mListener;
 	View v;
 
-	public HistoryAdapter(Context context, ArrayList<Item> items,
+	public HistoryAdapter(Context context, List<Item> items,
 			HistoryAdapter_Process process, GetWidthListener listener) {
 		super(context, 0, items);
 		this.context = context;
@@ -151,8 +151,13 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 
 						@Override
 						public void onClick(View v) {
-							mProcess.delete_item(position,position
-									- calculateNumberSectionBefore(position));
+							int position_delete = position
+									- calculateNumberSectionBefore(position);
+							items.remove(position);
+							if (items.size() == 1) {
+								items.clear();
+							}
+							mProcess.delete_item(position_delete, items);
 						}
 					});
 					holder.mBtnEvernote
@@ -236,7 +241,7 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 	}
 
 	public abstract static class HistoryAdapter_Process {
-		public abstract void delete_item(int position_view, int position_codes);
+		public abstract void delete_item(int position, List<Item> listItems);
 
 		public abstract void click_evernote(int position);
 
