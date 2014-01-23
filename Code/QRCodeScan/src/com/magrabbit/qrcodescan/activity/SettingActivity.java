@@ -37,6 +37,7 @@ import com.magrabbit.qrcodescan.utils.Utils;
 
 /**
  * @author vule
+ * @description: This class use to setting application
  * 
  */
 public class SettingActivity extends BaseActivity implements
