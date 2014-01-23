@@ -30,12 +30,16 @@ public class ActivityPostToWall extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.dialog_twitter_post_t_wall);
-		mBtCancel = (Button) findViewById(R.id.post_to_wall_bt_cancel);
-		mBtPost = (Button) findViewById(R.id.post_to_wall_bt_post);
-		mEtContent = (EditText) findViewById(R.id.post_to_wall_et_content);
-		mBtCancel.setOnClickListener(this);
-		mBtPost.setOnClickListener(this);
-		mEtContent.setText("Follow this link http://QRcode.com");
+		try {
+			mBtCancel = (Button) findViewById(R.id.post_to_wall_bt_cancel);
+			mBtPost = (Button) findViewById(R.id.post_to_wall_bt_post);
+			mEtContent = (EditText) findViewById(R.id.post_to_wall_et_content);
+			mBtCancel.setOnClickListener(this);
+			mBtPost.setOnClickListener(this);
+			mEtContent.setText("http://www.google.com.vn/");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -53,12 +57,16 @@ public class ActivityPostToWall extends Activity implements OnClickListener {
 		}
 
 		case R.id.post_to_wall_bt_post: {
-			if (mEtContent.getText().toString().trim().length() > 0) {
-				new postToWall()
-						.execute(mEtContent.getText().toString().trim());
-			} else {
-				Toast.makeText(this, "Please input your content to post.",
-						Toast.LENGTH_SHORT).show();
+			try {
+				if (mEtContent.getText().toString().trim().length() > 0) {
+					new postToWall().execute(mEtContent.getText().toString()
+							.trim());
+				} else {
+					Toast.makeText(this, "Please input your content to post.",
+							Toast.LENGTH_SHORT).show();
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
 			}
 			break;
 		}
@@ -125,18 +133,22 @@ public class ActivityPostToWall extends Activity implements OnClickListener {
 		 * from background thread, otherwise you will get error
 		 * **/
 		protected void onPostExecute(String file_url) {
-			// dismiss the dialog after getting all products
-			mProgressDialog.dismiss();
-			// updating UI from Background Thread
-			runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					Toast.makeText(getApplicationContext(),
-							"Message has been posted successfully.",
-							Toast.LENGTH_SHORT).show();
-					finish();
-				}
-			});
+			try {
+				// dismiss the dialog after getting all products
+				mProgressDialog.dismiss();
+				// updating UI from Background Thread
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						Toast.makeText(getApplicationContext(),
+								"Message has been posted successfully.",
+								Toast.LENGTH_SHORT).show();
+						finish();
+					}
+				});
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 		}
 
 	}
