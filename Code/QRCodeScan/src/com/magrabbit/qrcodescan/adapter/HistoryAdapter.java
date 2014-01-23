@@ -151,7 +151,7 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 
 						@Override
 						public void onClick(View v) {
-							mProcess.delete_item(position, position
+							mProcess.delete_item(position,position
 									- calculateNumberSectionBefore(position));
 						}
 					});

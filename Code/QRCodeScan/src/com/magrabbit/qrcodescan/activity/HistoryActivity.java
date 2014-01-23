@@ -168,7 +168,7 @@ public class HistoryActivity extends ParentActivity implements
 											items.clear();
 										}
 										mAdapter.notifyDataSetChanged();
-//										mSwipeListView.setAdapter(mAdapter);
+										mSwipeListView.setAdapter(mAdapter);
 										// Disable Delete All Button
 										if (mListQRCodes.size() == 0) {
 											mTvDelete.setVisibility(View.INVISIBLE);
