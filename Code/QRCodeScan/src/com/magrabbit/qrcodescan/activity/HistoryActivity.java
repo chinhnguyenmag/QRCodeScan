@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -53,7 +54,7 @@ public class HistoryActivity extends ParentActivity implements
 		MenuSlidingClickListener, GetWidthListener {
 
 	private HistoryAdapter mAdapter;
-	private ArrayList<Item> items = new ArrayList<Item>();
+	private List<Item> items;
 	private SlidingMenuCustom mMenu;
 	private SwipeListView mSwipeListView;
 	private DatabaseHandler mDataHandler;
@@ -96,6 +97,7 @@ public class HistoryActivity extends ParentActivity implements
 
 		// Get QRCode from Database to inflate into list view
 		mDataHandler = new DatabaseHandler(this);
+		items = new ArrayList<Item>();
 		mListQRCodes = new ArrayList<QRCode>();
 		mListQRCodes.addAll(mDataHandler.getAllQRCodes());
 		Collections.sort(mListQRCodes, new Comparator<QRCode>() {
@@ -103,7 +105,7 @@ public class HistoryActivity extends ParentActivity implements
 			@Override
 			public int compare(QRCode lhs, QRCode rhs) {
 				SimpleDateFormat form = new SimpleDateFormat(
-						"EEEE, MMMM dd yyyy");
+						"EEEE, MMMM dd yyyy", Locale.US);
 
 				Date d1 = null;
 				Date d2 = null;
@@ -145,8 +147,7 @@ public class HistoryActivity extends ParentActivity implements
 				new HistoryAdapter_Process() {
 
 					@Override
-					public void delete_item(final int position_view,
-							final int position_codes) {
+					public void delete_item(final int position, final List<Item> listItems) {
 						DialogConfirm dialog = new DialogConfirm(
 								HistoryActivity.this,
 								android.R.drawable.ic_dialog_alert,
@@ -158,19 +159,16 @@ public class HistoryActivity extends ParentActivity implements
 
 									@Override
 									public void click_Ok() {
-										int pos1 = position_view;
-										int pos2 = position_codes;
 										// delete from database
 										mDataHandler.deleteQRCode(mListQRCodes
-												.get(position_codes));
-										mListQRCodes.remove(position_codes);
+												.get(position));
+										mListQRCodes.remove(position);
 
-										items.remove(position_view);
-										if (items.size() == 1) {
-											items.clear();
-										}
+										items.clear();
+										items.addAll(listItems);
+//										mSwipeListView.setAdapter(mAdapter);
 										mAdapter.notifyDataSetChanged();
-										// mSwipeListView.setAdapter(mAdapter);
+
 										// Disable Delete All Button
 										if (mListQRCodes.size() == 0) {
 											mTvDelete
