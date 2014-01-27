@@ -23,6 +23,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -126,6 +127,12 @@ public class HistoryActivity extends ParentActivity implements
 		// add the first section and item into list view
 		if (mListQRCodes.size() != 0) {
 			mTvDelete.setVisibility(View.VISIBLE);
+			// Align margin attributes for title
+			RelativeLayout.LayoutParams marginParams = (RelativeLayout.LayoutParams) mTvTitle
+					.getLayoutParams();
+			marginParams.setMargins(20, 0, 0, 0);
+			mTvTitle.setLayoutParams(marginParams);
+			
 			items.add(new HistorySectionItem(mListQRCodes.get(0).getDate()));
 			items.add(new HistoryItem(mListQRCodes.get(0).getUrl()));
 
@@ -172,7 +179,12 @@ public class HistoryActivity extends ParentActivity implements
 										// Disable Delete All Button
 										if (mListQRCodes.size() == 0) {
 											mTvDelete
-													.setVisibility(View.INVISIBLE);
+													.setVisibility(View.GONE);
+											// Align margin attributes for title
+											RelativeLayout.LayoutParams marginParams = (RelativeLayout.LayoutParams) mTvTitle
+													.getLayoutParams();
+											marginParams.setMargins(0, 0, 20, 0);
+											mTvTitle.setLayoutParams(marginParams);
 										}
 									}
 
@@ -345,7 +357,12 @@ public class HistoryActivity extends ParentActivity implements
 
 		// Disable Delete All Button
 		if (mListQRCodes.size() == 0) {
-			mTvDelete.setVisibility(View.INVISIBLE);
+			mTvDelete.setVisibility(View.GONE);
+			// Align margin attributes for title
+			RelativeLayout.LayoutParams marginParams = (RelativeLayout.LayoutParams) mTvTitle
+					.getLayoutParams();
+			marginParams.setMargins(0, 0, 20, 0);
+			mTvTitle.setLayoutParams(marginParams);
 		}
 
 	}
