@@ -230,6 +230,9 @@ public class HistoryActivity extends ParentActivity implements
 						if (Utils.isNetworkConnected(HistoryActivity.this)) {
 							Intent intent = new Intent(HistoryActivity.this,
 									TwitterLoginActivity.class);
+							intent.putExtra(
+									StringExtraUtils.KEY_INTENT_TWITTER,
+									mListQRCodes.get(position).getUrl().trim());
 							startActivity(intent);
 						} else {
 							Toast.makeText(HistoryActivity.this,

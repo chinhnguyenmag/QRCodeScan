@@ -26,6 +26,7 @@ import com.magrabbit.qrcodescan.R;
 import com.magrabbit.qrcodescan.customview.DialogPostToWall;
 import com.magrabbit.qrcodescan.customview.DialogPostToWall.ProcessDialogPostToWallTwitter;
 import com.magrabbit.qrcodescan.utils.Constants;
+import com.magrabbit.qrcodescan.utils.StringExtraUtils;
 
 public class TwitterLoginActivity extends Activity {
 
@@ -42,11 +43,20 @@ public class TwitterLoginActivity extends Activity {
 	private static RequestToken requestToken;
 	public static SharedPreferences sharedPrefs;
 	private DialogPostToWall mDialogPostToWallTwitter;
+	private String mLink;
+	private Bundle mBundle;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_twitter_login);
+
+		mBundle = getIntent().getExtras();
+		if (mBundle != null) {
+			mLink = getIntent().getExtras().getString(
+					StringExtraUtils.KEY_INTENT_TWITTER);
+		}
+
 		try {
 			if (TWITTER_CONSUMER_KEY.trim().equals("")
 					|| TWITTER_CONSUMER_SECRET.trim().equals("")) {
@@ -163,6 +173,9 @@ public class TwitterLoginActivity extends Activity {
 
 			Intent intent = new Intent(TwitterLoginActivity.this,
 					ActivityPostToWall.class);
+			if(mBundle != null) {
+				intent.putExtra(StringExtraUtils.KEY_INTENT_TWITTER_LOGIN, mLink);
+			}
 			startActivity(intent);
 			finish();
 
