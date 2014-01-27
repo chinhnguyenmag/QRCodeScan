@@ -332,8 +332,9 @@ public class SettingActivity extends BaseActivity implements
 	public void postToWall() {
 		try {
 			Bundle parameters = new Bundle();
-			parameters.putString("link", getString(R.string.content_to_share_social_media));
-			mFacebook.dialog(this, "feed", parameters, new DialogListener() {
+			parameters.putString("message",
+					getString(R.string.content_to_share_social_media));
+			mFacebook.dialog(this, "me/feed", parameters, new DialogListener() {
 
 				@Override
 				public void onFacebookError(FacebookError e) {
@@ -341,6 +342,7 @@ public class SettingActivity extends BaseActivity implements
 
 				@Override
 				public void onError(DialogError e) {
+					e.printStackTrace();
 				}
 
 				@Override
@@ -365,7 +367,8 @@ public class SettingActivity extends BaseActivity implements
 	 */
 	protected void sendSMS() {
 		Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-		smsIntent.putExtra("sms_body", getString(R.string.content_to_share_social_media));
+		smsIntent.putExtra("sms_body",
+				getString(R.string.content_to_share_social_media));
 		smsIntent.setType("vnd.android-dir/mms-sms");
 
 		try {
@@ -400,8 +403,8 @@ public class SettingActivity extends BaseActivity implements
 						finish();
 					} else {
 						Toast.makeText(getApplicationContext(),
-								getString(R.string.press_exit), Toast.LENGTH_SHORT)
-								.show();
+								getString(R.string.press_exit),
+								Toast.LENGTH_SHORT).show();
 						lastPressedTime = event.getEventTime();
 					}
 					return true;
@@ -431,9 +434,10 @@ public class SettingActivity extends BaseActivity implements
 	protected void sendMail() {
 		Intent emailIntent = new Intent(Intent.ACTION_SEND);
 		emailIntent.setType("message/rfc822");
-		emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
 		emailIntent
-				.putExtra(Intent.EXTRA_TEXT, getString(R.string.content_to_share_social_media));
+				.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+		emailIntent.putExtra(Intent.EXTRA_TEXT,
+				getString(R.string.content_to_share_social_media));
 		try {
 			startActivity(Intent.createChooser(emailIntent,
 					"Choose an Email client:"));
