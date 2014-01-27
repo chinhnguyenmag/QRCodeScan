@@ -19,28 +19,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginRight="20dp"
         android:layout_toLeftOf="@+id/header_tv_right"
         android:layout_toRightOf="@+id/header_bt_menu"
         android:gravity="center"
-        android:textSize="@dimen/campaign_textfont_header"
-        android:textColor="@color/White" />
+        android:textColor="@color/White"
+        android:textSize="@dimen/campaign_textfont_header" />
 
     <TextView
         android:id="@+id/header_tv_right"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
+        android:layout_centerInParent="true"
         android:layout_marginRight="5dp"
         android:background="@drawable/button_forcus_browser"
         android:clickable="true"
         android:gravity="center_vertical"
         android:onClick="onClick_DeleteAll"
-         android:textSize="@dimen/campaign_textfont_title"
         android:text="@string/activity_history_header_deleteall"
         android:textColor="@android:color/white"
+        android:textSize="@dimen/campaign_textfont_title"
         android:visibility="gone" />
 
 </RelativeLayout>
