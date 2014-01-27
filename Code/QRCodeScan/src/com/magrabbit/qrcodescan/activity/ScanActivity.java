@@ -135,6 +135,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		try {
 			super.onResume();
 			// Open the default i.e. the first rear facing camera.
+			mCamera.setPreviewCallback(null);
 			mCamera = Camera.open();
 			if (mCamera == null) {
 				// Cancel request if mCamera is null.
@@ -144,7 +145,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 			/* create layout for SurfaceView here */
 			mPreview = new CameraPreviewNew(this, this, autoFocusCB);
 			mFrameCamera.addView(mPreview);
-			
+
 			mPreview.setCamera(mCamera);
 
 			mPreviewing = true;
@@ -165,14 +166,16 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 				mCamera.cancelAutoFocus();
 				mCamera.setPreviewCallback(null);
 				mCamera.stopPreview();
+				// this line make difference
+				mPreview.getHolder().removeCallback(mPreview);
 				mCamera.release();
+				mCamera = null;
 
 				// remove layout Camera
 				mFrameCamera.removeView(mPreview);
 				mPreview = null;
 
 				mPreviewing = false;
-				mCamera = null;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -240,69 +243,67 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 						mCamera.setPreviewCallback(null);
 						// if (symData.contains("cptr.it/?var=")
 						// && symData.contains("&id=")) {
-							// Save into Database
-							Format formatter = new SimpleDateFormat(
-									"EEEE, MMMM dd yyyy", Locale.US);
+						// Save into Database
+						Format formatter = new SimpleDateFormat(
+								"EEEE, MMMM dd yyyy", Locale.US);
 
-							// DateFormat formatter =
-							// DateFormat.getDateInstance(
-							// DateFormat.LONG, Locale.US);
-							String date = formatter.format(new Date());
-							mDataHandler.addQRCode(new QRCode(date, symData));
+						// DateFormat formatter =
+						// DateFormat.getDateInstance(
+						// DateFormat.LONG, Locale.US);
+						String date = formatter.format(new Date());
+						mDataHandler.addQRCode(new QRCode(date, symData));
 
-							// Get the QR Code after scanning and put it to
-							// Browser
-							// for
-							// searching on WebSite
+						// Get the QR Code after scanning and put it to
+						// Browser
+						// for
+						// searching on WebSite
 
-							if (mPreference.isOpenUrl()) {
-								Intent dataIntent = new Intent(
-										ScanActivity.this,
-										BrowserActivity.class);
-								dataIntent.putExtra(
-										StringExtraUtils.KEY_SCAN_RESULT,
-										symData);
-								startActivity(dataIntent);
-							} else {
-								DialogConfirm dialog = new DialogConfirm(
-										ScanActivity.this,
-										android.R.drawable.ic_dialog_alert,
-										ScanActivity.this
-												.getString(R.string.activity_scan_open_browser_title),
-										ScanActivity.this
-												.getString(R.string.activity_scan_open_url_confirm),
-										true, new ProcessDialogConfirm() {
+						if (mPreference.isOpenUrl()) {
+							Intent dataIntent = new Intent(ScanActivity.this,
+									BrowserActivity.class);
+							dataIntent.putExtra(
+									StringExtraUtils.KEY_SCAN_RESULT, symData);
+							startActivity(dataIntent);
+						} else {
+							DialogConfirm dialog = new DialogConfirm(
+									ScanActivity.this,
+									android.R.drawable.ic_dialog_alert,
+									ScanActivity.this
+											.getString(R.string.activity_scan_open_browser_title),
+									ScanActivity.this
+											.getString(R.string.activity_scan_open_url_confirm),
+									true, new ProcessDialogConfirm() {
 
-											@Override
-											public void click_Ok() {
+										@Override
+										public void click_Ok() {
 
-												Intent dataIntent = new Intent(
-														ScanActivity.this,
-														BrowserActivity.class);
-												dataIntent
-														.putExtra(
-																StringExtraUtils.KEY_SCAN_RESULT,
-																symData);
-												startActivity(dataIntent);
+											Intent dataIntent = new Intent(
+													ScanActivity.this,
+													BrowserActivity.class);
+											dataIntent
+													.putExtra(
+															StringExtraUtils.KEY_SCAN_RESULT,
+															symData);
+											startActivity(dataIntent);
 
-											}
+										}
 
-											@Override
-											public void click_Cancel() {
-												// Start scanning again
-												mCamera.setPreviewCallback(ScanActivity.this);
-											}
-										});
-								dialog.show();
-							}
-							break;
+										@Override
+										public void click_Cancel() {
+											// Start scanning again
+											mCamera.setPreviewCallback(ScanActivity.this);
+										}
+									});
+							dialog.show();
+						}
+						break;
 
-//						} else {
-//							// show it
-//							if (!alertDialog.isShowing()) {
-//								alertDialog.show();
-//							}
-//						}
+						// } else {
+						// // show it
+						// if (!alertDialog.isShowing()) {
+						// alertDialog.show();
+						// }
+						// }
 					}
 				}
 				// Turn on Camera Preview
@@ -442,7 +443,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {

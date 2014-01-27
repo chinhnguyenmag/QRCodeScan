@@ -5,6 +5,18 @@
     android:background="@color/Orange"
     android:padding="5dp" >
 
+    <TextView
+        android:id="@+id/header_tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@+id/header_tv_right"
+        android:layout_toRightOf="@+id/header_bt_menu"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/White" />
+
     <ImageButton
         android:id="@+id/header_bt_menu"
         android:layout_width="wrap_content"
@@ -12,19 +24,6 @@
         android:layout_centerVertical="true"
         android:background="@drawable/button_header_menu"
         android:onClick="onClick_Menu" />
-
-    <TextView
-        android:id="@+id/header_tv_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="5dp"
-        android:layout_toLeftOf="@+id/header_tv_right"
-        android:layout_toRightOf="@+id/header_bt_menu"
-        android:gravity="center"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/White" />
 
     <TextView
         android:id="@+id/header_tv_right"
