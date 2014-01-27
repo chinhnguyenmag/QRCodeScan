@@ -633,7 +633,7 @@ public class HistoryActivity extends ParentActivity implements
 					finish();
 				} else {
 					Toast.makeText(getApplicationContext(),
-							"Press again to exit.", Toast.LENGTH_SHORT).show();
+							getString(R.string.press_exit), Toast.LENGTH_SHORT).show();
 					lastPressedTime = event.getEventTime();
 				}
 				return true;

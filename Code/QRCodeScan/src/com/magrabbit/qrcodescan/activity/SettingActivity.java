@@ -332,7 +332,7 @@ public class SettingActivity extends BaseActivity implements
 	public void postToWall() {
 		try {
 			Bundle parameters = new Bundle();
-			parameters.putString("link", "http://toitesthuthoi.com");
+			parameters.putString("caption", getString(R.string.content_to_share_social_media));
 			mFacebook.dialog(this, "feed", parameters, new DialogListener() {
 
 				@Override
@@ -346,7 +346,7 @@ public class SettingActivity extends BaseActivity implements
 				@Override
 				public void onComplete(Bundle values) {
 					Toast.makeText(SettingActivity.this,
-							"Commment has been posted in your wall!",
+							getString(R.string.mess_post_success),
 							Toast.LENGTH_SHORT).show();
 				}
 
@@ -365,7 +365,7 @@ public class SettingActivity extends BaseActivity implements
 	 */
 	protected void sendSMS() {
 		Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-		smsIntent.putExtra("sms_body", "Please follow this link...");
+		smsIntent.putExtra("sms_body", getString(R.string.content_to_share_social_media));
 		smsIntent.setType("vnd.android-dir/mms-sms");
 
 		try {
@@ -400,7 +400,7 @@ public class SettingActivity extends BaseActivity implements
 						finish();
 					} else {
 						Toast.makeText(getApplicationContext(),
-								"Press again to exit.", Toast.LENGTH_SHORT)
+								getString(R.string.press_exit), Toast.LENGTH_SHORT)
 								.show();
 						lastPressedTime = event.getEventTime();
 					}
@@ -431,9 +431,9 @@ public class SettingActivity extends BaseActivity implements
 	protected void sendMail() {
 		Intent emailIntent = new Intent(Intent.ACTION_SEND);
 		emailIntent.setType("message/rfc822");
-		emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Follow this link");
+		emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
 		emailIntent
-				.putExtra(Intent.EXTRA_TEXT, "QRcode link http://qrcode.com");
+				.putExtra(Intent.EXTRA_TEXT, getString(R.string.content_to_share_social_media));
 		try {
 			startActivity(Intent.createChooser(emailIntent,
 					"Choose an Email client:"));

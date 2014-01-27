@@ -151,7 +151,7 @@ public class AboutActivity extends BaseActivity implements
 						finish();
 					} else {
 						Toast.makeText(getApplicationContext(),
-								"Press again to exit.", Toast.LENGTH_SHORT)
+								getString(R.string.press_exit), Toast.LENGTH_SHORT)
 								.show();
 						lastPressedTime = event.getEventTime();
 					}
