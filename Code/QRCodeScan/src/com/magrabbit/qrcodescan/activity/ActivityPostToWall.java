@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.magrabbit.qrcodescan.R;
 import com.magrabbit.qrcodescan.utils.Constants;
+import com.magrabbit.qrcodescan.utils.StringExtraUtils;
 
 public class ActivityPostToWall extends Activity implements OnClickListener {
 
@@ -25,6 +26,7 @@ public class ActivityPostToWall extends Activity implements OnClickListener {
 	private Button mBtPost;
 	private EditText mEtContent;
 	private ProgressDialog mProgressDialog;
+	private String mLink;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +38,16 @@ public class ActivityPostToWall extends Activity implements OnClickListener {
 			mEtContent = (EditText) findViewById(R.id.post_to_wall_et_content);
 			mBtCancel.setOnClickListener(this);
 			mBtPost.setOnClickListener(this);
-			mEtContent
-					.setText(getString(R.string.content_to_share_social_media));
+
+			Bundle bundle = getIntent().getExtras();
+			if (bundle != null) {
+				mLink = getIntent().getExtras().getString(
+						StringExtraUtils.KEY_INTENT_TWITTER_LOGIN);
+				mEtContent.setText(mLink);
+			} else {
+				mEtContent
+						.setText(getString(R.string.content_to_share_social_media));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

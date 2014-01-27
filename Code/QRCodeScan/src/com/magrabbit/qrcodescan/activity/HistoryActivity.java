@@ -132,7 +132,7 @@ public class HistoryActivity extends ParentActivity implements
 					.getLayoutParams();
 			marginParams.setMargins(20, 0, 0, 0);
 			mTvTitle.setLayoutParams(marginParams);
-			
+
 			items.add(new HistorySectionItem(mListQRCodes.get(0).getDate()));
 			items.add(new HistoryItem(mListQRCodes.get(0).getUrl()));
 
@@ -154,7 +154,8 @@ public class HistoryActivity extends ParentActivity implements
 				new HistoryAdapter_Process() {
 
 					@Override
-					public void delete_item(final int position, final List<Item> listItems) {
+					public void delete_item(final int position,
+							final List<Item> listItems) {
 						DialogConfirm dialog = new DialogConfirm(
 								HistoryActivity.this,
 								android.R.drawable.ic_dialog_alert,
@@ -173,17 +174,17 @@ public class HistoryActivity extends ParentActivity implements
 
 										items.clear();
 										items.addAll(listItems);
-//										mSwipeListView.setAdapter(mAdapter);
+										// mSwipeListView.setAdapter(mAdapter);
 										mAdapter.notifyDataSetChanged();
 
 										// Disable Delete All Button
 										if (mListQRCodes.size() == 0) {
-											mTvDelete
-													.setVisibility(View.GONE);
+											mTvDelete.setVisibility(View.GONE);
 											// Align margin attributes for title
 											RelativeLayout.LayoutParams marginParams = (RelativeLayout.LayoutParams) mTvTitle
 													.getLayoutParams();
-											marginParams.setMargins(0, 0, 20, 0);
+											marginParams
+													.setMargins(0, 0, 20, 0);
 											mTvTitle.setLayoutParams(marginParams);
 										}
 									}
@@ -229,6 +230,9 @@ public class HistoryActivity extends ParentActivity implements
 						if (Utils.isNetworkConnected(HistoryActivity.this)) {
 							Intent intent = new Intent(HistoryActivity.this,
 									TwitterLoginActivity.class);
+							intent.putExtra(
+									StringExtraUtils.KEY_INTENT_TWITTER,
+									mListQRCodes.get(position).getUrl().trim());
 							startActivity(intent);
 						} else {
 							Toast.makeText(HistoryActivity.this,
@@ -633,7 +637,8 @@ public class HistoryActivity extends ParentActivity implements
 					finish();
 				} else {
 					Toast.makeText(getApplicationContext(),
-							getString(R.string.press_exit), Toast.LENGTH_SHORT).show();
+							getString(R.string.press_exit), Toast.LENGTH_SHORT)
+							.show();
 					lastPressedTime = event.getEventTime();
 				}
 				return true;
