@@ -427,7 +427,13 @@ public class HistoryActivity extends ParentActivity implements
 							items.clear();
 							mAdapter.notifyDataSetChanged();
 							mSwipeListView.setAdapter(mAdapter);
-
+							// Let Delete All Button GONE
+							mTvDelete.setVisibility(View.GONE);
+							// Align margin attributes for title
+							RelativeLayout.LayoutParams marginParams = (RelativeLayout.LayoutParams) mTvTitle
+									.getLayoutParams();
+							marginParams.setMargins(0, 0, 20, 0);
+							mTvTitle.setLayoutParams(marginParams);
 						}
 
 						@Override
