@@ -30,43 +30,50 @@ public class BrowserActivity extends BaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_website);
-		// Get the setting of time of opening URL
-		mPreference = new AppPreferences(BrowserActivity.this);
-		mCloseTime = mPreference.getCloseUrlTime();
+		try {
 
-		mTvTitle = (TextView) findViewById(R.id.header_website_tv_title);
-		Bundle bundle = getIntent().getExtras();
-		if (bundle != null) {
-			mScanResult = bundle.getString(StringExtraUtils.KEY_SCAN_RESULT);
-		}
-		mWebView = (WebView) findViewById(R.id.activity_website_wv);
-		if (mScanResult != null
-				&& !mScanResult.toLowerCase().startsWith("http://")
-				&& !mScanResult.toLowerCase().startsWith("https://")) {
-			mScanResult = "http://" + mScanResult;
-		}
-		mWebView.loadUrl(mScanResult);
+			// Get the setting of time of opening URL
+			mPreference = new AppPreferences(BrowserActivity.this);
+			mCloseTime = mPreference.getCloseUrlTime();
 
-		mWebView.setWebViewClient(new WebViewClient() {
-
-			public void onPageFinished(WebView view, String url) {
-				mTvTitle.setText(view.getTitle());
-
-				if (mCloseTime != -1) {
-					// Timer for counting the amount of time to close
-					// application
-					mTimer = new Timer();
-					TimerTask closeWebPage = new TimerTask() {
-
-						@Override
-						public void run() {
-							finish();
-						}
-					};
-					mTimer.schedule(closeWebPage, mCloseTime * 1000);
-				}
+			mTvTitle = (TextView) findViewById(R.id.header_website_tv_title);
+			Bundle bundle = getIntent().getExtras();
+			if (bundle != null) {
+				mScanResult = bundle
+						.getString(StringExtraUtils.KEY_SCAN_RESULT);
 			}
-		});
+			mWebView = (WebView) findViewById(R.id.activity_website_wv);
+			if (mScanResult != null
+					&& !mScanResult.toLowerCase().startsWith("http://")
+					&& !mScanResult.toLowerCase().startsWith("https://")) {
+				mScanResult = "http://" + mScanResult;
+			}
+			mWebView.loadUrl(mScanResult);
+
+			mWebView.setWebViewClient(new WebViewClient() {
+
+				public void onPageFinished(WebView view, String url) {
+					mTvTitle.setText(view.getTitle());
+
+					if (mCloseTime != -1) {
+						// Timer for counting the amount of time to close
+						// application
+						mTimer = new Timer();
+						TimerTask closeWebPage = new TimerTask() {
+
+							@Override
+							public void run() {
+								finish();
+							}
+						};
+						mTimer.schedule(closeWebPage, mCloseTime * 1000);
+					}
+				}
+			});
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -75,14 +82,19 @@ public class BrowserActivity extends BaseActivity {
 	}
 
 	public void onClick_Share(View v) {
+		try {
+			Intent sharingIntent = new Intent(
+					android.content.Intent.ACTION_SEND);
+			sharingIntent.setType("text/plain");
+			sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
+					"Share QR Code");
+			sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT,
+					mScanResult);
+			startActivity(Intent.createChooser(sharingIntent, "Share via"));
 
-		Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-		sharingIntent.setType("text/plain");
-		sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
-				"Share QR Code");
-		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, mScanResult);
-		startActivity(Intent.createChooser(sharingIntent, "Share via"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
-	
 }

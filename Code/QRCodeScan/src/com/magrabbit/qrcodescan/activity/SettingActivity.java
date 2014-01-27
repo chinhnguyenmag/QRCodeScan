@@ -37,6 +37,7 @@ import com.magrabbit.qrcodescan.utils.Utils;
 
 /**
  * @author vule
+ * @description: This class use to setting application
  * 
  */
 public class SettingActivity extends BaseActivity implements
@@ -61,79 +62,104 @@ public class SettingActivity extends BaseActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
-		mTvTitle = (TextView) findViewById(R.id.header_tv_title);
-		mTvTitle.setText(R.string.header_title_setting);
+		try {
+			mTvTitle = (TextView) findViewById(R.id.header_tv_title);
+			mTvTitle.setText(R.string.header_title_setting);
 
-		mAppPreferences = new AppPreferences(this);
-		mMenu = new SlidingMenuCustom(this, this);
-		mMenu.setTouchModeAboveMargin();
-		mSwitchViewSound = (ToggleButton) findViewById(R.id.activity_settings_sv_sound);
-		mSwitchViewOpenUrl = (ToggleButton) findViewById(R.id.activity_settings_sv_open_url);
-		mTvTime = (TextView) findViewById(R.id.activity_setting_tv_time);
-		mRlShareFacebook = (RelativeLayout) findViewById(R.id.setting_ll_social_facebook);
-		mRlShareSMS = (RelativeLayout) findViewById(R.id.setting_ll_social_message);
-		mRlShareMail = (RelativeLayout) findViewById(R.id.setting_ll_social_mail);
-		mRlShareTwitter = (RelativeLayout) findViewById(R.id.setting_ll_social_twitter);
-		mRlShareSMS.setOnClickListener(this);
-		mRlShareMail.setOnClickListener(this);
-		mRlShareTwitter.setOnClickListener(this);
-		mRlShareFacebook.setOnClickListener(this);
+			mAppPreferences = new AppPreferences(this);
+			mMenu = new SlidingMenuCustom(this, this);
+			mMenu.setTouchModeAboveMargin();
+			mSwitchViewSound = (ToggleButton) findViewById(R.id.activity_settings_sv_sound);
+			mSwitchViewOpenUrl = (ToggleButton) findViewById(R.id.activity_settings_sv_open_url);
+			mTvTime = (TextView) findViewById(R.id.activity_setting_tv_time);
+			mRlShareFacebook = (RelativeLayout) findViewById(R.id.setting_ll_social_facebook);
+			mRlShareSMS = (RelativeLayout) findViewById(R.id.setting_ll_social_message);
+			mRlShareMail = (RelativeLayout) findViewById(R.id.setting_ll_social_mail);
+			mRlShareTwitter = (RelativeLayout) findViewById(R.id.setting_ll_social_twitter);
+			mRlShareSMS.setOnClickListener(this);
+			mRlShareMail.setOnClickListener(this);
+			mRlShareTwitter.setOnClickListener(this);
+			mRlShareFacebook.setOnClickListener(this);
 
-		mSwitchViewSound.setChecked(mAppPreferences.isSound());
-		mSwitchViewOpenUrl.setChecked(mAppPreferences.isOpenUrl());
-		mSwitchViewSound
-				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			mSwitchViewSound.setChecked(mAppPreferences.isSound());
+			mSwitchViewOpenUrl.setChecked(mAppPreferences.isOpenUrl());
+			mSwitchViewSound
+					.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
-					@Override
-					public void onCheckedChanged(CompoundButton arg0,
-							boolean isOn) {
-						mAppPreferences.setSound(isOn);
-					}
-				});
+						@Override
+						public void onCheckedChanged(CompoundButton arg0,
+								boolean isOn) {
+							mAppPreferences.setSound(isOn);
+						}
+					});
 
-		mSwitchViewOpenUrl
-				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			mSwitchViewOpenUrl
+					.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
-					@Override
-					public void onCheckedChanged(CompoundButton arg0,
-							boolean isOn) {
-						mAppPreferences.setOpenUrl(isOn);
-					}
-				});
+						@Override
+						public void onCheckedChanged(CompoundButton arg0,
+								boolean isOn) {
+							mAppPreferences.setOpenUrl(isOn);
+						}
+					});
 
-		if (mAppPreferences.getCloseUrlTime() == -1) {
-			mTvTime.setText("Nerver");
-		} else {
-			mTvTime.setText(mAppPreferences.getCloseUrlTime() + " seconds");
+			if (mAppPreferences.getCloseUrlTime() == -1) {
+				mTvTime.setText("Nerver");
+			} else {
+				mTvTime.setText(mAppPreferences.getCloseUrlTime() + " seconds");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
 	public void onClick_Menu(View view) {
-		if (mMenu == null) {
-			mMenu = new SlidingMenuCustom(this, this);
+		try {
+			if (mMenu == null) {
+				mMenu = new SlidingMenuCustom(this, this);
+			}
+			mMenu.toggle();
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		mMenu.toggle();
 	}
 
 	@Override
 	public void onScannerClickListener() {
-		startActivity(new Intent(this, ScanActivity.class));
-		finish();
-		overridePendingTransition(0, 0);
+		try {
+			startActivity(new Intent(this, ScanActivity.class));
+			finish();
+			overridePendingTransition(0, 0);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void onHistoryClickListener() {
-		startActivity(new Intent(this, HistoryActivity.class));
-		finish();
-		overridePendingTransition(0, 0);
+		try {
+			startActivity(new Intent(this, HistoryActivity.class));
+			finish();
+			overridePendingTransition(0, 0);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void onAboutClickListener() {
-		startActivity(new Intent(this, AboutActivity.class));
-		finish();
-		overridePendingTransition(0, 0);
+		try {
+			startActivity(new Intent(this, AboutActivity.class));
+			finish();
+			overridePendingTransition(0, 0);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -142,68 +168,74 @@ public class SettingActivity extends BaseActivity implements
 	}
 
 	public void onClick_AutoClose(View v) {
-		DialogPickTime d = new DialogPickTime(this,
-				new ProcessDialogPickTime() {
+		try {
+			DialogPickTime d = new DialogPickTime(this,
+					new ProcessDialogPickTime() {
 
-					@Override
-					public void click_Ok(int value) {
-						mAppPreferences.setCloseUrl(value);
-						if (mAppPreferences.getCloseUrlTime() == -1) {
-							mTvTime.setText("Nerver");
-						} else {
-							mTvTime.setText(mAppPreferences.getCloseUrlTime()
-									+ " seconds");
+						@Override
+						public void click_Ok(int value) {
+							mAppPreferences.setCloseUrl(value);
+							if (mAppPreferences.getCloseUrlTime() == -1) {
+								mTvTime.setText("Nerver");
+							} else {
+								mTvTime.setText(mAppPreferences
+										.getCloseUrlTime() + " seconds");
+							}
 						}
-					}
 
-					@Override
-					public void click_Cancel() {
+						@Override
+						public void click_Cancel() {
 
-					}
-				}, mAppPreferences.getCloseUrlTime());
-		d.show();
+						}
+					}, mAppPreferences.getCloseUrlTime());
+			d.show();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.setting_ll_social_message: {
-			sendSMS();
-			break;
-		}
+		try {
+			switch (v.getId()) {
+			case R.id.setting_ll_social_message: {
+				sendSMS();
+				break;
+			}
 
-		case R.id.setting_ll_social_mail: {
-			if (Utils.isNetworkConnected(this)) {
+			case R.id.setting_ll_social_mail: {
 				sendMail();
-			} else {
-				showToastMessage(getString(R.string.mess_error_network));
+
+				break;
 			}
 
-			break;
-		}
-
-		case R.id.setting_ll_social_twitter: {
-			if (Utils.isNetworkConnected(this)) {
-				Intent intent = new Intent(SettingActivity.this,
-						TwitterLoginActivity.class);
-				startActivity(intent);
-			} else {
-				showToastMessage(getString(R.string.mess_error_network));
+			case R.id.setting_ll_social_twitter: {
+				if (Utils.isNetworkConnected(this)) {
+					Intent intent = new Intent(SettingActivity.this,
+							TwitterLoginActivity.class);
+					startActivity(intent);
+				} else {
+					showToastMessage(getString(R.string.mess_error_network));
+				}
+				break;
 			}
-			break;
-		}
 
-		case R.id.setting_ll_social_facebook: {
-			if (Utils.isNetworkConnected(this)) {
-				loginToFacebook();
-			} else {
-				showToastMessage(getString(R.string.mess_error_network));
+			case R.id.setting_ll_social_facebook: {
+				if (Utils.isNetworkConnected(this)) {
+					loginToFacebook();
+				} else {
+					showToastMessage(getString(R.string.mess_error_network));
+				}
+				break;
 			}
-			break;
-		}
 
-		default:
-			break;
+			default:
+				break;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -284,38 +316,50 @@ public class SettingActivity extends BaseActivity implements
 	 * This method use to get access token from facebook
 	 */
 	public void getAccessToken() {
-		String access_token = mFacebook.getAccessToken();
-		Toast.makeText(getApplicationContext(),
-				"Access Token: " + access_token, Toast.LENGTH_LONG).show();
+		try {
+			String access_token = mFacebook.getAccessToken();
+			Toast.makeText(getApplicationContext(),
+					"Access Token: " + access_token, Toast.LENGTH_LONG).show();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
 	 * This method use to post to wall on facebook
 	 */
 	public void postToWall() {
-		Bundle parameters = new Bundle();
-		parameters.putString("link", "http://toitesthuthoi.com");
-		mFacebook.dialog(this, "feed", parameters, new DialogListener() {
+		try {
+			Bundle parameters = new Bundle();
+			parameters.putString("message",
+					getString(R.string.content_to_share_social_media));
+			mFacebook.dialog(this, "me/feed", parameters, new DialogListener() {
 
-			@Override
-			public void onFacebookError(FacebookError e) {
-			}
+				@Override
+				public void onFacebookError(FacebookError e) {
+				}
 
-			@Override
-			public void onError(DialogError e) {
-			}
+				@Override
+				public void onError(DialogError e) {
+					e.printStackTrace();
+				}
 
-			@Override
-			public void onComplete(Bundle values) {
-				Toast.makeText(SettingActivity.this,
-						"Commment has been posted in your wall!",
-						Toast.LENGTH_SHORT).show();
-			}
+				@Override
+				public void onComplete(Bundle values) {
+					Toast.makeText(SettingActivity.this,
+							getString(R.string.mess_post_success),
+							Toast.LENGTH_SHORT).show();
+				}
 
-			@Override
-			public void onCancel() {
-			}
-		});
+				@Override
+				public void onCancel() {
+				}
+			});
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -323,7 +367,8 @@ public class SettingActivity extends BaseActivity implements
 	 */
 	protected void sendSMS() {
 		Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-		smsIntent.putExtra("sms_body", "Please follow this link...");
+		smsIntent.putExtra("sms_body",
+				getString(R.string.content_to_share_social_media));
 		smsIntent.setType("vnd.android-dir/mms-sms");
 
 		try {
@@ -350,18 +395,24 @@ public class SettingActivity extends BaseActivity implements
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-			switch (event.getAction()) {
-			case KeyEvent.ACTION_DOWN:
-				if (event.getDownTime() - lastPressedTime < PERIOD) {
-					finish();
-				} else {
-					Toast.makeText(getApplicationContext(),
-							"Press again to exit.", Toast.LENGTH_SHORT).show();
-					lastPressedTime = event.getEventTime();
+		try {
+			if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+				switch (event.getAction()) {
+				case KeyEvent.ACTION_DOWN:
+					if (event.getDownTime() - lastPressedTime < PERIOD) {
+						finish();
+					} else {
+						Toast.makeText(getApplicationContext(),
+								getString(R.string.press_exit),
+								Toast.LENGTH_SHORT).show();
+						lastPressedTime = event.getEventTime();
+					}
+					return true;
 				}
-				return true;
 			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return false;
 	}
@@ -369,7 +420,12 @@ public class SettingActivity extends BaseActivity implements
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		mFacebook.authorizeCallback(requestCode, resultCode, data);
+		try {
+			mFacebook.authorizeCallback(requestCode, resultCode, data);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -378,13 +434,14 @@ public class SettingActivity extends BaseActivity implements
 	protected void sendMail() {
 		Intent emailIntent = new Intent(Intent.ACTION_SEND);
 		emailIntent.setType("message/rfc822");
-		emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Follow this link");
 		emailIntent
-				.putExtra(Intent.EXTRA_TEXT, "QRcode link http://qrcode.com");
+				.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+		emailIntent.putExtra(Intent.EXTRA_TEXT,
+				getString(R.string.content_to_share_social_media));
 		try {
 			startActivity(Intent.createChooser(emailIntent,
 					"Choose an Email client:"));
-		} catch (android.content.ActivityNotFoundException ex) {
+		} catch (Exception ex) {
 			Toast.makeText(this, "There are no email clients installed.",
 					Toast.LENGTH_SHORT).show();
 		}

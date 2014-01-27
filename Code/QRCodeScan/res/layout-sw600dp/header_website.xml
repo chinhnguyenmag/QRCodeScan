@@ -5,6 +5,20 @@
     android:background="@color/Orange"
     android:padding="5dp" >
 
+    <TextView
+        android:id="@+id/header_website_tv_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@+id/header_website_ibt_share"
+        android:layout_toRightOf="@+id/header_website_ib_back"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textColor="@color/White"
+        android:textSize="@dimen/campaign_textfont_title" />
+
     <LinearLayout
         android:id="@+id/header_website_ib_back"
         android:layout_width="wrap_content"
@@ -25,8 +39,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Back"
-            android:textSize="@dimen/campaign_textfontsize"
-            android:textColor="@color/White" />
+            android:textColor="@color/White"
+            android:textSize="@dimen/campaign_textfontsize" />
     </LinearLayout>
 
     <ImageButton
@@ -38,19 +52,5 @@
         android:layout_marginRight="10dp"
         android:background="@drawable/ic_history"
         android:onClick="onClick_Share" />
-
-    <TextView
-        android:id="@+id/header_website_tv_title"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_toLeftOf="@id/header_website_ibt_share"
-        android:layout_toRightOf="@id/header_website_ib_back"
-        android:gravity="center"
-        android:singleLine="true"
-         android:textSize="@dimen/campaign_textfont_title"
-        android:textColor="@color/White" />
 
 </RelativeLayout>

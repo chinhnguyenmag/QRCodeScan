@@ -47,15 +47,20 @@ public class CreateEverNote extends ParentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_evernote);
 
-		mEditTextTitle = (EditText) findViewById(R.id.text_title);
-		mEditTextContent = (EditText) findViewById(R.id.text_content);
-		mBtnSelect = (Button) findViewById(R.id.select_button);
-		mBtnSave = (Button) findViewById(R.id.save_button);
+		try {
+			mEditTextTitle = (EditText) findViewById(R.id.text_title);
+			mEditTextContent = (EditText) findViewById(R.id.text_content);
+			mBtnSelect = (Button) findViewById(R.id.select_button);
+			mBtnSave = (Button) findViewById(R.id.save_button);
 
-		Bundle bundle = getIntent().getExtras();
-		if (bundle != null) {
-			mEditTextContent.setText(bundle
-					.getString(StringExtraUtils.KEY_HISTORY_ITEM));
+			Bundle bundle = getIntent().getExtras();
+			if (bundle != null) {
+				mEditTextContent.setText(bundle
+						.getString(StringExtraUtils.KEY_HISTORY_ITEM));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -64,55 +69,61 @@ public class CreateEverNote extends ParentActivity {
 	 * notebook if no notebook select
 	 */
 	public void saveNote(View view) {
-		String title = mEditTextTitle.getText().toString();
-		String content = mEditTextContent.getText().toString();
-		if (TextUtils.isEmpty(title) || TextUtils.isEmpty(content)) {
-			Toast.makeText(getApplicationContext(),
-					R.string.activity_create_evernote_empty_content_error,
-					Toast.LENGTH_LONG).show();
-		}
-
-		Note note = new Note();
-		note.setTitle(title);
-
-		// TODO: line breaks need to be converted to render in ENML
-		note.setContent(EvernoteUtil.NOTE_PREFIX
-				+ content.replace("&", "&amp;") + EvernoteUtil.NOTE_SUFFIX);
-
-		// If User has selected a notebook guid, assign it now
-		if (!TextUtils.isEmpty(mSelectedNotebookGuid)) {
-			note.setNotebookGuid(mSelectedNotebookGuid);
-		}
-		showDialog(DIALOG_PROGRESS);
 		try {
-			mEvernoteSession.getClientFactory().createNoteStoreClient()
-					.createNote(note, new OnClientCallback<Note>() {
-						@Override
-						public void onSuccess(Note data) {
-							Toast.makeText(
-									getApplicationContext(),
-									R.string.activity_create_evernote_note_saved,
-									Toast.LENGTH_LONG).show();
-							finish();
-							removeDialog(DIALOG_PROGRESS);
-						}
+			String title = mEditTextTitle.getText().toString();
+			String content = mEditTextContent.getText().toString();
+			if (TextUtils.isEmpty(title) || TextUtils.isEmpty(content)) {
+				Toast.makeText(getApplicationContext(),
+						R.string.activity_create_evernote_empty_content_error,
+						Toast.LENGTH_LONG).show();
+			}
 
-						@Override
-						public void onException(Exception exception) {
-							Log.e(LOGTAG, "Error saving note", exception);
-							Toast.makeText(
-									getApplicationContext(),
-									R.string.activity_create_evernote_error_saving_note,
-									Toast.LENGTH_LONG).show();
-							removeDialog(DIALOG_PROGRESS);
-						}
-					});
-		} catch (TTransportException exception) {
-			Log.e(LOGTAG, "Error creating notestore", exception);
-			Toast.makeText(getApplicationContext(),
-					R.string.activity_create_evernote_error_creating_notestore,
-					Toast.LENGTH_LONG).show();
-			removeDialog(DIALOG_PROGRESS);
+			Note note = new Note();
+			note.setTitle(title);
+
+			// TODO: line breaks need to be converted to render in ENML
+			note.setContent(EvernoteUtil.NOTE_PREFIX
+					+ content.replace("&", "&amp;") + EvernoteUtil.NOTE_SUFFIX);
+
+			// If User has selected a notebook guid, assign it now
+			if (!TextUtils.isEmpty(mSelectedNotebookGuid)) {
+				note.setNotebookGuid(mSelectedNotebookGuid);
+			}
+			showDialog(DIALOG_PROGRESS);
+			try {
+				mEvernoteSession.getClientFactory().createNoteStoreClient()
+						.createNote(note, new OnClientCallback<Note>() {
+							@Override
+							public void onSuccess(Note data) {
+								Toast.makeText(
+										getApplicationContext(),
+										R.string.activity_create_evernote_note_saved,
+										Toast.LENGTH_LONG).show();
+								finish();
+								removeDialog(DIALOG_PROGRESS);
+							}
+
+							@Override
+							public void onException(Exception exception) {
+								Log.e(LOGTAG, "Error saving note", exception);
+								Toast.makeText(
+										getApplicationContext(),
+										R.string.activity_create_evernote_error_saving_note,
+										Toast.LENGTH_LONG).show();
+								removeDialog(DIALOG_PROGRESS);
+							}
+						});
+			} catch (TTransportException exception) {
+				Log.e(LOGTAG, "Error creating notestore", exception);
+				Toast.makeText(
+						getApplicationContext(),
+						R.string.activity_create_evernote_error_creating_notestore,
+						Toast.LENGTH_LONG).show();
+				removeDialog(DIALOG_PROGRESS);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 	}
@@ -181,7 +192,7 @@ public class CreateEverNote extends ParentActivity {
 							removeDialog(DIALOG_PROGRESS);
 						}
 					});
-		} catch (TTransportException exception) {
+		} catch (Exception exception) {
 			Log.e(LOGTAG, "Error creating notestore", exception);
 			Toast.makeText(getApplicationContext(),
 					R.string.activity_create_evernote_error_creating_notestore,
