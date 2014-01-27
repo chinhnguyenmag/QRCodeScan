@@ -335,22 +335,22 @@ public class SettingActivity extends BaseActivity implements
 		try {
 			Bundle parameters = new Bundle();
 
-			Uri captixUrl = Uri
-					.parse("http://www7.44doors.com/dl.aspx?cid=2444&pv_url=http://cptr.it/captixscan?2444_rm_id=100.3781911.7");
+			// Uri captixUrl = Uri
+			// .parse("http://www7.44doors.com/dl.aspx?cid=2444&pv_url=http://cptr.it/captixscan?2444_rm_id=100.3781911.7");
 
 			parameters
 					.putString(
 							"link",
-							Html.fromHtml(getString(R.string.content_to_share_social_media)
-									+ "<a href=\""
-									+ captixUrl
-									+ "\"> cptr.it/captixscan</a>")
-									+ "");
+							"http://www7.44doors.com/dl.aspx?cid=2444&pv_url=http://cptr.it/captixscan?2444_rm_id=100.3781911.7");
+
+			parameters.putString("caption",
+					getString(R.string.content_to_share_social_media));
 
 			mFacebook.dialog(this, "feed", parameters, new DialogListener() {
 
 				@Override
 				public void onFacebookError(FacebookError e) {
+					e.printStackTrace();
 				}
 
 				@Override
@@ -367,6 +367,8 @@ public class SettingActivity extends BaseActivity implements
 
 				@Override
 				public void onCancel() {
+					Toast.makeText(SettingActivity.this, "Canceled",
+							Toast.LENGTH_SHORT).show();
 				}
 			});
 

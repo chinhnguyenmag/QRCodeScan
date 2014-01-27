@@ -58,9 +58,15 @@ public class SocialUtil {
 	/* Facebook Constans */
 
 	/**
+	 * This is chinh's facebook appid
+	 */
+	//public static final String FACEBOOK_APPID = "1413450295564258";
+	
+	/**
 	 * This is vu's facebook appid
 	 */
-	public static final String FACEBOOK_APPID = "1413450295564258";
+	public static final String FACEBOOK_APPID = "588040127956217";
+	
 
 	public static final String FACEBOOK_SECRET_APPID = "d39c6c15302f553251f9949c40b0ea21";
 	public static final String FACEBOOK_ACCESS_TOKEN = "facebook_access_token";
