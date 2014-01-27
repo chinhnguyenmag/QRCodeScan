@@ -332,7 +332,7 @@ public class SettingActivity extends BaseActivity implements
 	public void postToWall() {
 		try {
 			Bundle parameters = new Bundle();
-			parameters.putString("caption", getString(R.string.content_to_share_social_media));
+			parameters.putString("link", getString(R.string.content_to_share_social_media));
 			mFacebook.dialog(this, "feed", parameters, new DialogListener() {
 
 				@Override
