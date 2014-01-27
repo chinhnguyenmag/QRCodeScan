@@ -9,7 +9,9 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -332,9 +334,19 @@ public class SettingActivity extends BaseActivity implements
 	public void postToWall() {
 		try {
 			Bundle parameters = new Bundle();
-			parameters.putString("message",
+
+			Uri captixUrl = Uri
+					.parse("http://www7.44doors.com/dl.aspx?cid=2444&pv_url=http://cptr.it/captixscan?2444_rm_id=100.3781911.7");
+
+			// ============2============
+
+			Html.fromHtml(getString(R.string.content_to_share_social_media)
+					+ "<a href=\"" + captixUrl + "\"> cptr.it/captixscan</a>");
+
+			parameters.putString("link",
 					getString(R.string.content_to_share_social_media));
-			mFacebook.dialog(this, "me/feed", parameters, new DialogListener() {
+
+			mFacebook.dialog(this, "feed", parameters, new DialogListener() {
 
 				@Override
 				public void onFacebookError(FacebookError e) {
@@ -367,8 +379,11 @@ public class SettingActivity extends BaseActivity implements
 	 */
 	protected void sendSMS() {
 		Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-		smsIntent.putExtra("sms_body",
-				getString(R.string.content_to_share_social_media));
+		smsIntent
+				.putExtra(
+						"sms_body",
+						getString(R.string.content_to_share_social_media)
+								+ " http://www7.44doors.com/dl.aspx?cid=2444&pv_url=http://cptr.it/captixscan?2444_rm_id=100.3781911.7");
 		smsIntent.setType("vnd.android-dir/mms-sms");
 
 		try {
@@ -433,11 +448,24 @@ public class SettingActivity extends BaseActivity implements
 	 */
 	protected void sendMail() {
 		Intent emailIntent = new Intent(Intent.ACTION_SEND);
-		emailIntent.setType("message/rfc822");
+		// emailIntent.setType("message/rfc822");
+		emailIntent.setType("text/html");
 		emailIntent
 				.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+
+		Uri captixUrl = Uri
+				.parse("http://www7.44doors.com/dl.aspx?cid=2444&pv_url=http://cptr.it/captixscan?2444_rm_id=100.3781911.7");
+
+		// ============1============
 		emailIntent.putExtra(Intent.EXTRA_TEXT,
 				getString(R.string.content_to_share_social_media));
+
+		// ============2============
+		emailIntent.putExtra(
+				android.content.Intent.EXTRA_TEXT,
+				Html.fromHtml(getString(R.string.content_to_share_social_media)
+						+ "<a href=\"" + captixUrl
+						+ "\"> cptr.it/captixscan</a>"));
 		try {
 			startActivity(Intent.createChooser(emailIntent,
 					"Choose an Email client:"));
