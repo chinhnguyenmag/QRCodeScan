@@ -147,7 +147,8 @@ public class HistoryActivity extends ParentActivity implements
 				new HistoryAdapter_Process() {
 
 					@Override
-					public void delete_item(final int position, final List<Item> listItems) {
+					public void delete_item(final int position,
+							final List<Item> listItems) {
 						DialogConfirm dialog = new DialogConfirm(
 								HistoryActivity.this,
 								android.R.drawable.ic_dialog_alert,
@@ -166,7 +167,7 @@ public class HistoryActivity extends ParentActivity implements
 
 										items.clear();
 										items.addAll(listItems);
-//										mSwipeListView.setAdapter(mAdapter);
+										// mSwipeListView.setAdapter(mAdapter);
 										mAdapter.notifyDataSetChanged();
 
 										// Disable Delete All Button
@@ -217,6 +218,9 @@ public class HistoryActivity extends ParentActivity implements
 						if (Utils.isNetworkConnected(HistoryActivity.this)) {
 							Intent intent = new Intent(HistoryActivity.this,
 									TwitterLoginActivity.class);
+							intent.putExtra(
+									StringExtraUtils.KEY_INTENT_TWITTER,
+									mListQRCodes.get(position).getUrl().trim());
 							startActivity(intent);
 						} else {
 							Toast.makeText(HistoryActivity.this,
@@ -616,7 +620,8 @@ public class HistoryActivity extends ParentActivity implements
 					finish();
 				} else {
 					Toast.makeText(getApplicationContext(),
-							getString(R.string.press_exit), Toast.LENGTH_SHORT).show();
+							getString(R.string.press_exit), Toast.LENGTH_SHORT)
+							.show();
 					lastPressedTime = event.getEventTime();
 				}
 				return true;
