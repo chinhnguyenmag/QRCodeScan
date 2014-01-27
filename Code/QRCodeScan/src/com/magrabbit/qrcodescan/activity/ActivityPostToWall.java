@@ -36,7 +36,7 @@ public class ActivityPostToWall extends Activity implements OnClickListener {
 			mEtContent = (EditText) findViewById(R.id.post_to_wall_et_content);
 			mBtCancel.setOnClickListener(this);
 			mBtPost.setOnClickListener(this);
-			mEtContent.setText("http://www.google.com.vn/");
+			mEtContent.setText("Link to share http://www.onlyfortest");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

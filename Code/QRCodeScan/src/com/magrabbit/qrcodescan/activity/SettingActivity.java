@@ -332,7 +332,7 @@ public class SettingActivity extends BaseActivity implements
 	public void postToWall() {
 		try {
 			Bundle parameters = new Bundle();
-			parameters.putString("link", "http://toitesthuthoi.com");
+			parameters.putString("link", "http://www.onlyfortest.com");
 			mFacebook.dialog(this, "feed", parameters, new DialogListener() {
 
 				@Override
@@ -365,7 +365,7 @@ public class SettingActivity extends BaseActivity implements
 	 */
 	protected void sendSMS() {
 		Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-		smsIntent.putExtra("sms_body", "Please follow this link...");
+		smsIntent.putExtra("sms_body", "Please follow this link... http://www.onlyfortest.com");
 		smsIntent.setType("vnd.android-dir/mms-sms");
 
 		try {
@@ -433,7 +433,7 @@ public class SettingActivity extends BaseActivity implements
 		emailIntent.setType("message/rfc822");
 		emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Follow this link");
 		emailIntent
-				.putExtra(Intent.EXTRA_TEXT, "QRcode link http://qrcode.com");
+				.putExtra(Intent.EXTRA_TEXT, "QRcode link http://www.onlyfortest.com");
 		try {
 			startActivity(Intent.createChooser(emailIntent,
 					"Choose an Email client:"));
