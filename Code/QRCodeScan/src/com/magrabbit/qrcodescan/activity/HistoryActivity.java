@@ -132,7 +132,7 @@ public class HistoryActivity extends ParentActivity implements
 					.getLayoutParams();
 			marginParams.setMargins(20, 0, 0, 0);
 			mTvTitle.setLayoutParams(marginParams);
-			
+
 			items.add(new HistorySectionItem(mListQRCodes.get(0).getDate()));
 			items.add(new HistoryItem(mListQRCodes.get(0).getUrl()));
 
@@ -179,12 +179,12 @@ public class HistoryActivity extends ParentActivity implements
 
 										// Disable Delete All Button
 										if (mListQRCodes.size() == 0) {
-											mTvDelete
-													.setVisibility(View.GONE);
+											mTvDelete.setVisibility(View.GONE);
 											// Align margin attributes for title
 											RelativeLayout.LayoutParams marginParams = (RelativeLayout.LayoutParams) mTvTitle
 													.getLayoutParams();
-											marginParams.setMargins(0, 0, 20, 0);
+											marginParams
+													.setMargins(0, 0, 20, 0);
 											mTvTitle.setLayoutParams(marginParams);
 										}
 									}
@@ -427,7 +427,13 @@ public class HistoryActivity extends ParentActivity implements
 							items.clear();
 							mAdapter.notifyDataSetChanged();
 							mSwipeListView.setAdapter(mAdapter);
-
+							// Let Delete All Button GONE
+							mTvDelete.setVisibility(View.GONE);
+							// Align margin attributes for title
+							RelativeLayout.LayoutParams marginParams = (RelativeLayout.LayoutParams) mTvTitle
+									.getLayoutParams();
+							marginParams.setMargins(0, 0, 20, 0);
+							mTvTitle.setLayoutParams(marginParams);
 						}
 
 						@Override
