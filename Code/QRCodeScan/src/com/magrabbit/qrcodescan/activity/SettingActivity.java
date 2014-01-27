@@ -338,13 +338,14 @@ public class SettingActivity extends BaseActivity implements
 			Uri captixUrl = Uri
 					.parse("http://www7.44doors.com/dl.aspx?cid=2444&pv_url=http://cptr.it/captixscan?2444_rm_id=100.3781911.7");
 
-			// ============2============
-
-			Html.fromHtml(getString(R.string.content_to_share_social_media)
-					+ "<a href=\"" + captixUrl + "\"> cptr.it/captixscan</a>");
-
-			parameters.putString("link",
-					getString(R.string.content_to_share_social_media));
+			parameters
+					.putString(
+							"link",
+							Html.fromHtml(getString(R.string.content_to_share_social_media)
+									+ "<a href=\""
+									+ captixUrl
+									+ "\"> cptr.it/captixscan</a>")
+									+ "");
 
 			mFacebook.dialog(this, "feed", parameters, new DialogListener() {
 
