@@ -209,7 +209,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 			Intent dataIntent = new Intent();
 			dataIntent.putExtra(ERROR_INFO, "Camera unavailable");
 			setResult(Activity.RESULT_CANCELED, dataIntent);
-			finish();
+//			finish();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
