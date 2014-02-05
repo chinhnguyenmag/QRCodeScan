@@ -112,12 +112,14 @@
                     android:text="@string/url_profile" />
 
                 <TextView
+                    android:id="@+id/setting_tv_urlprofile"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginRight="25dp"
+                    android:layout_marginLeft="10dp"
+                    android:clickable="true"
                     android:gravity="right"
-                    android:text="@string/link"
+                    android:onClick="onClick_ChangeURLProfile"
                     android:textColor="@android:color/darker_gray" />
             </LinearLayout>
 

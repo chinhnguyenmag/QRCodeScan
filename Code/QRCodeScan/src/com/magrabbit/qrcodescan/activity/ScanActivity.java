@@ -26,8 +26,6 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -240,6 +238,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 						// Stop scanning
 						mCamera.cancelAutoFocus();
 						mCamera.setPreviewCallback(null);
+
 						// if (symData.contains("cptr.it/?var=")
 						// && symData.contains("&id=")) {
 						// Save into Database
@@ -452,7 +451,8 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 					finish();
 				} else {
 					Toast.makeText(getApplicationContext(),
-							getString(R.string.press_exit), Toast.LENGTH_SHORT).show();
+							getString(R.string.press_exit), Toast.LENGTH_SHORT)
+							.show();
 					lastPressedTime = event.getEventTime();
 				}
 				return true;

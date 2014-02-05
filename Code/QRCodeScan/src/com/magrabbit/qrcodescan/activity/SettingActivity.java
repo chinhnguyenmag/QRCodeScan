@@ -9,7 +9,9 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -27,6 +29,8 @@ import com.facebook.android.Facebook;
 import com.facebook.android.Facebook.DialogListener;
 import com.facebook.android.FacebookError;
 import com.magrabbit.qrcodescan.R;
+import com.magrabbit.qrcodescan.customview.DialogChangeProfile;
+import com.magrabbit.qrcodescan.customview.DialogChangeProfile.ProcessDialogProfile;
 import com.magrabbit.qrcodescan.customview.DialogPickTime;
 import com.magrabbit.qrcodescan.customview.DialogPickTime.ProcessDialogPickTime;
 import com.magrabbit.qrcodescan.customview.SlidingMenuCustom;
@@ -49,6 +53,7 @@ public class SettingActivity extends BaseActivity implements
 	private AppPreferences mAppPreferences;
 	private TextView mTvTime;
 	private TextView mTvTitle;
+	private TextView mTvUrlProfile;
 	private RelativeLayout mRlShareFacebook;
 	private RelativeLayout mRlShareSMS;
 	private RelativeLayout mRlShareMail;
@@ -66,7 +71,10 @@ public class SettingActivity extends BaseActivity implements
 			mTvTitle = (TextView) findViewById(R.id.header_tv_title);
 			mTvTitle.setText(R.string.header_title_setting);
 
+			mTvUrlProfile = (TextView) findViewById(R.id.setting_tv_urlprofile);
+
 			mAppPreferences = new AppPreferences(this);
+			mTvUrlProfile.setText(mAppPreferences.getProfileUrl());
 			mMenu = new SlidingMenuCustom(this, this);
 			mMenu.setTouchModeAboveMargin();
 			mSwitchViewSound = (ToggleButton) findViewById(R.id.activity_settings_sv_sound);
@@ -239,6 +247,34 @@ public class SettingActivity extends BaseActivity implements
 		}
 	}
 
+	public void onClick_ChangeURLProfile(View v) {
+		try {
+
+			DialogChangeProfile dialog = new DialogChangeProfile(this,
+					mAppPreferences.getProfileUrl(),
+					new ProcessDialogProfile() {
+
+						@Override
+						public void click_Ok(String url) {
+							try {
+								mAppPreferences.setProfileUrl(url);
+								showToastMessage(getString(R.string.mess_update_urlprofile_successfull));
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+
+						@Override
+						public void click_Cancel() {
+
+						}
+					});
+			dialog.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * This method use to login facebook
 	 */
@@ -332,9 +368,20 @@ public class SettingActivity extends BaseActivity implements
 	public void postToWall() {
 		try {
 			Bundle parameters = new Bundle();
-			parameters.putString("message",
-					getString(R.string.content_to_share_social_media));
-			mFacebook.dialog(this, "me/feed", parameters, new DialogListener() {
+
+			Uri captixUrl = Uri
+					.parse("http://www7.44doors.com/dl.aspx?cid=2444&pv_url=http://cptr.it/captixscan?2444_rm_id=100.3781911.7");
+
+			parameters
+					.putString(
+							"link",
+							Html.fromHtml(getString(R.string.content_to_share_social_media)
+									+ "<a href=\""
+									+ captixUrl
+									+ "\"> cptr.it/captixscan</a>")
+									+ "");
+
+			mFacebook.dialog(this, "feed", parameters, new DialogListener() {
 
 				@Override
 				public void onFacebookError(FacebookError e) {
@@ -367,8 +414,11 @@ public class SettingActivity extends BaseActivity implements
 	 */
 	protected void sendSMS() {
 		Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-		smsIntent.putExtra("sms_body",
-				getString(R.string.content_to_share_social_media));
+		smsIntent
+				.putExtra(
+						"sms_body",
+						getString(R.string.content_to_share_social_media)
+								+ " http://www7.44doors.com/dl.aspx?cid=2444&pv_url=http://cptr.it/captixscan?2444_rm_id=100.3781911.7");
 		smsIntent.setType("vnd.android-dir/mms-sms");
 
 		try {
@@ -433,11 +483,24 @@ public class SettingActivity extends BaseActivity implements
 	 */
 	protected void sendMail() {
 		Intent emailIntent = new Intent(Intent.ACTION_SEND);
-		emailIntent.setType("message/rfc822");
+		// emailIntent.setType("message/rfc822");
+		emailIntent.setType("text/html");
 		emailIntent
 				.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+
+		Uri captixUrl = Uri
+				.parse("http://www7.44doors.com/dl.aspx?cid=2444&pv_url=http://cptr.it/captixscan?2444_rm_id=100.3781911.7");
+
+		// ============1============
 		emailIntent.putExtra(Intent.EXTRA_TEXT,
 				getString(R.string.content_to_share_social_media));
+
+		// ============2============
+		emailIntent.putExtra(
+				android.content.Intent.EXTRA_TEXT,
+				Html.fromHtml(getString(R.string.content_to_share_social_media)
+						+ "<a href=\"" + captixUrl
+						+ "\"> cptr.it/captixscan</a>"));
 		try {
 			startActivity(Intent.createChooser(emailIntent,
 					"Choose an Email client:"));

@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 public class AppPreferences {
-	private final String APP_SHARED_PREFS = "MyMenuConfiguration";
+	private final String APP_SHARED_PREFS = "CaptixScanConfiguration";
 	private SharedPreferences mAppSharedPrefs;
 	private Editor mPrefsEditor;
 
