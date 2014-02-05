@@ -280,6 +280,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="2dp"
                 android:layout_marginLeft="20dp"
+                
                 android:background="@color/background_gray" />
 
             <RelativeLayout
@@ -290,6 +291,7 @@
                 android:background="@drawable/listview_selector"
                 android:orientation="horizontal"
                 android:paddingBottom="10dp"
+                 android:visibility="gone"
                 android:paddingTop="10dp" >
 
                 <ImageView
@@ -329,6 +331,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="2dp"
                 android:layout_marginLeft="20dp"
+                 android:visibility="gone"
                 android:background="@color/background_gray" />
 
             <RelativeLayout
@@ -339,6 +342,7 @@
                 android:background="@drawable/listview_selector"
                 android:orientation="horizontal"
                 android:paddingBottom="10dp"
+                 android:visibility="gone"
                 android:paddingTop="10dp" >
 
                 <ImageView
@@ -378,6 +382,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="2dp"
                 android:layout_marginLeft="20dp"
+                 android:visibility="gone"
                 android:background="@color/background_gray" />
         </LinearLayout>
     </ScrollView>
