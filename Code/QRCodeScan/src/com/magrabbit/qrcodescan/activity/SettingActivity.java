@@ -9,7 +9,10 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.text.Html;
 import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -27,7 +30,9 @@ import com.facebook.android.Facebook;
 import com.facebook.android.Facebook.DialogListener;
 import com.facebook.android.FacebookError;
 import com.magrabbit.qrcodescan.R;
+import com.magrabbit.qrcodescan.customview.DialogConfirm;
 import com.magrabbit.qrcodescan.customview.DialogPickTime;
+import com.magrabbit.qrcodescan.customview.DialogConfirm.ProcessDialogConfirm;
 import com.magrabbit.qrcodescan.customview.DialogPickTime.ProcessDialogPickTime;
 import com.magrabbit.qrcodescan.customview.SlidingMenuCustom;
 import com.magrabbit.qrcodescan.listener.MenuSlidingClickListener;
@@ -62,6 +67,12 @@ public class SettingActivity extends BaseActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
+		if (android.os.Build.VERSION.SDK_INT > 9) {
+			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+					.permitAll().build();
+
+			StrictMode.setThreadPolicy(policy);
+		}
 		try {
 			mTvTitle = (TextView) findViewById(R.id.header_tv_title);
 			mTvTitle.setText(R.string.header_title_setting);
@@ -272,7 +283,24 @@ public class SettingActivity extends BaseActivity implements
 		long expires = mSharedPreferences.getLong("access_expires", 0);
 		if (access_token != null) {
 			mFacebook.setAccessToken(access_token);
-			postToWall();
+
+			DialogConfirm dialog = new DialogConfirm(SettingActivity.this,
+					android.R.drawable.ic_dialog_alert, "Post to wall",
+					SettingActivity.this
+							.getString(R.string.activity_settting_confirm),
+					true, new ProcessDialogConfirm() {
+
+						@Override
+						public void click_Ok() {
+							postOnWall();
+						}
+
+						@Override
+						public void click_Cancel() {
+
+						}
+					});
+			dialog.show();
 		}
 
 		if (expires != 0) {
@@ -301,8 +329,26 @@ public class SettingActivity extends BaseActivity implements
 							editor.putLong("access_expires",
 									mFacebook.getAccessExpires());
 							editor.commit();
+							// postToWall();
+							DialogConfirm dialog = new DialogConfirm(
+									SettingActivity.this,
+									android.R.drawable.ic_dialog_alert,
+									"Post to wall",
+									SettingActivity.this
+											.getString(R.string.activity_settting_confirm),
+									true, new ProcessDialogConfirm() {
 
-							postToWall();
+										@Override
+										public void click_Ok() {
+											postOnWall();
+										}
+
+										@Override
+										public void click_Cancel() {
+
+										}
+									});
+							dialog.show();
 						}
 
 						@Override
@@ -332,29 +378,43 @@ public class SettingActivity extends BaseActivity implements
 	public void postToWall() {
 		try {
 			Bundle parameters = new Bundle();
-			parameters.putString("link", getString(R.string.content_to_share_social_media));
-			mFacebook.dialog(this, "feed", parameters, new DialogListener() {
 
-				@Override
-				public void onFacebookError(FacebookError e) {
-				}
+			// Uri captixUrl = Uri
+			// .parse("http://www7.44doors.com/dl.aspx?cid=2444&pv_url=http://cptr.it/captixscan?2444_rm_id=100.3781911.7");
 
-				@Override
-				public void onError(DialogError e) {
-				}
-
-				@Override
-				public void onComplete(Bundle values) {
-					Toast.makeText(SettingActivity.this,
-							getString(R.string.mess_post_success),
-							Toast.LENGTH_SHORT).show();
-				}
-
-				@Override
-				public void onCancel() {
-				}
-			});
-
+			// parameters
+			// .putString(
+			// "link",
+			// "http://www7.44doors.com/dl.aspx?cid=2444&pv_url=http://cptr.it/captixscan?2444_rm_id=100.3781911.7");
+			//
+			// parameters.putString("caption",
+			// getString(R.string.content_to_share_social_media));
+			//
+			// mFacebook.dialog(this, "feed", parameters, new DialogListener() {
+			//
+			// @Override
+			// public void onFacebookError(FacebookError e) {
+			// e.printStackTrace();
+			// }
+			//
+			// @Override
+			// public void onError(DialogError e) {
+			// e.printStackTrace();
+			// }
+			//
+			// @Override
+			// public void onComplete(Bundle values) {
+			// Toast.makeText(SettingActivity.this,
+			// getString(R.string.mess_post_success),
+			// Toast.LENGTH_SHORT).show();
+			// }
+			//
+			// @Override
+			// public void onCancel() {
+			// Toast.makeText(SettingActivity.this, "Canceled",
+			// Toast.LENGTH_SHORT).show();
+			// }
+			// });
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -365,7 +425,11 @@ public class SettingActivity extends BaseActivity implements
 	 */
 	protected void sendSMS() {
 		Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-		smsIntent.putExtra("sms_body", getString(R.string.content_to_share_social_media));
+		smsIntent
+				.putExtra(
+						"sms_body",
+						getString(R.string.content_to_share_social_media)
+								+ " http://www7.44doors.com/dl.aspx?cid=2444&pv_url=http://cptr.it/captixscan?2444_rm_id=100.3781911.7");
 		smsIntent.setType("vnd.android-dir/mms-sms");
 
 		try {
@@ -377,19 +441,6 @@ public class SettingActivity extends BaseActivity implements
 		}
 	}
 
-	// @Override
-	// public void onBackPressed() {
-	// if (count == 1) {
-	// count = 0;
-	// finish();
-	// } else {
-	// Toast.makeText(this, "Press Back again to exit", Toast.LENGTH_SHORT)
-	// .show();
-	// count++;
-	// }
-	// return;
-	// }
-
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		try {
@@ -400,8 +451,8 @@ public class SettingActivity extends BaseActivity implements
 						finish();
 					} else {
 						Toast.makeText(getApplicationContext(),
-								getString(R.string.press_exit), Toast.LENGTH_SHORT)
-								.show();
+								getString(R.string.press_exit),
+								Toast.LENGTH_SHORT).show();
 						lastPressedTime = event.getEventTime();
 					}
 					return true;
@@ -430,16 +481,55 @@ public class SettingActivity extends BaseActivity implements
 	 */
 	protected void sendMail() {
 		Intent emailIntent = new Intent(Intent.ACTION_SEND);
-		emailIntent.setType("message/rfc822");
-		emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+		emailIntent.setType("text/html");
 		emailIntent
-				.putExtra(Intent.EXTRA_TEXT, getString(R.string.content_to_share_social_media));
+				.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+
+		Uri captixUrl = Uri
+				.parse("http://www7.44doors.com/dl.aspx?cid=2444&pv_url=http://cptr.it/captixscan?2444_rm_id=100.3781911.7");
+		emailIntent.putExtra(
+				android.content.Intent.EXTRA_TEXT,
+				Html.fromHtml(getString(R.string.content_to_share_social_media)
+						+ "<a href=\"" + captixUrl
+						+ "\"> cptr.it/captixscan</a>"));
 		try {
 			startActivity(Intent.createChooser(emailIntent,
 					"Choose an Email client:"));
 		} catch (Exception ex) {
 			Toast.makeText(this, "There are no email clients installed.",
 					Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	public void postOnWall() {
+		try {
+			// String message = Html
+			// .fromHtml(getString(R.string.content_to_share_social_media)
+			// +
+			// " http://www7.44doors.com/dl.aspx?cid=2444&pv_url=http://cptr.it/captixscan?2444_rm_id=100.3781911.7")
+			// + "";
+			// String response = mFacebook.request("me");
+			// Bundle parameters = new Bundle();
+			// parameters.putString("message", message);
+
+			String message = Html
+					.fromHtml(getString(R.string.content_to_share_social_media))
+					+ "";
+			String response = mFacebook.request("me");
+			Bundle parameters = new Bundle();
+			parameters.putString("message", message);
+			parameters.putString("link", "http://44doors.com/");
+
+			response = mFacebook.request("me/feed", parameters, "POST");
+			Toast.makeText(SettingActivity.this,
+					"Message has been posted on your wall.", Toast.LENGTH_SHORT)
+					.show();
+			if (response == null || response.equals("")
+					|| response.equals("false")) {
+				Log.v("Error", "Blank response");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

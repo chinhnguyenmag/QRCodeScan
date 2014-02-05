@@ -62,8 +62,9 @@
     <drawable name="green_drawable">#CC123Bff</drawable>
 
     <string name="content_html">content_detail.html</string>
-    <string name="content_to_share_social_media">Need a QR or barcode reader? Captix: Scan is the best one I\'ve found. Give it a try! cptr.it/captixscan http://www.44doors.com/</string>
+    <string name="content_to_share_social_media">Need a QR or barcode reader? Captix: Scan is the best one I\'ve found. Give it a try! </string>
 	 <string name="mess_post_success">Commment has been posted in your wall!</string>
 	 <string name="press_exit"> Press again to exit.</string>
+	  <string name="activity_settting_confirm">Are you sure you want to post on your wall?</string>
 	
 </resources>

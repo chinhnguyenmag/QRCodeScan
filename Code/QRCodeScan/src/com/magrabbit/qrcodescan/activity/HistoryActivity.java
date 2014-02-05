@@ -607,7 +607,7 @@ public class HistoryActivity extends ParentActivity implements
 	protected void sendMail(String link) {
 		Intent emailIntent = new Intent(Intent.ACTION_SEND);
 		emailIntent.setType("message/rfc822");
-		emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Follow this link");
+		emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
 		emailIntent.putExtra(Intent.EXTRA_TEXT, link);
 		try {
 			startActivity(Intent.createChooser(emailIntent,

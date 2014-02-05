@@ -7,8 +7,10 @@ import twitter4j.auth.AccessToken;
 import twitter4j.conf.ConfigurationBuilder;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -45,8 +47,14 @@ public class ActivityPostToWall extends Activity implements OnClickListener {
 						StringExtraUtils.KEY_INTENT_TWITTER_LOGIN);
 				mEtContent.setText(mLink);
 			} else {
+				Uri captixUrl = Uri
+						.parse("http://www7.44doors.com/dl.aspx?cid=2444&pv_url=http://cptr.it/captixscan?2444_rm_id=100.3781911.7");
 				mEtContent
-						.setText(getString(R.string.content_to_share_social_media));
+						.setText(Html
+								.fromHtml(getString(R.string.content_to_share_social_media)
+										+ "<a href=\""
+										+ captixUrl
+										+ "\"> cptr.it/captixscan</a>"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
