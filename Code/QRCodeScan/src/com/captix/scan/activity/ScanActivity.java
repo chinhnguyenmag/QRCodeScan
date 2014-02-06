@@ -15,7 +15,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.hardware.Camera;
@@ -251,7 +250,9 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 						// this is wrong result
 						if (!symData.matches("[0-9]{16}")) {
 							// Check whether to play sound or not
-							if (mAppPreferences.isSound()) {
+							if (mAppPreferences.isSound()
+									&& mAudio
+											.getStreamVolume(AudioManager.STREAM_MUSIC) != 0) {
 								mAudio.setStreamVolume(
 										AudioManager.STREAM_MUSIC,
 										mAudio.getStreamMaxVolume(AudioManager.STREAM_MUSIC),
