@@ -9,6 +9,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
+import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -25,23 +26,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.facebook.android.DialogError;
-import com.facebook.android.Facebook;
-import com.facebook.android.Facebook.DialogListener;
-import com.facebook.android.FacebookError;
 import com.captix.scan.R;
 import com.captix.scan.customview.DialogChangeProfile;
-import com.captix.scan.customview.DialogConfirm;
-import com.captix.scan.customview.DialogPickTime;
-import com.captix.scan.customview.SlidingMenuCustom;
 import com.captix.scan.customview.DialogChangeProfile.ProcessDialogProfile;
+import com.captix.scan.customview.DialogConfirm;
 import com.captix.scan.customview.DialogConfirm.ProcessDialogConfirm;
+import com.captix.scan.customview.DialogPickTime;
 import com.captix.scan.customview.DialogPickTime.ProcessDialogPickTime;
+import com.captix.scan.customview.SlidingMenuCustom;
 import com.captix.scan.listener.MenuSlidingClickListener;
 import com.captix.scan.model.AppPreferences;
 import com.captix.scan.utils.SocialUtil;
 import com.captix.scan.utils.Utils;
-
+import com.facebook.android.DialogError;
+import com.facebook.android.Facebook;
+import com.facebook.android.Facebook.DialogListener;
+import com.facebook.android.FacebookError;
 
 /**
  * @author vule
@@ -66,11 +66,14 @@ public class SettingActivity extends BaseActivity implements
 	private SharedPreferences mSharedPreferences;
 	private long lastPressedTime;
 	private static final int PERIOD = 2000;
+	private DialogChangeProfile mDlChangeUrl;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
+
 		if (android.os.Build.VERSION.SDK_INT > 9) {
 			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
 					.permitAll().build();
@@ -84,7 +87,13 @@ public class SettingActivity extends BaseActivity implements
 			mTvUrlProfile = (TextView) findViewById(R.id.setting_tv_urlprofile);
 
 			mAppPreferences = new AppPreferences(this);
-			mTvUrlProfile.setText(mAppPreferences.getProfileUrl());
+			String[] urlProfile=mAppPreferences
+					.getProfileUrl().split("/");
+			if (mAppPreferences.getProfileUrl().equals("-1")) {
+				mTvUrlProfile.setText("");
+			} else {
+				mTvUrlProfile.setText(urlProfile[0]);
+			}
 			mMenu = new SlidingMenuCustom(this, this);
 			mMenu.setTouchModeAboveMargin();
 			mSwitchViewSound = (ToggleButton) findViewById(R.id.activity_settings_sv_sound);
@@ -257,29 +266,34 @@ public class SettingActivity extends BaseActivity implements
 		}
 	}
 
-	public void onClick_ChangeURLProfile(View v) {
+	public void onClick_UrlProfile(View v) {
 		try {
 
-			DialogChangeProfile dialog = new DialogChangeProfile(this,
-					mAppPreferences.getProfileUrl(),
-					new ProcessDialogProfile() {
+			mDlChangeUrl = new DialogChangeProfile(this, mAppPreferences.getProfileUrl(), new ProcessDialogProfile() {
 
-						@Override
-						public void click_Ok(String url) {
-							try {
-								mAppPreferences.setProfileUrl(url);
-								showToastMessage(getString(R.string.mess_update_urlprofile_successfull));
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
+				@Override
+				public void click_Ok(String url) {
+					try {
+						mAppPreferences.setProfileUrl(url);
+						String[] urlProfile=mAppPreferences
+								.getProfileUrl().split("/");
+						if (mAppPreferences.getProfileUrl().equals("-1")) {
+							mTvUrlProfile.setText("");
+						} else {
+							mTvUrlProfile.setText(urlProfile[0]);
 						}
+						showToastMessage(getString(R.string.mess_update_urlprofile_successfull));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 
-						@Override
-						public void click_Cancel() {
+				@Override
+				public void click_Cancel() {
 
-						}
-					});
-			dialog.show();
+				}
+			});
+			mDlChangeUrl.show();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

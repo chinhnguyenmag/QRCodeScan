@@ -47,11 +47,11 @@ public class DialogPickTime extends BaseDialog implements OnClickListener {
 		mBtCancel.setOnClickListener(this);
 
 		mWhellviewPickTime = (WheelView) findViewById(R.id.dialog_select_time_wv_time);
-		mPickTimeAdapter = new PickTimeAdapter(context, 95, 5);
+		mPickTimeAdapter = new PickTimeAdapter(context, 90, 5);
 		mWhellviewPickTime.setViewAdapter(mPickTimeAdapter);
 
 		if (currentValue == -1) {
-			mWhellviewPickTime.setCurrentItem(19);
+			mWhellviewPickTime.setCurrentItem(18);
 		} else {
 			mWhellviewPickTime
 					.setCurrentItem(Utils.parseIndex(currentValue, 5));
@@ -61,8 +61,10 @@ public class DialogPickTime extends BaseDialog implements OnClickListener {
 
 			@Override
 			public void onChanged(WheelView wheel, int oldValue, int newValue) {
-				if (!mPickTimeAdapter.getItemText(wheel.getCurrentItem())
-						.equals("Nerver")) {
+				if (mPickTimeAdapter.getItemText(wheel.getCurrentItem()) != null
+						&& !mPickTimeAdapter
+								.getItemText(wheel.getCurrentItem()).equals(
+										"Nerver")) {
 					mValue = Integer.parseInt(mPickTimeAdapter
 							.getItemText(wheel.getCurrentItem()).toString()
 							.replace("s", ""));
