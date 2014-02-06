@@ -95,7 +95,6 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 			}
 
 			mAutoFocusHandler = new Handler();
-			// mCamera = getCameraInstance();
 			// Create and configure the ImageScanner;
 			setupScanner();
 
