@@ -163,45 +163,24 @@ public class HistoryActivity extends ParentActivity implements
 					@Override
 					public void delete_item(final int position,
 							final List<Item> listItems) {
-						DialogConfirm dialog = new DialogConfirm(
-								HistoryActivity.this,
-								android.R.drawable.ic_dialog_alert,
-								HistoryActivity.this
-										.getString(R.string.activity_history_delete_history_title),
-								HistoryActivity.this
-										.getString(R.string.activity_history_delete_history_confirm),
-								true, new ProcessDialogConfirm() {
+						// delete from database
+						mDataHandler.deleteQRCode(mListQRCodes.get(position));
+						mListQRCodes.remove(position);
 
-									@Override
-									public void click_Ok() {
-										// delete from database
-										mDataHandler.deleteQRCode(mListQRCodes
-												.get(position));
-										mListQRCodes.remove(position);
+						items.clear();
+						items.addAll(listItems);
+						// mSwipeListView.setAdapter(mAdapter);
+						mAdapter.notifyDataSetChanged();
 
-										items.clear();
-										items.addAll(listItems);
-										// mSwipeListView.setAdapter(mAdapter);
-										mAdapter.notifyDataSetChanged();
-
-										// Disable Delete All Button
-										if (mListQRCodes.size() == 0) {
-											mTvDelete.setVisibility(View.GONE);
-											// Align margin attributes for title
-											RelativeLayout.LayoutParams marginParams = (RelativeLayout.LayoutParams) mTvTitle
-													.getLayoutParams();
-											marginParams
-													.setMargins(0, 0, 20, 0);
-											mTvTitle.setLayoutParams(marginParams);
-										}
-									}
-
-									@Override
-									public void click_Cancel() {
-
-									}
-								});
-						dialog.show();
+						// Disable Delete All Button
+						if (mListQRCodes.size() == 0) {
+							mTvDelete.setVisibility(View.GONE);
+							// Align margin attributes for title
+							RelativeLayout.LayoutParams marginParams = (RelativeLayout.LayoutParams) mTvTitle
+									.getLayoutParams();
+							marginParams.setMargins(0, 0, 20, 0);
+							mTvTitle.setLayoutParams(marginParams);
+						}
 
 					}
 
