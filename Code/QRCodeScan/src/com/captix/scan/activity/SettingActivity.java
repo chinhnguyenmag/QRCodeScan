@@ -85,7 +85,7 @@ public class SettingActivity extends BaseActivity implements
 			mTvTitle = (TextView) findViewById(R.id.header_tv_title);
 			mTvTitle.setText(R.string.header_title_setting);
 
-			mTvUrlProfile = (TextView) findViewById(R.id.activity_setting_tv_time);
+			mTvUrlProfile = (TextView) findViewById(R.id.setting_tv_urlprofile);
 
 			mAppPreferences = new AppPreferences(this);
 			String[] urlProfile=mAppPreferences
