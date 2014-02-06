@@ -75,6 +75,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		setContentView(R.layout.activity_scan);
 		mAudio = (AudioManager) getSystemService(this.AUDIO_SERVICE);
 		mAppPreferences = new AppPreferences(this);
+		mAppPreferences.setOpenUrl(true);
 		if (mAppPreferences.getProfileUrl().equals("")) {
 			mAppPreferences.setProfileUrl("cptr.it/?var={variable}&id=test");
 		}
@@ -253,7 +254,8 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 						mCamera.cancelAutoFocus();
 						mCamera.setPreviewCallback(null);
 
-						if (mAppPreferences.getProfileUrl().equalsIgnoreCase("-1")) {
+						if (mAppPreferences.getProfileUrl().equalsIgnoreCase(
+								"-1")) {
 							// There is no URL profile format
 							continueScan(symData);
 						} else {
