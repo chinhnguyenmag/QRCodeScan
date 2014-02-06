@@ -116,7 +116,7 @@ public class SettingActivity extends BaseActivity implements
 			mRlShareFacebook.setOnClickListener(this);
 
 			mSwitchViewSound.setChecked(mAppPreferences.isSound());
-			mSwitchViewOpenUrl.setChecked(mAppPreferences.isOpenUrl());
+			mSwitchViewOpenUrl.setChecked(mAppPreferences.getAskBeforeOpening());
 			mSwitchViewSound
 					.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
@@ -133,7 +133,7 @@ public class SettingActivity extends BaseActivity implements
 						@Override
 						public void onCheckedChanged(CompoundButton arg0,
 								boolean isOn) {
-							mAppPreferences.setOpenUrl(isOn);
+							mAppPreferences.setAskBeforeOpening(isOn);
 						}
 					});
 

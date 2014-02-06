@@ -18,6 +18,9 @@ import android.widget.TextView;
 
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.captix.scan.R;
+import com.captix.scan.activity.HistoryActivity;
+import com.captix.scan.customview.DialogConfirm;
+import com.captix.scan.customview.DialogConfirm.ProcessDialogConfirm;
 import com.captix.scan.listener.GetWidthListener;
 import com.captix.scan.model.HistoryItem;
 import com.captix.scan.model.HistorySectionItem;
@@ -151,13 +154,31 @@ public class HistoryAdapter extends ArrayAdapter<Item> {
 
 						@Override
 						public void onClick(View v) {
-							int position_delete = position
-									- calculateNumberSectionBefore(position);
-							items.remove(position);
-							if (items.size() == 1) {
-								items.clear();
-							}
-							mProcess.delete_item(position_delete, items);
+							DialogConfirm dialog = new DialogConfirm(
+									context,
+									android.R.drawable.ic_dialog_alert,
+									context.getString(R.string.activity_history_delete_history_title),
+									context.getString(R.string.activity_history_delete_history_confirm),
+									true, new ProcessDialogConfirm() {
+
+										@Override
+										public void click_Ok() {
+											int position_delete = position
+													- calculateNumberSectionBefore(position);
+											items.remove(position);
+											if (items.size() == 1) {
+												items.clear();
+											}
+											mProcess.delete_item(position_delete, items);
+										}
+
+										@Override
+										public void click_Cancel() {
+
+										}
+									});
+							dialog.show();
+							
 						}
 					});
 					holder.mBtnEvernote

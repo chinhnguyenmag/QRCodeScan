@@ -7,6 +7,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.hardware.Camera;
 import android.hardware.Camera.AutoFocusCallback;
 import android.hardware.Camera.PreviewCallback;
@@ -94,26 +95,58 @@ public class CameraPreviewNew extends SurfaceView implements
 						mPreviewSize.height);
 			}
 			// Change orientation when rotating camera
-			int angle;
-			Display display = mActivity.getWindowManager().getDefaultDisplay();
-			switch (display.getRotation()) {
-			case Surface.ROTATION_0: // This is display orientation
-				angle = 90; // This is camera orientation
-				break;
-			case Surface.ROTATION_90:
-				angle = 0;
-				break;
-			case Surface.ROTATION_180:
-				angle = 270;
-				break;
-			case Surface.ROTATION_270:
-				angle = 180;
-				break;
-			default:
-				angle = 90;
-				break;
+			// int angle;
+			// Display display =
+			// mActivity.getWindowManager().getDefaultDisplay();
+			// switch (display.getRotation()) {
+			// case Surface.ROTATION_0: // This is display orientation
+			// angle = 90; // This is camera orientation
+			// break;
+			// case Surface.ROTATION_90:
+			// angle = 0;
+			// break;
+			// case Surface.ROTATION_180:
+			// angle = 270;
+			// break;
+			// case Surface.ROTATION_270:
+			// angle = 180;
+			// break;
+			// default:
+			// angle = 90;
+			// break;
+			// }
+			// mCamera.setDisplayOrientation(angle);
+			if (mActivity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+				mCamera.setDisplayOrientation(90);
 			}
-			mCamera.setDisplayOrientation(angle);
+			if (mActivity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+				// Change orientation when rotating camera
+				int angle;// This is camera orientation
+				Display display = mActivity.getWindowManager()
+						.getDefaultDisplay();
+				switch (display.getRotation()) {// This is display orientation
+				case Surface.ROTATION_0:
+					// for Tablet
+					angle = 0;
+					break;
+				case Surface.ROTATION_90:
+					// for Phone
+					angle = 0;
+					break;
+				case Surface.ROTATION_180:
+					// for Tablet
+					angle = 180;
+					break;
+				case Surface.ROTATION_270:
+					// for Phone
+					angle = 180;
+					break;
+				default:
+					angle = 90;
+					break;
+				}
+				mCamera.setDisplayOrientation(angle);
+			}
 			mCamera.setParameters(parameters);
 			mCamera.setPreviewDisplay(mHolder);
 			mCamera.setPreviewCallback(previewCallback);
