@@ -218,7 +218,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
-                    android:background="@drawable/ic_setting_mail"
+                    android:background="@drawable/ic_setting_sms"
                     android:contentDescription="@string/common_imagebutton_description" />
 
                 <TextView
