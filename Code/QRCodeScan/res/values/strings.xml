@@ -52,6 +52,7 @@
     <string name="activity_scan_open_browser_title"> Open Browser</string>
     <string name="activity_scan_invalid_url_title">Invalid URL</string>
     <string name="activity_scan_invalid_url_message">This URL is not right format</string>
+    <string name="activity_scan_camera_unavailable">Camera is not available</string>
 
     <!-- History Activity -->
     <string name="activity_history_delete_history_confirm">Are you sure you want to delete this scan history?</string>
