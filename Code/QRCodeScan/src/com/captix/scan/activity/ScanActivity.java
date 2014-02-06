@@ -81,16 +81,17 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 			mAppPreferences.setProfileUrl("cptr.it/?var={variable}&id=test");
 		}
 		try {
-			//setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
 			mTvTitle = (TextView) findViewById(R.id.header_tv_title);
 			mTvTitle.setText(R.string.header_title_scan);
 			mMenu = new SlidingMenuCustom(this, this);
+			// Configure orientation for displaying Sliding Menu and Camera
 			int display_mode = getResources().getConfiguration().orientation;
 			if (display_mode == 1) {
 				mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 			} else {
 				mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset_land);
+				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 			}
 			mFrameCamera = (FrameLayout) findViewById(R.id.activity_scan_camera);
 			mDataHandler = new DatabaseHandler(this);
@@ -481,6 +482,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		}
 		return false;
 	}
+
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
