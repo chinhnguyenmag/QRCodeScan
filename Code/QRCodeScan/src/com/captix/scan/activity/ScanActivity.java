@@ -53,7 +53,6 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	private boolean mPreviewing = true;
 	private FrameLayout mFrameCamera;
 	// Application Preference
-	private AppPreferences mPreference;
 	// For Sliding Menu
 	private SlidingMenuCustom mSlidingMenu;
 	// Save scanned QRCode into local database by SQLite
@@ -77,7 +76,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		mAudio = (AudioManager) getSystemService(this.AUDIO_SERVICE);
 		mAppPreferences = new AppPreferences(this);
 		if (mAppPreferences.getProfileUrl().equals("")) {
-			mAppPreferences.setProfileUrl("cptr.it");
+			mAppPreferences.setProfileUrl("cptr.it/?var={variable}&id=test");
 		}
 		try {
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -86,7 +85,6 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 			mTvTitle.setText(R.string.header_title_scan);
 			mSlidingMenu = new SlidingMenuCustom(this, this);
 
-			mPreference = new AppPreferences(ScanActivity.this);
 			mFrameCamera = (FrameLayout) findViewById(R.id.activity_scan_camera);
 			mDataHandler = new DatabaseHandler(this);
 
@@ -191,8 +189,8 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	protected void onDestroy() {
 		super.onDestroy();
 		try {
-			if (mPreference != null) {
-				mPreference = null;
+			if (mAppPreferences != null) {
+				mAppPreferences = null;
 			}
 			if (mCamera != null) {
 				mCamera.stopPreview();
@@ -245,7 +243,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 					final String symData = sym.getData();
 					if (!TextUtils.isEmpty(symData)) {
 						// Check whether to play sound or not
-						if (mPreference.isSound()) {
+						if (mAppPreferences.isSound()) {
 							mAudio.setStreamVolume(
 									AudioManager.STREAM_MUSIC,
 									mAudio.getStreamMaxVolume(AudioManager.STREAM_MUSIC),
@@ -256,15 +254,17 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 						mCamera.cancelAutoFocus();
 						mCamera.setPreviewCallback(null);
 
-						if (mPreference.getProfileUrl().equalsIgnoreCase("-1")) {
-							resultScan(symData);
+						if (mAppPreferences.getProfileUrl().equalsIgnoreCase("-1")) {
+							// There is no URL profile format
+							continueScan(symData);
 						} else {
-							String urlProfile = mPreference.getProfileUrl();
-							String[] domain = urlProfile.split("/");
+							// Check whether URL follow URL profile format or
+							// not like "cptr.it/?var={variable}&id=test"
+							String[] domain = symData.split("/");
 							if (domain[0].contains(".")
-									&& urlProfile.contains("?var=")
-									&& urlProfile.contains("&id=test")) {
-								resultScan(symData);
+									&& symData.contains("?var=")
+									&& symData.contains("&id=test")) {
+								continueScan(symData);
 							} else if (!alertDialog.isShowing()) {
 								alertDialog.show();
 							}
@@ -281,12 +281,9 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		}
 	}
 
-	public void resultScan(final String symData) {
+	public void continueScan(final String symData) {
 		Format formatter = new SimpleDateFormat("EEEE, MMMM dd yyyy", Locale.US);
 
-		// DateFormat formatter =
-		// DateFormat.getDateInstance(
-		// DateFormat.LONG, Locale.US);
 		String date = formatter.format(new Date());
 		mDataHandler.addQRCode(new QRCode(date, symData));
 
@@ -295,7 +292,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		// for
 		// searching on WebSite
 
-		if (mPreference.isOpenUrl()) {
+		if (mAppPreferences.isOpenUrl()) {
 			Intent dataIntent = new Intent(ScanActivity.this,
 					BrowserActivity.class);
 			dataIntent.putExtra(StringExtraUtils.KEY_SCAN_RESULT, symData);
