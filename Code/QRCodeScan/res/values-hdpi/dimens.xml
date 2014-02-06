@@ -2,6 +2,6 @@
 <resources>
 
     <dimen name="slidingmenu_offset">220dp</dimen>
-    <dimen name="slidingmenu_offset_land">500dp</dimen>
+    <dimen name="slidingmenu_offset_land">450dp</dimen>
 
 </resources>
