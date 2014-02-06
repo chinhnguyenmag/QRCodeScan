@@ -39,27 +39,23 @@
         <activity
             android:name="com.captix.scan.activity.AboutActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="com.captix.scan.activity.BrowserActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar"
             android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
         <activity
             android:name="com.captix.scan.activity.HistoryActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar"
             android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
         <activity
             android:name="com.captix.scan.activity.ScanActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar"
             android:windowSoftInputMode="stateAlwaysHidden" >
             <intent-filter>
@@ -71,7 +67,6 @@
         <activity
             android:name="com.captix.scan.activity.SettingActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar"
             android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>

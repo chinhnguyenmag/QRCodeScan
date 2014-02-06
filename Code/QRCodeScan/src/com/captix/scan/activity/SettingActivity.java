@@ -9,6 +9,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
+import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -96,6 +97,12 @@ public class SettingActivity extends BaseActivity implements
 			}
 			mMenu = new SlidingMenuCustom(this, this);
 			mMenu.setTouchModeAboveMargin();
+			int display_mode = getResources().getConfiguration().orientation;
+			if (display_mode == 1) {
+				mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+			} else {
+				mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset_land);
+			}
 			mSwitchViewSound = (ToggleButton) findViewById(R.id.activity_settings_sv_sound);
 			mSwitchViewOpenUrl = (ToggleButton) findViewById(R.id.activity_settings_sv_open_url);
 			mTvTime = (TextView) findViewById(R.id.activity_setting_tv_time);
@@ -581,5 +588,14 @@ public class SettingActivity extends BaseActivity implements
 			e.printStackTrace();
 		}
 	}
-
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		// Checks the orientation of the screen
+		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+			mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset_land);
+		} else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+			mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+		}
+	}
 }

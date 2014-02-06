@@ -34,12 +34,14 @@
                 android:id="@+id/list_item_entry_btn_twitter"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
+                 android:visibility="gone"
                 android:layout_toRightOf="@id/list_item_entry_btn_email"
                 android:background="@drawable/button_twiter" />
 
             <ImageButton
                 android:id="@+id/list_item_entry_btn_facebook"
                 android:layout_width="60dp"
+                 android:visibility="gone"
                 android:layout_height="60dp"
                 android:layout_toRightOf="@id/list_item_entry_btn_twitter"
                 android:background="@drawable/button_facebook" />
@@ -47,6 +49,7 @@
             <ImageButton
                 android:id="@+id/list_item_entry_btn_evernote"
                 android:layout_width="60dp"
+                 android:visibility="gone"
                 android:layout_height="60dp"
                 android:layout_toRightOf="@id/list_item_entry_btn_facebook"
                 android:background="@drawable/button_enote" />
