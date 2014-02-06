@@ -1,6 +1,7 @@
 package com.captix.scan.activity;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -41,7 +42,12 @@ public class AboutActivity extends BaseActivity implements
 			mWvContent = (WebView) findViewById(R.id.about_wv_introduce);
 			setTransparentBackground();
 			mMenu = new SlidingMenuCustom(this, this);
-
+			int display_mode = getResources().getConfiguration().orientation;
+			if (display_mode == 1) {
+				mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+			} else {
+				mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset_land);
+			}
 			new loadTask().execute();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -162,5 +168,15 @@ public class AboutActivity extends BaseActivity implements
 			e.printStackTrace();
 		}
 		return false;
+	}
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		// Checks the orientation of the screen
+		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+			mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset_land);
+		} else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+			mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+		}
 	}
 }
