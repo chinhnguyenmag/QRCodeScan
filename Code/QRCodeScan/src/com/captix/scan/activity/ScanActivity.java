@@ -76,7 +76,6 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		setContentView(R.layout.activity_scan);
 		mAudio = (AudioManager) getSystemService(this.AUDIO_SERVICE);
 		mAppPreferences = new AppPreferences(this);
-		mAppPreferences.setOpenUrl(true);
 		if (mAppPreferences.getProfileUrl().equals("")) {
 			mAppPreferences.setProfileUrl("cptr.it/?var={variable}&id=test");
 		}
@@ -299,7 +298,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		// for
 		// searching on WebSite
 
-		if (mAppPreferences.isOpenUrl()) {
+		if (!mAppPreferences.getAskBeforeOpening()) {
 			Intent dataIntent = new Intent(ScanActivity.this,
 					BrowserActivity.class);
 			dataIntent.putExtra(StringExtraUtils.KEY_SCAN_RESULT, symData);
