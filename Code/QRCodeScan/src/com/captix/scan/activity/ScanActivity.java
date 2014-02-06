@@ -88,10 +88,10 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 			int display_mode = getResources().getConfiguration().orientation;
 			if (display_mode == 1) {
 				mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+				//setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 			} else {
 				mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset_land);
-				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+				//setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 			}
 			mFrameCamera = (FrameLayout) findViewById(R.id.activity_scan_camera);
 			mDataHandler = new DatabaseHandler(this);
