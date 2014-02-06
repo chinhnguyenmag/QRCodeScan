@@ -76,20 +76,22 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		setContentView(R.layout.activity_scan);
 		mAudio = (AudioManager) getSystemService(this.AUDIO_SERVICE);
 		mAppPreferences = new AppPreferences(this);
+		mAppPreferences.setOpenUrl(true);
 		if (mAppPreferences.getProfileUrl().equals("")) {
 			mAppPreferences.setProfileUrl("cptr.it/?var={variable}&id=test");
 		}
 		try {
-			//setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
 			mTvTitle = (TextView) findViewById(R.id.header_tv_title);
 			mTvTitle.setText(R.string.header_title_scan);
 			mMenu = new SlidingMenuCustom(this, this);
+			// Configure orientation for displaying Sliding Menu and Camera
 			int display_mode = getResources().getConfiguration().orientation;
 			if (display_mode == 1) {
 				mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+//				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 			} else {
 				mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset_land);
+//				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 			}
 			mFrameCamera = (FrameLayout) findViewById(R.id.activity_scan_camera);
 			mDataHandler = new DatabaseHandler(this);
@@ -101,10 +103,8 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 			}
 
 			mAutoFocusHandler = new Handler();
-			// mCamera = getCameraInstance();
 			// Create and configure the ImageScanner;
 			setupScanner();
-
 			// Show warning dialog for Invalid URL
 			createInvalidURLDialog(ScanActivity.this);
 		} catch (Exception e) {
@@ -260,7 +260,8 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 						mCamera.cancelAutoFocus();
 						mCamera.setPreviewCallback(null);
 
-						if (mAppPreferences.getProfileUrl().equalsIgnoreCase("-1")) {
+						if (mAppPreferences.getProfileUrl().equalsIgnoreCase(
+								"-1")) {
 							// There is no URL profile format
 							continueScan(symData);
 						} else {
@@ -480,6 +481,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		}
 		return false;
 	}
+
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
