@@ -42,6 +42,12 @@ public class DialogChangeProfile extends BaseDialog implements OnClickListener {
 		mBtOk = (Button) findViewById(R.id.dialog_change_profile_bt_Ok);
 		mBtCancel = (Button) findViewById(R.id.dialog_change_profile_bt_Cancel);
 		mEtUrlProfile = (EditText) findViewById(R.id.dialog_change_profile_et_url);
+		if(urlProfile.equals("-1")){
+			mEtUrlProfile.setText("");
+		}else{
+			mEtUrlProfile.setText(urlProfile);
+		}
+		mEtUrlProfile.requestFocus();
 		mBtOk.setOnClickListener(this);
 		mBtCancel.setOnClickListener(this);
 
@@ -56,13 +62,13 @@ public class DialogChangeProfile extends BaseDialog implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.dialog_select_time_bt_Ok:
+		case R.id.dialog_change_profile_bt_Ok:
 			if (validate()) {
 				mProcess.click_Ok(mUrl);
-				dismiss();
 			}
+			dismiss();
 			break;
-		case R.id.dialog_select_time_bt_Cancel:
+		case R.id.dialog_change_profile_bt_Cancel:
 			mProcess.click_Cancel();
 			dismiss();
 			break;
@@ -73,23 +79,21 @@ public class DialogChangeProfile extends BaseDialog implements OnClickListener {
 
 	public boolean validate() {
 		String urlProfile = mEtUrlProfile.getText().toString();
-
 		if (urlProfile.length() == 0) {
-			Toast.makeText(mContext,
-					mContext.getString(R.string.mess_error_urlprofile),
-					Toast.LENGTH_LONG).show();
-			return false;
+			mUrl = "-1";
+			return true;
 		}
-
 		String[] domain = urlProfile.split("/");
 		if (domain[0].contains(".") && urlProfile.contains("?var=")
 				&& urlProfile.contains("&id=test")) {
-			Toast.makeText(
-					mContext,
-					"Invalid URL profile. Url format should be  cptr.it/?var={variable}&id=test.",
-					Toast.LENGTH_LONG).show();
-			return false;
+			mUrl = urlProfile;
+			return true;
 		}
-		return true;
+
+		Toast.makeText(
+				mContext,
+				"Invalid URL profile. Url format should be  cptr.it/?var={variable}&id=test.",
+				Toast.LENGTH_LONG).show();
+		return false;
 	}
 }

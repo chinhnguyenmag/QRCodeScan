@@ -111,6 +111,7 @@
                 android:paddingBottom="20dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
+                android:onClick="onClick_UrlProfile"
                 android:paddingTop="20dp" >
 
                 <TextView

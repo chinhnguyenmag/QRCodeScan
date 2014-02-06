@@ -607,7 +607,7 @@ public class Utils {
 		if (value == -1) {
 			return 19;
 		}
-		return value / step;
+		return (value / step)-1;
 	}
 
 	/**

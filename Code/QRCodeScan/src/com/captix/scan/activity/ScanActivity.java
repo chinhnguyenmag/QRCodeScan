@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
@@ -62,6 +63,8 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	private AlertDialog alertDialog;
 	private long lastPressedTime;
 	private static final int PERIOD = 2000;
+	private AppPreferences mAppPreferences;
+	private AudioManager mAudio;
 
 	static {
 		System.loadLibrary("iconv");
@@ -71,6 +74,11 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_scan);
+		mAudio = (AudioManager) getSystemService(this.AUDIO_SERVICE);
+		mAppPreferences = new AppPreferences(this);
+		if (mAppPreferences.getProfileUrl().equals("")) {
+			mAppPreferences.setProfileUrl("cptr.it");
+		}
 		try {
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -207,7 +215,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 			Intent dataIntent = new Intent();
 			dataIntent.putExtra(ERROR_INFO, "Camera unavailable");
 			setResult(Activity.RESULT_CANCELED, dataIntent);
-//			finish();
+			// finish();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -233,6 +241,10 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 					if (!TextUtils.isEmpty(symData)) {
 						// Check whether to play sound or not
 						if (mPreference.isSound()) {
+							mAudio.setStreamVolume(
+									AudioManager.STREAM_MUSIC,
+									mAudio.getStreamMaxVolume(AudioManager.STREAM_MUSIC),
+									0);
 							playSound();
 						}
 						// Stop scanning

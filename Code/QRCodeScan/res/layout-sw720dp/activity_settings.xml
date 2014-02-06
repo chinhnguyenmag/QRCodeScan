@@ -30,8 +30,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="5dp"
-                    android:textSize="@dimen/campaign_textfont_title"
-                    android:text="@string/scanner" />
+                    android:text="@string/scanner"
+                    android:textSize="@dimen/campaign_textfont_title" />
             </LinearLayout>
 
             <LinearLayout
@@ -108,6 +108,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
+                android:onClick="onClick_UrlProfile"
                 android:paddingBottom="20dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
@@ -192,8 +193,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="5dp"
-                    android:textSize="@dimen/campaign_textfont_title"
-                    android:text="@string/share" />
+                    android:text="@string/share"
+                    android:textSize="@dimen/campaign_textfont_title" />
             </LinearLayout>
 
             <RelativeLayout

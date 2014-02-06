@@ -12,7 +12,6 @@ import com.captix.scan.R;
 public class PickTimeAdapter extends NumericWheelAdapter {
 	// Items step value
 	private int mStep;
-	private String mValue;
 
 	/**
 	 * Constructor
@@ -27,11 +26,11 @@ public class PickTimeAdapter extends NumericWheelAdapter {
 	@Override
 	public CharSequence getItemText(int index) {
 		if (index >= 0 && index < getItemsCount()) {
-			int value = index * mStep;
+			int value = 5 + index * mStep;
 			if (value == 95) {
 				return "Nerver";
 			}
-			return Integer.toString(value)+"s";
+			return Integer.toString(value) + "s";
 		}
 		return null;
 	}
