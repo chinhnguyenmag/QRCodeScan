@@ -279,7 +279,6 @@ public class HistoryActivity extends ParentActivity implements
 
 					@Override
 					public void onOpened(int position, boolean toRight) {
-						// TODO Auto-generated method stub
 
 					}
 

@@ -249,7 +249,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 					final String symData = sym.getData();
 					if (!TextUtils.isEmpty(symData)) {
 						// Check whether to play sound or not
-						if (mAppPreferences.isSound()) {
+						if (mAppPreferences.isSound()&&mAudio.getStreamVolume(AudioManager.STREAM_MUSIC)!=0) {
 							mAudio.setStreamVolume(
 									AudioManager.STREAM_MUSIC,
 									mAudio.getStreamMaxVolume(AudioManager.STREAM_MUSIC),
