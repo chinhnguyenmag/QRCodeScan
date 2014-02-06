@@ -94,28 +94,6 @@ public class CameraPreviewNew extends SurfaceView implements
 				parameters.setPreviewSize(mPreviewSize.width,
 						mPreviewSize.height);
 			}
-			// Change orientation when rotating camera
-			// int angle;
-			// Display display =
-			// mActivity.getWindowManager().getDefaultDisplay();
-			// switch (display.getRotation()) {
-			// case Surface.ROTATION_0: // This is display orientation
-			// angle = 90; // This is camera orientation
-			// break;
-			// case Surface.ROTATION_90:
-			// angle = 0;
-			// break;
-			// case Surface.ROTATION_180:
-			// angle = 270;
-			// break;
-			// case Surface.ROTATION_270:
-			// angle = 180;
-			// break;
-			// default:
-			// angle = 90;
-			// break;
-			// }
-			// mCamera.setDisplayOrientation(angle);
 			if (mActivity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
 				mCamera.setDisplayOrientation(90);
 			}

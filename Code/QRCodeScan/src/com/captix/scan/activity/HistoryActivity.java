@@ -91,7 +91,6 @@ public class HistoryActivity extends ParentActivity implements
 		mTvTitle = (TextView) findViewById(R.id.header_tv_title);
 		mTvTitle.setText(R.string.header_title_history);
 		mTvDelete = (TextView) findViewById(R.id.header_tv_right);
-
 		// inflate layout for list view
 		mSwipeListView = (SwipeListView) findViewById(R.id.activity_history_lv);
 		View v = new View(this);
@@ -264,8 +263,6 @@ public class HistoryActivity extends ParentActivity implements
 
 					@Override
 					public void onOpened(int position, boolean toRight) {
-						// TODO Auto-generated method stub
-
 					}
 
 					@Override
@@ -302,8 +299,7 @@ public class HistoryActivity extends ParentActivity implements
 
 					@Override
 					public void onClosed(int position, boolean fromRight) {
-						// TODO Auto-generated method stub
-
+						
 					}
 
 					@Override
@@ -323,8 +319,7 @@ public class HistoryActivity extends ParentActivity implements
 
 					@Override
 					public void onClickBackView(int position) {
-						// TODO Auto-generated method stub
-
+						mSwipeListView.closeAnimate(position);
 					}
 
 					@Override
