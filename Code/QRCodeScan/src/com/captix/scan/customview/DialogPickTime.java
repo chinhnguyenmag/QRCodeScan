@@ -49,7 +49,7 @@ public class DialogPickTime extends BaseDialog implements OnClickListener {
 		mWhellviewPickTime = (WheelView) findViewById(R.id.dialog_select_time_wv_time);
 		mPickTimeAdapter = new PickTimeAdapter(context, 90, 5);
 		mWhellviewPickTime.setViewAdapter(mPickTimeAdapter);
-
+		mValue = currentValue;
 		if (currentValue == -1) {
 			mWhellviewPickTime.setCurrentItem(18);
 		} else {
