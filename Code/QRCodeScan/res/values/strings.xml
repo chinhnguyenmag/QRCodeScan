@@ -13,7 +13,7 @@
     <string name="mess_waitting">Processing...</string>
     <string name="scanner">SCANNER</string>
     <string name="sound">Sound</string>
-    <string name="auto_open_url">Auto Open URL</string>
+    <string name="auto_open_url">Always ask before opening</string>
     <string name="url_profile">URL Profile</string>
     <string name="auto_close">Auto close URL view after</string>
     <string name="share">SHARE</string>

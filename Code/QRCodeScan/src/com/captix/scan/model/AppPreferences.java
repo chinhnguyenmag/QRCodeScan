@@ -55,7 +55,7 @@ public class AppPreferences {
 	 * @param isOpen
 	 * @return
 	 */
-	public boolean setOpenUrl(boolean isOpen) {
+	public boolean setAskBeforeOpening(boolean isOpen) {
 		mPrefsEditor.putBoolean("OpenUrl", isOpen);
 		mPrefsEditor.commit();
 		return true;
@@ -64,8 +64,8 @@ public class AppPreferences {
 	/**
 	 * @return auto open url true/false.
 	 */
-	public boolean isOpenUrl() {
-		boolean isOpen = mAppSharedPrefs.getBoolean("OpenUrl", false);
+	public boolean getAskBeforeOpening() {
+		boolean isOpen = mAppSharedPrefs.getBoolean("OpenUrl", true);
 		return isOpen;
 	}
 
