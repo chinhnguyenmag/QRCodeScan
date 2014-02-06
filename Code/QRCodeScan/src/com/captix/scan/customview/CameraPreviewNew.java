@@ -5,12 +5,15 @@ package com.captix.scan.customview;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.hardware.Camera;
 import android.hardware.Camera.AutoFocusCallback;
 import android.hardware.Camera.PreviewCallback;
 import android.hardware.Camera.Size;
 import android.util.Log;
+import android.view.Display;
+import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -24,10 +27,12 @@ public class CameraPreviewNew extends SurfaceView implements
 	private List<Size> mSupportedPreviewSizes;
 	private PreviewCallback previewCallback;
 	private AutoFocusCallback autoFocusCallback;
+	private Activity mActivity;
 
 	public CameraPreviewNew(Context context, PreviewCallback previewCb,
 			AutoFocusCallback autoFocusCb) {
 		super(context);
+		mActivity = (Activity) context;
 		previewCallback = previewCb;
 		autoFocusCallback = autoFocusCb;
 
@@ -88,9 +93,27 @@ public class CameraPreviewNew extends SurfaceView implements
 				parameters.setPreviewSize(mPreviewSize.width,
 						mPreviewSize.height);
 			}
-			// Hard code camera surface rotation 90 degs to match Activity view
-			// in portrait
-			mCamera.setDisplayOrientation(90);
+			// Change orientation when rotating camera
+			int angle;
+			Display display = mActivity.getWindowManager().getDefaultDisplay();
+			switch (display.getRotation()) {
+			case Surface.ROTATION_0: // This is display orientation
+				angle = 90; // This is camera orientation
+				break;
+			case Surface.ROTATION_90:
+				angle = 0;
+				break;
+			case Surface.ROTATION_180:
+				angle = 270;
+				break;
+			case Surface.ROTATION_270:
+				angle = 180;
+				break;
+			default:
+				angle = 90;
+				break;
+			}
+			mCamera.setDisplayOrientation(angle);
 			mCamera.setParameters(parameters);
 			mCamera.setPreviewDisplay(mHolder);
 			mCamera.setPreviewCallback(previewCallback);
