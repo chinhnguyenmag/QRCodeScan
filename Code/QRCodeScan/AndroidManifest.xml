@@ -57,7 +57,7 @@
             android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
         <activity
-            android:name="com.captix.scan.activity.SplashActivity"
+            android:name="com.captix.scan.activity.ScanActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar"
@@ -75,12 +75,6 @@
             android:theme="@android:style/Theme.Light.NoTitleBar"
             android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
-        <activity
-            android:name="com.captix.scan.activity.ScanActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="com.captix.scan.activity.CreateEverNote"
             android:configChanges="orientation"
