@@ -311,7 +311,8 @@
                 android:paddingBottom="15dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                android:paddingTop="15dp" >
+                android:paddingTop="15dp"
+                android:visibility="gone" >
 
                 <ImageView
                     android:id="@+id/setting_ic_twitter"
@@ -351,7 +352,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="2dp"
                 android:layout_marginLeft="20dp"
-                android:background="@color/background_gray" />
+                android:background="@color/background_gray"
+                android:visibility="gone" />
 
             <RelativeLayout
                 android:id="@+id/setting_ll_social_facebook"
@@ -363,7 +365,8 @@
                 android:paddingBottom="15dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                android:paddingTop="15dp" >
+                android:paddingTop="15dp"
+                android:visibility="gone" >
 
                 <ImageView
                     android:id="@+id/setting_ic_facebook"
@@ -403,7 +406,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="2dp"
                 android:layout_marginLeft="20dp"
-                android:background="@color/background_gray" />
+                android:background="@color/background_gray"
+                android:visibility="gone" />
         </LinearLayout>
     </ScrollView>
 

@@ -312,6 +312,7 @@
                 android:paddingBottom="15dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
+                 android:visibility="gone"
                 android:paddingTop="15dp" >
 
                 <ImageView
@@ -352,6 +353,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="2dp"
                 android:layout_marginLeft="20dp"
+                 android:visibility="gone"
                 android:background="@color/background_gray" />
 
             <RelativeLayout
@@ -364,6 +366,7 @@
                 android:paddingBottom="15dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
+                 android:visibility="gone"
                 android:paddingTop="15dp" >
 
                 <ImageView
@@ -404,6 +407,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="2dp"
                 android:layout_marginLeft="20dp"
+                 android:visibility="gone"
                 android:background="@color/background_gray" />
         </LinearLayout>
     </ScrollView>
