@@ -17,6 +17,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.hardware.Camera;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -54,7 +55,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	private FrameLayout mFrameCamera;
 	// Application Preference
 	// For Sliding Menu
-	private SlidingMenuCustom mSlidingMenu;
+	private SlidingMenuCustom mMenu;
 	// Save scanned QRCode into local database by SQLite
 	private DatabaseHandler mDataHandler;
 	private TextView mTvTitle;
@@ -79,12 +80,17 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 			mAppPreferences.setProfileUrl("cptr.it/?var={variable}&id=test");
 		}
 		try {
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+			//setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 			mTvTitle = (TextView) findViewById(R.id.header_tv_title);
 			mTvTitle.setText(R.string.header_title_scan);
-			mSlidingMenu = new SlidingMenuCustom(this, this);
-
+			mMenu = new SlidingMenuCustom(this, this);
+			int display_mode = getResources().getConfiguration().orientation;
+			if (display_mode == 1) {
+				mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+			} else {
+				mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset_land);
+			}
 			mFrameCamera = (FrameLayout) findViewById(R.id.activity_scan_camera);
 			mDataHandler = new DatabaseHandler(this);
 
@@ -405,10 +411,10 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 
 	public void onClick_Menu(View view) {
 		try {
-			if (mSlidingMenu == null) {
-				mSlidingMenu = new SlidingMenuCustom(this, this);
+			if (mMenu == null) {
+				mMenu = new SlidingMenuCustom(this, this);
 			}
-			mSlidingMenu.toggle();
+			mMenu.toggle();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -417,7 +423,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	@Override
 	public void onScannerClickListener() {
 		try {
-			mSlidingMenu.toggle();
+			mMenu.toggle();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -473,5 +479,15 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 			}
 		}
 		return false;
+	}
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		// Checks the orientation of the screen
+		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+			mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset_land);
+		} else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+			mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+		}
 	}
 }
