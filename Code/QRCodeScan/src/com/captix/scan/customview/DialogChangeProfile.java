@@ -84,9 +84,14 @@ public class DialogChangeProfile extends BaseDialog implements OnClickListener {
 			return true;
 		}
 		String urlProfile2 = urlProfile;
-		urlProfile2.replace("http://", "");
-		urlProfile2.replace("https://", "");
-		urlProfile2.replace("www.", "");
+		urlProfile2 = urlProfile2.replace("http://", "");
+		urlProfile2 = urlProfile2.replace("https://", "");
+		urlProfile2 = urlProfile2.replace("www.", "");
+
+		urlProfile2 = urlProfile2.replace("HTTP://", "");
+		urlProfile2 = urlProfile2.replace("HTTPS://", "");
+		urlProfile2 = urlProfile2.replace("WWW.", "");
+
 		if (urlProfile.indexOf("/") != -1) {
 			String[] domain = urlProfile2.split("/");
 			if (domain[0].contains(".")) {

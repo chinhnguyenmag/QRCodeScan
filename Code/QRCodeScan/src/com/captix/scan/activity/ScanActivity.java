@@ -294,24 +294,33 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 
 	public boolean checkInvalidURL(String result) {
 		String result2 = result;
-		result2.replace("http://", "");
-		result2.replace("https://", "");
-		result2.replace("www.", "");
+		result2 = result2.replace("https://", "");
+		result2 = result2.replace("http://", "");
+		result2 = result2.replace("www.", "");
+
+		result2 = result2.replace("HTTPS://", "");
+		result2 = result2.replace("HTTP://", "");
+		result2 = result2.replace("WWW.", "");
+
 		if (result2.indexOf("/") != -1) {
 			String[] domain = result2.split("/");
 			result2 = domain[0];
 		}
 
 		String urlProfile = mAppPreferences.getProfileUrl();
-		urlProfile.replace("http://", "");
-		urlProfile.replace("https://", "");
-		urlProfile.replace("www.", "");
+		urlProfile = urlProfile.replace("http://", "");
+		urlProfile = urlProfile.replace("https://", "");
+		urlProfile = urlProfile.replace("www.", "");
+		urlProfile = urlProfile.replace("HTTPS://", "");
+		urlProfile = urlProfile.replace("HTTP://", "");
+		urlProfile = urlProfile.replace("WWW.", "");
+
 		if (urlProfile.indexOf("/") != -1) {
-			String[] domain = result2.split("/");
+			String[] domain = urlProfile.split("/");
 			urlProfile = domain[0];
 		}
 
-		return result2.equalsIgnoreCase(urlProfile);
+		return result2.toUpperCase().equalsIgnoreCase(urlProfile.toUpperCase());
 	}
 
 	public void continueScan(final String symData) {
