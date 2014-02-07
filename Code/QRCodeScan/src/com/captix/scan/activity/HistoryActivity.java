@@ -69,7 +69,7 @@ public class HistoryActivity extends ParentActivity implements
 
 	// =============================================================
 	private int swipeMode = SwipeListView.SWIPE_MODE_BOTH;
-	private boolean swipeOpenOnLongPress = true;
+	private boolean swipeOpenOnLongPress = false;
 	private boolean swipeCloseAllItemsWhenMoveList = true;
 	private long swipeAnimationTime = 0;
 	private float swipeOffsetLeft = 300;
