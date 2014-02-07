@@ -36,8 +36,8 @@ public class Constants {
 	public static final String KEY_MESSAGE_ACTION = "receiver_message";
 
 	public static final String TAG = "TwitterLogin";
-	
-	//TWITTER OAUTH====================================================
+
+	// TWITTER OAUTH====================================================
 	public static final String PREFERENCE_NAME = "twitter_oauth";
 	public static final String PREF_KEY_SECRET = "oauth_token_secret";
 	public static final String PREF_KEY_TOKEN = "oauth_token";
@@ -47,9 +47,9 @@ public class Constants {
 	public static final String IEXTRA_AUTH_URL = "auth_url";
 	public static final String IEXTRA_OAUTH_VERIFIER = "oauth_verifier";
 	public static final String IEXTRA_OAUTH_TOKEN = "oauth_token";
-	//=================================================================
-	
-	
+	// =================================================================
+	public static final String VALIDATE_URL_PROFILE = "XXXXX";
+
 	public static void displayMessage(Context context, String message) {
 
 		Intent intent = new Intent(DISPLAY_MESSAGE_ACTION);

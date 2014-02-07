@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.captix.scan.R;
@@ -20,7 +19,6 @@ public class BrowserActivity extends BaseActivity {
 	private String mScanResult;
 	private WebView mWebView;
 	private TextView mTvTitle;
-	private ProgressBar mProgressLoading;
 	// Application Preference
 	private AppPreferences mPreference;
 
@@ -39,8 +37,6 @@ public class BrowserActivity extends BaseActivity {
 			mCloseTime = mPreference.getCloseUrlTime();
 
 			mTvTitle = (TextView) findViewById(R.id.header_website_tv_title);
-			mProgressLoading = (ProgressBar) findViewById(R.id.activity_website_pb_loading);
-			mProgressLoading.setVisibility(View.GONE);
 			Bundle bundle = getIntent().getExtras();
 			if (bundle != null) {
 				mScanResult = bundle
@@ -57,7 +53,6 @@ public class BrowserActivity extends BaseActivity {
 			mWebView.setWebViewClient(new WebViewClient() {
 
 				public void onPageFinished(WebView view, String url) {
-					mProgressLoading.setVisibility(View.GONE);
 					mTvTitle.setText(view.getTitle());
 
 					if (mCloseTime != -1) {

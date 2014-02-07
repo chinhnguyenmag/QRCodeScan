@@ -39,6 +39,7 @@ import com.captix.scan.customview.SlidingMenuCustom;
 import com.captix.scan.listener.MenuSlidingClickListener;
 import com.captix.scan.model.AppPreferences;
 import com.captix.scan.model.QRCode;
+import com.captix.scan.utils.Constants;
 import com.captix.scan.utils.StringExtraUtils;
 import com.captix.scan.utils.ZBarConstants;
 
@@ -77,7 +78,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		mAudio = (AudioManager) getSystemService(this.AUDIO_SERVICE);
 		mAppPreferences = new AppPreferences(this);
 		if (mAppPreferences.getProfileUrl().equals("")) {
-			mAppPreferences.setProfileUrl("cptr.it/?var={variable}&id=test");
+			mAppPreferences.setProfileUrl("cptr.it/?var=XXXXX&id=test");
 		}
 		try {
 			mTvTitle = (TextView) findViewById(R.id.header_tv_title);
@@ -288,34 +289,75 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	}
 
 	public boolean checkInvalidURL(String result) {
-		String result2 = result;
-		result2 = result2.replace("https://", "");
-		result2 = result2.replace("http://", "");
-		result2 = result2.replace("www.", "");
+		String resultOld = result.toUpperCase();
+		String result1 = resultOld.toLowerCase();
+		String result2 = "";
+		String urlProfile1 = mAppPreferences.getProfileUrl().toLowerCase();
+		String urlProfile2 = "";
 
-		result2 = result2.replace("HTTPS://", "");
-		result2 = result2.replace("HTTP://", "");
-		result2 = result2.replace("WWW.", "");
+		result1 = result1.replace("HTTPS://", "");
+		result1 = result1.replace("HTTP://", "");
+		result1 = result1.replace("WWW.", "");
+		result1 = result1.replace("FTP://", "");
 
-		if (result2.indexOf("/") != -1) {
-			String[] domain = result2.split("/");
-			result2 = domain[0];
+		if (result1.indexOf("/") != -1) {
+			String[] domain = result1.split("/");
+			result1 = domain[0];
+			if (domain.length > 0) {
+				result2 = domain[1];
+			}
 		}
 
-		String urlProfile = mAppPreferences.getProfileUrl();
-		urlProfile = urlProfile.replace("http://", "");
-		urlProfile = urlProfile.replace("https://", "");
-		urlProfile = urlProfile.replace("www.", "");
-		urlProfile = urlProfile.replace("HTTPS://", "");
-		urlProfile = urlProfile.replace("HTTP://", "");
-		urlProfile = urlProfile.replace("WWW.", "");
+		urlProfile1 = urlProfile1.replace("HTTPS://", "");
+		urlProfile1 = urlProfile1.replace("HTTP://", "");
+		urlProfile1 = urlProfile1.replace("WWW.", "");
 
-		if (urlProfile.indexOf("/") != -1) {
-			String[] domain = urlProfile.split("/");
-			urlProfile = domain[0];
+		if (urlProfile1.indexOf("/") != -1) {
+			String[] domain = urlProfile1.split("/");
+			urlProfile1 = domain[0];
+			if (domain.length > 0) {
+				urlProfile2 = domain[1];
+			}
 		}
 
-		return result2.toUpperCase().equalsIgnoreCase(urlProfile.toUpperCase());
+		if (urlProfile2.length() > 0) {
+			if (urlProfile2.startsWith(Constants.VALIDATE_URL_PROFILE
+					.toUpperCase())) {
+				return result1.toUpperCase().equalsIgnoreCase(
+						urlProfile1.toUpperCase());
+			}
+
+			if (result2.length() > 0) {
+				if (resultOld.contains(Constants.VALIDATE_URL_PROFILE
+						.toUpperCase())) {
+					String contain1 = resultOld.toUpperCase().substring(
+							0,
+							resultOld.indexOf(Constants.VALIDATE_URL_PROFILE
+									.toUpperCase()));
+
+					String contain2 = resultOld.toUpperCase().substring(
+							resultOld.indexOf(Constants.VALIDATE_URL_PROFILE
+									.toUpperCase())
+									+ Constants.VALIDATE_URL_PROFILE.length(),
+							resultOld.length());
+
+					if (contain2.length() == 0) {
+						if (mAppPreferences.getProfileUrl().toUpperCase()
+								.contains(contain1.toUpperCase())) {
+							return true;
+						}
+					} else if (mAppPreferences.getProfileUrl().toUpperCase()
+							.contains(contain1.toUpperCase())
+							&& mAppPreferences.getProfileUrl().toUpperCase()
+									.contains(contain2.toUpperCase())) {
+						return true;
+					}
+				}
+			}
+		} else
+			return result1.toUpperCase().equalsIgnoreCase(
+					urlProfile1.toUpperCase());
+		return false;
 	}
 
 	public void continueScan(final String symData) {
