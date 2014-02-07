@@ -1,5 +1,7 @@
 package com.captix.scan.activity;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -69,7 +71,6 @@ public class SettingActivity extends BaseActivity implements
 	private static final int PERIOD = 2000;
 	private DialogChangeProfile mDlChangeUrl;
 
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -88,12 +89,15 @@ public class SettingActivity extends BaseActivity implements
 			mTvUrlProfile = (TextView) findViewById(R.id.setting_tv_urlprofile);
 
 			mAppPreferences = new AppPreferences(this);
-			String[] urlProfile=mAppPreferences
-					.getProfileUrl().split("/");
+			String[] urlProfile = removeHttp(mAppPreferences.getProfileUrl()).split("/");
 			if (mAppPreferences.getProfileUrl().equals("-1")) {
 				mTvUrlProfile.setText("");
 			} else {
-				mTvUrlProfile.setText(urlProfile[0]);
+				if(urlProfile.length==0){
+					removeHttp(mAppPreferences.getProfileUrl());
+				}else{
+					mTvUrlProfile.setText(urlProfile[0]);
+				}
 			}
 			mMenu = new SlidingMenuCustom(this, this);
 			mMenu.setTouchModeAboveMargin();
@@ -116,7 +120,8 @@ public class SettingActivity extends BaseActivity implements
 			mRlShareFacebook.setOnClickListener(this);
 
 			mSwitchViewSound.setChecked(mAppPreferences.isSound());
-			mSwitchViewOpenUrl.setChecked(mAppPreferences.getAskBeforeOpening());
+			mSwitchViewOpenUrl
+					.setChecked(mAppPreferences.getAskBeforeOpening());
 			mSwitchViewSound
 					.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
@@ -138,7 +143,7 @@ public class SettingActivity extends BaseActivity implements
 					});
 
 			if (mAppPreferences.getCloseUrlTime() == -1) {
-				mTvTime.setText("Nerver");
+				mTvTime.setText("Never");
 			} else {
 				mTvTime.setText(mAppPreferences.getCloseUrlTime() + " seconds");
 			}
@@ -210,7 +215,7 @@ public class SettingActivity extends BaseActivity implements
 						public void click_Ok(int value) {
 							mAppPreferences.setCloseUrl(value);
 							if (mAppPreferences.getCloseUrlTime() == -1) {
-								mTvTime.setText("Nerver");
+								mTvTime.setText("Never");
 							} else {
 								mTvTime.setText(mAppPreferences
 										.getCloseUrlTime() + " seconds");
@@ -276,30 +281,35 @@ public class SettingActivity extends BaseActivity implements
 	public void onClick_UrlProfile(View v) {
 		try {
 
-			mDlChangeUrl = new DialogChangeProfile(this, mAppPreferences.getProfileUrl(), new ProcessDialogProfile() {
+			mDlChangeUrl = new DialogChangeProfile(this,
+					mAppPreferences.getProfileUrl(),
+					new ProcessDialogProfile() {
 
-				@Override
-				public void click_Ok(String url) {
-					try {
-						mAppPreferences.setProfileUrl(url);
-						String[] urlProfile=mAppPreferences
-								.getProfileUrl().split("/");
-						if (mAppPreferences.getProfileUrl().equals("-1")) {
-							mTvUrlProfile.setText("");
-						} else {
-							mTvUrlProfile.setText(urlProfile[0]);
+						@Override
+						public void click_Ok(String url) {
+							try {
+								mAppPreferences.setProfileUrl(url);
+								String[] urlProfile = removeHttp(mAppPreferences.getProfileUrl()).split("/");
+								if (mAppPreferences.getProfileUrl().equals("-1")) {
+									mTvUrlProfile.setText("");
+								} else {
+									if(urlProfile.length==0){
+										removeHttp(mAppPreferences.getProfileUrl());
+									}else{
+										mTvUrlProfile.setText(urlProfile[0]);
+									}
+								}
+								showToastMessage(getString(R.string.mess_update_urlprofile_successfull));
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
 						}
-						showToastMessage(getString(R.string.mess_update_urlprofile_successfull));
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
 
-				@Override
-				public void click_Cancel() {
+						@Override
+						public void click_Cancel() {
 
-				}
-			});
+						}
+					});
 			mDlChangeUrl.show();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -538,8 +548,8 @@ public class SettingActivity extends BaseActivity implements
 	protected void sendMail() {
 		Intent emailIntent = new Intent(Intent.ACTION_SEND);
 		emailIntent.setType("text/html");
-		emailIntent
-				.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_title_share));
+		emailIntent.putExtra(Intent.EXTRA_SUBJECT,
+				getString(R.string.email_title_share));
 
 		Uri captixUrl = Uri
 				.parse("http://www7.44doors.com/dl.aspx?cid=2444&pv_url=http://cptr.it/captixscan?2444_rm_id=100.3781911.7");
@@ -588,6 +598,7 @@ public class SettingActivity extends BaseActivity implements
 			e.printStackTrace();
 		}
 	}
+
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
@@ -597,5 +608,23 @@ public class SettingActivity extends BaseActivity implements
 		} else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
 			mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
 		}
+	}
+
+	/**
+	 * @param s
+	 * @return String not have http://.
+	 * 
+	 */
+	public String removeHttp(String s) {
+		URL myURL;
+		try {
+			myURL = new URL(s);
+			s = myURL.getHost();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return s;
 	}
 }

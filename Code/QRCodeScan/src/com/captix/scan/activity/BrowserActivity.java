@@ -87,7 +87,7 @@ public class BrowserActivity extends BaseActivity {
 					android.content.Intent.ACTION_SEND);
 			sharingIntent.setType("text/plain");
 			sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
-					"Share QR Code");
+					getString(R.string.email_title_share));
 			sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT,
 					mScanResult);
 			startActivity(Intent.createChooser(sharingIntent, "Share via"));

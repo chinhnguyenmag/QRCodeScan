@@ -87,10 +87,12 @@ public class DialogChangeProfile extends BaseDialog implements OnClickListener {
 		urlProfile2 = urlProfile2.replace("http://", "");
 		urlProfile2 = urlProfile2.replace("https://", "");
 		urlProfile2 = urlProfile2.replace("www.", "");
+		urlProfile2 = urlProfile2.replace("ftp://", "");
 
 		urlProfile2 = urlProfile2.replace("HTTP://", "");
 		urlProfile2 = urlProfile2.replace("HTTPS://", "");
 		urlProfile2 = urlProfile2.replace("WWW.", "");
+		urlProfile2 = urlProfile2.replace("FTP://", "");
 
 		if (urlProfile.indexOf("/") != -1) {
 			String[] domain = urlProfile2.split("/");
