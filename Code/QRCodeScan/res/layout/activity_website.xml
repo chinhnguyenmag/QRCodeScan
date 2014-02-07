@@ -7,6 +7,7 @@
         android:id="@+id/activity_website_header"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
+
         <include layout="@layout/header_website" />
     </LinearLayout>
 
@@ -15,13 +16,5 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_below="@id/activity_website_header" />
-
-    <ProgressBar
-        android:id="@+id/activity_website_pb_loading"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="204dp" />
 
 </RelativeLayout>
