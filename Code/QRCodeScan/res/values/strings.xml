@@ -69,5 +69,5 @@
     <string name="mess_post_success">Commment has been posted in your wall!</string>
     <string name="press_exit"> Press again to exit.</string>
     <string name="activity_settting_confirm">Are you sure you want to post on your wall?</string>
-
+	 <string name="email_title_share">Captix Scan Share</string>
 </resources>
