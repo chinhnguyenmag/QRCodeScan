@@ -42,9 +42,9 @@ public class DialogChangeProfile extends BaseDialog implements OnClickListener {
 		mBtOk = (Button) findViewById(R.id.dialog_change_profile_bt_Ok);
 		mBtCancel = (Button) findViewById(R.id.dialog_change_profile_bt_Cancel);
 		mEtUrlProfile = (EditText) findViewById(R.id.dialog_change_profile_et_url);
-		if(urlProfile.equals("-1")){
+		if (urlProfile.equals("-1")) {
 			mEtUrlProfile.setText("");
-		}else{
+		} else {
 			mEtUrlProfile.setText(urlProfile);
 		}
 		mEtUrlProfile.requestFocus();
@@ -83,17 +83,34 @@ public class DialogChangeProfile extends BaseDialog implements OnClickListener {
 			mUrl = "-1";
 			return true;
 		}
-		String[] domain = urlProfile.split("/");
-		if (domain[0].contains(".") && urlProfile.contains("?var=")
-				&& urlProfile.contains("&id=test")) {
-			mUrl = urlProfile;
-			return true;
+		String urlProfile2 = urlProfile;
+		urlProfile2 = urlProfile2.replace("http://", "");
+		urlProfile2 = urlProfile2.replace("https://", "");
+		urlProfile2 = urlProfile2.replace("www.", "");
+
+		urlProfile2 = urlProfile2.replace("HTTP://", "");
+		urlProfile2 = urlProfile2.replace("HTTPS://", "");
+		urlProfile2 = urlProfile2.replace("WWW.", "");
+
+		if (urlProfile.indexOf("/") != -1) {
+			String[] domain = urlProfile2.split("/");
+			if (domain[0].contains(".")) {
+				mUrl = urlProfile;
+				return true;
+			}
+		} else {
+			if (urlProfile2.contains(".")) {
+				mUrl = urlProfile;
+				return true;
+			}
 		}
 
-		Toast.makeText(
-				mContext,
-				"Invalid URL profile. Url format should be  cptr.it/?var={variable}&id=test.",
-				Toast.LENGTH_LONG).show();
+		// Toast.makeText(
+		// mContext,
+		// "Invalid URL profile. Url format should be  cptr.it/?var={variable}&id=test.",
+		// Toast.LENGTH_LONG).show();
+		Toast.makeText(mContext, "Invalid URL profile", Toast.LENGTH_LONG)
+				.show();
 		return false;
 	}
 }
