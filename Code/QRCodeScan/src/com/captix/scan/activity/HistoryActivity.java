@@ -24,24 +24,18 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.evernote.client.android.EvernoteSession;
-import com.facebook.android.DialogError;
-import com.facebook.android.Facebook;
-import com.facebook.android.Facebook.DialogListener;
-import com.facebook.android.FacebookError;
-import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
-import com.fortysevendeg.swipelistview.SwipeListView;
 import com.captix.scan.R;
 import com.captix.scan.adapter.HistoryAdapter;
 import com.captix.scan.adapter.HistoryAdapter.HistoryAdapter_Process;
 import com.captix.scan.control.DatabaseHandler;
 import com.captix.scan.customview.DialogConfirm;
-import com.captix.scan.customview.SlidingMenuCustom;
 import com.captix.scan.customview.DialogConfirm.ProcessDialogConfirm;
+import com.captix.scan.customview.SlidingMenuCustom;
 import com.captix.scan.listener.GetWidthListener;
 import com.captix.scan.listener.MenuSlidingClickListener;
 import com.captix.scan.model.HistoryItem;
@@ -51,6 +45,13 @@ import com.captix.scan.model.QRCode;
 import com.captix.scan.utils.SocialUtil;
 import com.captix.scan.utils.StringExtraUtils;
 import com.captix.scan.utils.Utils;
+import com.evernote.client.android.EvernoteSession;
+import com.facebook.android.DialogError;
+import com.facebook.android.Facebook;
+import com.facebook.android.Facebook.DialogListener;
+import com.facebook.android.FacebookError;
+import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
+import com.fortysevendeg.swipelistview.SwipeListView;
 
 public class HistoryActivity extends ParentActivity implements
 		MenuSlidingClickListener, GetWidthListener {
@@ -92,6 +93,11 @@ public class HistoryActivity extends ParentActivity implements
 		mTvDelete = (TextView) findViewById(R.id.header_tv_right);
 		// inflate layout for list view
 		mSwipeListView = (SwipeListView) findViewById(R.id.activity_history_lv);
+		View v = new View(this);
+		v.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, 10));
+		v.setBackgroundColor(getResources().getColor(
+				R.color.color_divider_listview));
+		mSwipeListView.addFooterView(new View(this), null, true);
 
 		mMenu = new SlidingMenuCustom(this, this);
 		mMenu.setTouchModeAboveMargin();
@@ -349,7 +355,6 @@ public class HistoryActivity extends ParentActivity implements
 			marginParams.setMargins(0, 0, 20, 0);
 			mTvTitle.setLayoutParams(marginParams);
 		}
-
 	}
 
 	public void onClick_Menu(View view) {

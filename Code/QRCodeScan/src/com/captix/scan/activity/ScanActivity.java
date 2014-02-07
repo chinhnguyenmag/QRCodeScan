@@ -15,7 +15,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.hardware.Camera;
@@ -87,10 +86,10 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 			int display_mode = getResources().getConfiguration().orientation;
 			if (display_mode == 1) {
 				mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-//				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+				// setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 			} else {
 				mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset_land);
-//				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+				// setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 			}
 			mFrameCamera = (FrameLayout) findViewById(R.id.activity_scan_camera);
 			mDataHandler = new DatabaseHandler(this);
@@ -247,32 +246,39 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 				for (Symbol sym : syms) {
 					final String symData = sym.getData();
 					if (!TextUtils.isEmpty(symData)) {
-						// Check whether to play sound or not
-						if (mAppPreferences.isSound()&&mAudio.getStreamVolume(AudioManager.STREAM_MUSIC)!=0) {
-							mAudio.setStreamVolume(
-									AudioManager.STREAM_MUSIC,
-									mAudio.getStreamMaxVolume(AudioManager.STREAM_MUSIC),
-									0);
-							playSound();
-						}
-						// Stop scanning
-						mCamera.cancelAutoFocus();
-						mCamera.setPreviewCallback(null);
+						// Check whether result has 16 digits or not because
+						// this is wrong result
+						if (!symData.matches("[0-9]{16}")) {
+							// Check whether to play sound or not
+							if (mAppPreferences.isSound()
+									&& mAudio
+											.getStreamVolume(AudioManager.STREAM_MUSIC) != 0) {
+								mAudio.setStreamVolume(
+										AudioManager.STREAM_MUSIC,
+										mAudio.getStreamMaxVolume(AudioManager.STREAM_MUSIC),
+										0);
+								playSound();
+							}
+							// Stop scanning
+							mCamera.cancelAutoFocus();
+							mCamera.setPreviewCallback(null);
 
-						if (mAppPreferences.getProfileUrl().equalsIgnoreCase(
-								"-1")) {
-							// There is no URL profile format
-							continueScan(symData);
-						} else {
-							// Check whether URL follow URL profile format or
-							// not like "cptr.it/?var={variable}&id=test"
-							String[] domain = symData.split("/");
-							if (domain[0].contains(".")
-									&& symData.contains("?var=")
-									&& symData.contains("&id=test")) {
+							if (mAppPreferences.getProfileUrl()
+									.equalsIgnoreCase("-1")) {
+								// There is no URL profile format
 								continueScan(symData);
-							} else if (!alertDialog.isShowing()) {
-								alertDialog.show();
+							} else {
+								// Check whether URL follow URL profile format
+								// or
+								// not like "cptr.it/?var={variable}&id=test"
+								String[] domain = symData.split("/");
+								if (domain[0].contains(".")
+										&& symData.contains("?var=")
+										&& symData.contains("&id=test")) {
+									continueScan(symData);
+								} else if (!alertDialog.isShowing()) {
+									alertDialog.show();
+								}
 							}
 						}
 					}
