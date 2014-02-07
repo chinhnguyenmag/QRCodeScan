@@ -254,14 +254,6 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 							if (mAppPreferences.isSound()
 									&& mAudio
 											.getStreamVolume(AudioManager.STREAM_RING) != 0) {
-								mAudio.setStreamVolume(
-										AudioManager.STREAM_RING,
-										mAudio.getStreamMaxVolume(AudioManager.STREAM_RING),
-										0);
-								mAudio.setStreamVolume(
-										AudioManager.STREAM_MUSIC,
-										mAudio.getStreamMaxVolume(AudioManager.STREAM_MUSIC),
-										0);
 								playSound();
 							}
 							// Stop scanning
@@ -439,6 +431,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		try {
 			MediaPlayer mp = MediaPlayer.create(getBaseContext(),
 					R.raw.camera_shutter);
+			mp.setVolume(1.0f, 1.0f);
 			mp.start();
 
 			mp.setOnCompletionListener(new OnCompletionListener() {
