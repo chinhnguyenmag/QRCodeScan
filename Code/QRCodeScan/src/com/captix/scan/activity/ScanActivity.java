@@ -271,14 +271,13 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 								// Check whether URL follow URL profile format
 								// or
 								// not like "cptr.it/?var={variable}&id=test"
-								String[] domain = symData.split("/");
-								if (domain[0].contains(".")
-										&& symData.contains("?var=")
-										&& symData.contains("&id=test")) {
+
+								if (checkInvalidURL(symData)) {
 									continueScan(symData);
 								} else if (!alertDialog.isShowing()) {
 									alertDialog.show();
 								}
+
 							}
 						}
 					}
@@ -291,6 +290,28 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public boolean checkInvalidURL(String result) {
+		String result2 = result;
+		result2.replace("http://", "");
+		result2.replace("https://", "");
+		result2.replace("www.", "");
+		if (result2.indexOf("/") != -1) {
+			String[] domain = result2.split("/");
+			result2 = domain[0];
+		}
+
+		String urlProfile = mAppPreferences.getProfileUrl();
+		urlProfile.replace("http://", "");
+		urlProfile.replace("https://", "");
+		urlProfile.replace("www.", "");
+		if (urlProfile.indexOf("/") != -1) {
+			String[] domain = result2.split("/");
+			urlProfile = domain[0];
+		}
+
+		return result2.equalsIgnoreCase(urlProfile);
 	}
 
 	public void continueScan(final String symData) {
