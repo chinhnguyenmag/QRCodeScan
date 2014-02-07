@@ -263,18 +263,14 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 							// Stop scanning
 							mCamera.cancelAutoFocus();
 							mCamera.setPreviewCallback(null);
-
+							// Create dialog confirm to avoid opening twice
+							createDialogConfirmBrowsing(symData);
 							if (mAppPreferences.getProfileUrl()
 									.equalsIgnoreCase("-1")) {
-								// Create dialog confirm to avoid opening twice
-								createDialogConfirmBrowsing(symData);
 								// There is no URL profile format
 								continueScan(symData);
 							} else {
 								if (checkInvalidURL(symData)) {
-									// Create dialog confirm to avoid opening
-									// twice
-									createDialogConfirmBrowsing(symData);
 									// Continue scan following fixed URL format
 									continueScan(symData);
 								} else if (!alertDialog.isShowing()) {
