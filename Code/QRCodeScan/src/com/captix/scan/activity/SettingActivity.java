@@ -539,7 +539,7 @@ public class SettingActivity extends BaseActivity implements
 		Intent emailIntent = new Intent(Intent.ACTION_SEND);
 		emailIntent.setType("text/html");
 		emailIntent
-				.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+				.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_title_share));
 
 		Uri captixUrl = Uri
 				.parse("http://www7.44doors.com/dl.aspx?cid=2444&pv_url=http://cptr.it/captixscan?2444_rm_id=100.3781911.7");

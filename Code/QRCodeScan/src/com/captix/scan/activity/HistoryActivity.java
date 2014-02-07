@@ -594,7 +594,7 @@ public class HistoryActivity extends ParentActivity implements
 		Intent emailIntent = new Intent(Intent.ACTION_SEND);
 		emailIntent.setType("message/rfc822");
 		emailIntent
-				.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+				.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_title_share));
 		emailIntent.putExtra(Intent.EXTRA_TEXT, link);
 		try {
 			startActivity(Intent.createChooser(emailIntent,
