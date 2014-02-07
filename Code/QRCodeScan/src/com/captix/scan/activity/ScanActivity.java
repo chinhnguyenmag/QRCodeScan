@@ -60,6 +60,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	private TextView mTvTitle;
 	private AlertDialog.Builder alertDialogBuilder;
 	private AlertDialog alertDialog;
+	private DialogConfirm dialogConfirm;
 	private long lastPressedTime;
 	private static final int PERIOD = 2000;
 	private AppPreferences mAppPreferences;
@@ -265,6 +266,8 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 
 							if (mAppPreferences.getProfileUrl()
 									.equalsIgnoreCase("-1")) {
+								// Create dialog confirm to avoid opening twice
+								createDialogConfirmBrowsing(symData);
 								// There is no URL profile format
 								continueScan(symData);
 							} else {
@@ -275,6 +278,10 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 								if (domain[0].contains(".")
 										&& symData.contains("?var=")
 										&& symData.contains("&id=test")) {
+									// Create dialog confirm to avoid opening
+									// twice
+									createDialogConfirmBrowsing(symData);
+									// Continue scan following fixed URL format
 									continueScan(symData);
 								} else if (!alertDialog.isShowing()) {
 									alertDialog.show();
@@ -310,33 +317,9 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 			dataIntent.putExtra(StringExtraUtils.KEY_SCAN_RESULT, symData);
 			startActivity(dataIntent);
 		} else {
-			DialogConfirm dialog = new DialogConfirm(
-					ScanActivity.this,
-					android.R.drawable.ic_dialog_alert,
-					ScanActivity.this
-							.getString(R.string.activity_scan_open_browser_title),
-					ScanActivity.this
-							.getString(R.string.activity_scan_open_url_confirm),
-					true, new ProcessDialogConfirm() {
-
-						@Override
-						public void click_Ok() {
-
-							Intent dataIntent = new Intent(ScanActivity.this,
-									BrowserActivity.class);
-							dataIntent.putExtra(
-									StringExtraUtils.KEY_SCAN_RESULT, symData);
-							startActivity(dataIntent);
-
-						}
-
-						@Override
-						public void click_Cancel() {
-							// Start scanning again
-							mCamera.setPreviewCallback(ScanActivity.this);
-						}
-					});
-			dialog.show();
+			if (!dialogConfirm.isShowing()) {
+				dialogConfirm.show();
+			}
 		}
 	}
 
@@ -368,6 +351,35 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	/* ASK BEFORE OPENING BROWSER DIALOG */
+	public void createDialogConfirmBrowsing(final String symData) {
+		dialogConfirm = new DialogConfirm(ScanActivity.this,
+				android.R.drawable.ic_dialog_alert,
+				ScanActivity.this
+						.getString(R.string.activity_scan_open_browser_title),
+				ScanActivity.this
+						.getString(R.string.activity_scan_open_url_confirm),
+				true, new ProcessDialogConfirm() {
+
+					@Override
+					public void click_Ok() {
+
+						Intent dataIntent = new Intent(ScanActivity.this,
+								BrowserActivity.class);
+						dataIntent.putExtra(StringExtraUtils.KEY_SCAN_RESULT,
+								symData);
+						startActivity(dataIntent);
+
+					}
+
+					@Override
+					public void click_Cancel() {
+						// Start scanning again
+						mCamera.setPreviewCallback(ScanActivity.this);
+					}
+				});
 	}
 
 	public void startPreviewAgain() {
