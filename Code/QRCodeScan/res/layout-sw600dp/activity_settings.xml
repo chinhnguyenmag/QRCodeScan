@@ -39,9 +39,9 @@
                 android:layout_height="80dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
+                android:gravity="center_vertical"
                 android:paddingBottom="10dp"
                 android:paddingLeft="5dp"
-                android:gravity="center_vertical"
                 android:paddingRight="5dp"
                 android:paddingTop="10dp" >
 
@@ -74,9 +74,9 @@
                 android:layout_height="80dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
+                android:gravity="center_vertical"
                 android:paddingBottom="10dp"
                 android:paddingLeft="5dp"
-                android:gravity="center_vertical"
                 android:paddingRight="5dp"
                 android:paddingTop="10dp" >
 
@@ -109,11 +109,11 @@
                 android:layout_width="fill_parent"
                 android:layout_height="80dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
+                android:background="@drawable/listview_selector"
+                android:onClick="onClick_UrlProfile"
                 android:paddingBottom="20dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                android:onClick="onClick_UrlProfile"
                 android:paddingTop="20dp" >
 
                 <TextView
@@ -125,11 +125,12 @@
                     android:textSize="@dimen/campaign_textfontsize" />
 
                 <TextView
-                     android:id="@+id/setting_tv_urlprofile"
+                    android:id="@+id/setting_tv_urlprofile"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginRight="25dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="15dp"
                     android:gravity="right"
                     android:text="@string/link"
                     android:textColor="@android:color/darker_gray"
@@ -315,8 +316,8 @@
                 android:paddingBottom="15dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                 android:visibility="gone"
-                android:paddingTop="15dp" >
+                android:paddingTop="15dp"
+                android:visibility="gone" >
 
                 <ImageView
                     android:id="@+id/setting_ic_twitter"
@@ -356,8 +357,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="2dp"
                 android:layout_marginLeft="20dp"
-                 android:visibility="gone"
-                android:background="@color/background_gray" />
+                android:background="@color/background_gray"
+                android:visibility="gone" />
 
             <RelativeLayout
                 android:id="@+id/setting_ll_social_facebook"
@@ -369,8 +370,8 @@
                 android:paddingBottom="15dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                 android:visibility="gone"
-                android:paddingTop="15dp" >
+                android:paddingTop="15dp"
+                android:visibility="gone" >
 
                 <ImageView
                     android:id="@+id/setting_ic_facebook"
@@ -410,8 +411,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="2dp"
                 android:layout_marginLeft="20dp"
-                 android:visibility="gone"
-                android:background="@color/background_gray" />
+                android:background="@color/background_gray"
+                android:visibility="gone" />
         </LinearLayout>
     </ScrollView>
 

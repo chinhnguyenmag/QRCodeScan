@@ -30,8 +30,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="URL PROFILE"
                     android:gravity="center"
+                    android:text="@string/url_profile"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@android:color/white" />
             </LinearLayout>

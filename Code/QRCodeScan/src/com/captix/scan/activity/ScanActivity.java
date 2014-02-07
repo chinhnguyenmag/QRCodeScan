@@ -271,13 +271,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 								// There is no URL profile format
 								continueScan(symData);
 							} else {
-								// Check whether URL follow URL profile format
-								// or
-								// not like "cptr.it/?var={variable}&id=test"
-								String[] domain = symData.split("/");
-								if (domain[0].contains(".")
-										&& symData.contains("?var=")
-										&& symData.contains("&id=test")) {
+								if (checkInvalidURL(symData)) {
 									// Create dialog confirm to avoid opening
 									// twice
 									createDialogConfirmBrowsing(symData);
@@ -286,6 +280,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 								} else if (!alertDialog.isShowing()) {
 									alertDialog.show();
 								}
+
 							}
 						}
 					}
@@ -298,6 +293,37 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public boolean checkInvalidURL(String result) {
+		String result2 = result;
+		result2 = result2.replace("https://", "");
+		result2 = result2.replace("http://", "");
+		result2 = result2.replace("www.", "");
+
+		result2 = result2.replace("HTTPS://", "");
+		result2 = result2.replace("HTTP://", "");
+		result2 = result2.replace("WWW.", "");
+
+		if (result2.indexOf("/") != -1) {
+			String[] domain = result2.split("/");
+			result2 = domain[0];
+		}
+
+		String urlProfile = mAppPreferences.getProfileUrl();
+		urlProfile = urlProfile.replace("http://", "");
+		urlProfile = urlProfile.replace("https://", "");
+		urlProfile = urlProfile.replace("www.", "");
+		urlProfile = urlProfile.replace("HTTPS://", "");
+		urlProfile = urlProfile.replace("HTTP://", "");
+		urlProfile = urlProfile.replace("WWW.", "");
+
+		if (urlProfile.indexOf("/") != -1) {
+			String[] domain = urlProfile.split("/");
+			urlProfile = domain[0];
+		}
+
+		return result2.toUpperCase().equalsIgnoreCase(urlProfile.toUpperCase());
 	}
 
 	public void continueScan(final String symData) {

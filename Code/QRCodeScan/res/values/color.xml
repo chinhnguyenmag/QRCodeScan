@@ -8,5 +8,6 @@
     <color name="transparent">@android:color/transparent</color>
     <color name="color_bt_fc">#eb7134</color>
     <color name="color_bt">#f09037</color>
+    <color name="color_divider_listview">#F6D3C5</color>
 
 </resources>
