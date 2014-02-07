@@ -2,6 +2,7 @@ package com.captix.scan.activity;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -62,6 +63,8 @@ public class HistoryActivity extends ParentActivity implements
 	private SwipeListView mSwipeListView;
 	private DatabaseHandler mDataHandler;
 	private List<QRCode> mListQRCodes;
+	private SimpleDateFormat mFormatterSection;
+	private DateFormat inputFormat;
 	private int mSectionNumber = 0;
 	private Facebook mFacebook = new Facebook(SocialUtil.FACEBOOK_APPID);
 	private SharedPreferences mSharedPreferences;
@@ -118,7 +121,7 @@ public class HistoryActivity extends ParentActivity implements
 			@Override
 			public int compare(QRCode lhs, QRCode rhs) {
 				SimpleDateFormat form = new SimpleDateFormat(
-						"EEEE, MMMM dd yyyy", Locale.US);
+						"yyyy-MM-dd HH:mm:ss", Locale.US);
 
 				Date d1 = null;
 				Date d2 = null;
@@ -145,15 +148,38 @@ public class HistoryActivity extends ParentActivity implements
 			marginParams.setMargins(20, 0, 0, 0);
 			mTvTitle.setLayoutParams(marginParams);
 
-			items.add(new HistorySectionItem(mListQRCodes.get(0).getDate()));
+			mFormatterSection = new SimpleDateFormat("EEEE, MMMM dd yyyy",
+					Locale.US);
+			inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			try {
+				Date newDate = new Date();
+				newDate = inputFormat.parse(mListQRCodes.get(0).getDate());
+				items.add(new HistorySectionItem(mFormatterSection
+						.format(newDate)));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
 			items.add(new HistoryItem(mListQRCodes.get(0).getUrl()));
 
 			for (int i = 1; i < mListQRCodes.size(); i++) {
-				if (!mListQRCodes.get(i).getDate()
-						.equals(mListQRCodes.get(i - 1).getDate())) {
+				if (!mListQRCodes
+						.get(i)
+						.getDate()
+						.substring(0, 11)
+						.equals(mListQRCodes.get(i - 1).getDate()
+								.substring(0, 11))) {
 					// section
-					items.add(new HistorySectionItem(mListQRCodes.get(i)
-							.getDate()));
+					Date newDate = new Date();
+					try {
+						newDate = inputFormat.parse(mListQRCodes.get(i)
+								.getDate());
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					items.add(new HistorySectionItem(mFormatterSection
+							.format(newDate)));
 					items.add(new HistoryItem(mListQRCodes.get(i).getUrl()));
 				} else {
 					// item
@@ -299,7 +325,7 @@ public class HistoryActivity extends ParentActivity implements
 
 					@Override
 					public void onClosed(int position, boolean fromRight) {
-						
+
 					}
 
 					@Override

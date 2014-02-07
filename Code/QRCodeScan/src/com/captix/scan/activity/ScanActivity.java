@@ -323,7 +323,8 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	}
 
 	public void continueScan(final String symData) {
-		Format formatter = new SimpleDateFormat("EEEE, MMMM dd yyyy", Locale.US);
+		SimpleDateFormat formatter = new SimpleDateFormat(
+				"yyyy-MM-dd HH:mm:ss", Locale.US);
 
 		String date = formatter.format(new Date());
 		mDataHandler.addQRCode(new QRCode(date, symData));
