@@ -290,75 +290,87 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	}
 
 	public boolean checkInvalidURL(String result) {
-		String resultOld = result.toUpperCase();
-		String result1 = resultOld.toLowerCase();
-		String result2 = "";
-		String urlProfile1 = mAppPreferences.getProfileUrl().toLowerCase();
-		String urlProfile2 = "";
+		try {
 
-		result1 = result1.replace("HTTPS://", "");
-		result1 = result1.replace("HTTP://", "");
-		result1 = result1.replace("WWW.", "");
-		result1 = result1.replace("FTP://", "");
+			String resultOld = result.toUpperCase();
+			String result1 = resultOld.toUpperCase();
+			String result2 = "";
+			String urlProfile1 = mAppPreferences.getProfileUrl().toUpperCase();
+			String urlProfile2 = "";
 
-		if (result1.indexOf("/") != -1) {
-			String[] domain = result1.split("/");
-			result1 = domain[0];
-			if (domain.length > 0) {
-				result2 = domain[1];
-			}
-		}
+			result1 = result1.replace("HTTPS://", "");
+			result1 = result1.replace("HTTP://", "");
+			result1 = result1.replace("WWW.", "");
+			result1 = result1.replace("FTP://", "");
 
-		urlProfile1 = urlProfile1.replace("HTTPS://", "");
-		urlProfile1 = urlProfile1.replace("HTTP://", "");
-		urlProfile1 = urlProfile1.replace("WWW.", "");
-
-		if (urlProfile1.indexOf("/") != -1) {
-			String[] domain = urlProfile1.split("/");
-			urlProfile1 = domain[0];
-			if (domain.length > 0) {
-				urlProfile2 = domain[1];
-			}
-		}
-
-		if (urlProfile2.length() > 0) {
-			if (urlProfile2.startsWith(Constants.VALIDATE_URL_PROFILE
-					.toUpperCase())) {
-				return result1.toUpperCase().equalsIgnoreCase(
-						urlProfile1.toUpperCase());
-			}
-
-			if (result2.length() > 0) {
-				if (resultOld.contains(Constants.VALIDATE_URL_PROFILE
-						.toUpperCase())) {
-					String contain1 = resultOld.toUpperCase().substring(
-							0,
-							resultOld.indexOf(Constants.VALIDATE_URL_PROFILE
-									.toUpperCase()));
-
-					String contain2 = resultOld.toUpperCase().substring(
-							resultOld.indexOf(Constants.VALIDATE_URL_PROFILE
-									.toUpperCase())
-									+ Constants.VALIDATE_URL_PROFILE.length(),
-							resultOld.length());
-
-					if (contain2.length() == 0) {
-						if (mAppPreferences.getProfileUrl().toUpperCase()
-								.contains(contain1.toUpperCase())) {
-							return true;
-						}
-					} else if (mAppPreferences.getProfileUrl().toUpperCase()
-							.contains(contain1.toUpperCase())
-							&& mAppPreferences.getProfileUrl().toUpperCase()
-									.contains(contain2.toUpperCase())) {
-						return true;
-					}
+			if (result1.indexOf("/") != -1) {
+				String[] domain = result1.split("/");
+				result1 = domain[0];
+				if (domain.length > 1) {
+					result2 = domain[1];
 				}
 			}
-		} else
-			return result1.toUpperCase().equalsIgnoreCase(
-					urlProfile1.toUpperCase());
-		return false;
+
+			urlProfile1 = urlProfile1.replace("HTTPS://", "");
+			urlProfile1 = urlProfile1.replace("HTTP://", "");
+			urlProfile1 = urlProfile1.replace("WWW.", "");
+			urlProfile1 = urlProfile1.replace("FTP://", "");
+
+			if (urlProfile1.indexOf("/") != -1) {
+				String[] domain = urlProfile1.split("/");
+				urlProfile1 = domain[0];
+				if (domain.length > 1) {
+					urlProfile2 = domain[1];
+				}
+			}
+
+			if (urlProfile2.length() > 0) {
+				if (urlProfile2.startsWith(Constants.VALIDATE_URL_PROFILE
+						.toUpperCase())) {
+					return result1.toUpperCase().equalsIgnoreCase(
+							urlProfile1.toUpperCase());
+				}
+
+				if (result2.length() > 0) {
+					if (resultOld.contains(Constants.VALIDATE_URL_PROFILE
+							.toUpperCase())) {
+						String contain1 = resultOld.toUpperCase().substring(
+								0,
+								resultOld
+										.indexOf(Constants.VALIDATE_URL_PROFILE
+												.toUpperCase()));
+
+						String contain2 = resultOld
+								.toUpperCase()
+								.substring(
+										resultOld
+												.indexOf(Constants.VALIDATE_URL_PROFILE
+														.toUpperCase())
+												+ Constants.VALIDATE_URL_PROFILE
+														.length(),
+										resultOld.length());
+
+						if (contain2.length() == 0) {
+							if (mAppPreferences.getProfileUrl().toUpperCase()
+									.contains(contain1.toUpperCase())) {
+								return true;
+							}
+						} else if (mAppPreferences.getProfileUrl()
+								.toUpperCase().contains(contain1.toUpperCase())
+								&& mAppPreferences.getProfileUrl()
+										.toUpperCase()
+										.contains(contain2.toUpperCase())) {
+							return true;
+						}
+					}
+				}
+			} else
+				return result1.toUpperCase().equalsIgnoreCase(
+						urlProfile1.toUpperCase());
+			return false;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	public void continueScan(final String symData) {

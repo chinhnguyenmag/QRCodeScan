@@ -64,7 +64,7 @@ public class DialogPickTime extends BaseDialog implements OnClickListener {
 				if (mPickTimeAdapter.getItemText(wheel.getCurrentItem()) != null
 						&& !mPickTimeAdapter
 								.getItemText(wheel.getCurrentItem()).equals(
-										"Nerver")) {
+										"Never")) {
 					mValue = Integer.parseInt(mPickTimeAdapter
 							.getItemText(wheel.getCurrentItem()).toString()
 							.replace("s", ""));

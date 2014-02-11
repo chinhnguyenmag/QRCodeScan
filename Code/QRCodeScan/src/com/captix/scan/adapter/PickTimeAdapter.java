@@ -28,7 +28,7 @@ public class PickTimeAdapter extends NumericWheelAdapter {
 		if (index >= 0 && index < getItemsCount()) {
 			int value = 5 + index * mStep;
 			if (value == 95) {
-				return "Nerver";
+				return "Never";
 			}
 			return Integer.toString(value) + "s";
 		}
