@@ -858,7 +858,7 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
 				} else {
 					swap = true;
 				}
-			} else if (Math.abs(deltaX) > viewWidth / 2) {
+			} else{
 				swap = true;
 				swapRight = deltaX > 0;
 			}

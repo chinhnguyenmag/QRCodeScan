@@ -361,7 +361,13 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 										.contains(contain2.toUpperCase())) {
 							return true;
 						}
+					} else {
+						return result1.toUpperCase().equalsIgnoreCase(
+								urlProfile1.toUpperCase());
 					}
+				} else {
+					return result1.toUpperCase().equalsIgnoreCase(
+							urlProfile1.toUpperCase());
 				}
 			} else
 				return result1.toUpperCase().equalsIgnoreCase(
