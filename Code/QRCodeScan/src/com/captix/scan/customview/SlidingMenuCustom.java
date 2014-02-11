@@ -95,4 +95,7 @@ public class SlidingMenuCustom {
 	public void setBehindOffsetRes(int resID) {
 		menu.setBehindOffsetRes(resID);
 	}
+	public void setBehindOff(int i) {
+		menu.setBehindOffset(i);
+	}
 }

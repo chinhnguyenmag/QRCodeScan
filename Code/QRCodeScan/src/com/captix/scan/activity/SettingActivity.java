@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.Html;
 import android.util.Base64;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -69,7 +70,6 @@ public class SettingActivity extends BaseActivity implements
 	private static final int PERIOD = 2000;
 	private DialogChangeProfile mDlChangeUrl;
 
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -88,8 +88,7 @@ public class SettingActivity extends BaseActivity implements
 			mTvUrlProfile = (TextView) findViewById(R.id.setting_tv_urlprofile);
 
 			mAppPreferences = new AppPreferences(this);
-			String[] urlProfile=mAppPreferences
-					.getProfileUrl().split("/");
+			String[] urlProfile = mAppPreferences.getProfileUrl().split("/");
 			if (mAppPreferences.getProfileUrl().equals("-1")) {
 				mTvUrlProfile.setText("");
 			} else {
@@ -97,11 +96,14 @@ public class SettingActivity extends BaseActivity implements
 			}
 			mMenu = new SlidingMenuCustom(this, this);
 			mMenu.setTouchModeAboveMargin();
+			DisplayMetrics displaymetrics = new DisplayMetrics();
+			getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+			int width = displaymetrics.widthPixels;
 			int display_mode = getResources().getConfiguration().orientation;
 			if (display_mode == 1) {
-				mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+				mMenu.setBehindOff(width / 2 + width / 5);
 			} else {
-				mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset_land);
+				mMenu.setBehindOff(width / 2 + width / 4);
 			}
 			mSwitchViewSound = (ToggleButton) findViewById(R.id.activity_settings_sv_sound);
 			mSwitchViewOpenUrl = (ToggleButton) findViewById(R.id.activity_settings_sv_open_url);
@@ -116,7 +118,8 @@ public class SettingActivity extends BaseActivity implements
 			mRlShareFacebook.setOnClickListener(this);
 
 			mSwitchViewSound.setChecked(mAppPreferences.isSound());
-			mSwitchViewOpenUrl.setChecked(mAppPreferences.getAskBeforeOpening());
+			mSwitchViewOpenUrl
+					.setChecked(mAppPreferences.getAskBeforeOpening());
 			mSwitchViewSound
 					.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
@@ -276,30 +279,33 @@ public class SettingActivity extends BaseActivity implements
 	public void onClick_UrlProfile(View v) {
 		try {
 
-			mDlChangeUrl = new DialogChangeProfile(this, mAppPreferences.getProfileUrl(), new ProcessDialogProfile() {
+			mDlChangeUrl = new DialogChangeProfile(this,
+					mAppPreferences.getProfileUrl(),
+					new ProcessDialogProfile() {
 
-				@Override
-				public void click_Ok(String url) {
-					try {
-						mAppPreferences.setProfileUrl(url);
-						String[] urlProfile=mAppPreferences
-								.getProfileUrl().split("/");
-						if (mAppPreferences.getProfileUrl().equals("-1")) {
-							mTvUrlProfile.setText("");
-						} else {
-							mTvUrlProfile.setText(urlProfile[0]);
+						@Override
+						public void click_Ok(String url) {
+							try {
+								mAppPreferences.setProfileUrl(url);
+								String[] urlProfile = mAppPreferences
+										.getProfileUrl().split("/");
+								if (mAppPreferences.getProfileUrl()
+										.equals("-1")) {
+									mTvUrlProfile.setText("");
+								} else {
+									mTvUrlProfile.setText(urlProfile[0]);
+								}
+								showToastMessage(getString(R.string.mess_update_urlprofile_successfull));
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
 						}
-						showToastMessage(getString(R.string.mess_update_urlprofile_successfull));
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
 
-				@Override
-				public void click_Cancel() {
+						@Override
+						public void click_Cancel() {
 
-				}
-			});
+						}
+					});
 			mDlChangeUrl.show();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -538,8 +544,8 @@ public class SettingActivity extends BaseActivity implements
 	protected void sendMail() {
 		Intent emailIntent = new Intent(Intent.ACTION_SEND);
 		emailIntent.setType("text/html");
-		emailIntent
-				.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_title_share));
+		emailIntent.putExtra(Intent.EXTRA_SUBJECT,
+				getString(R.string.email_title_share));
 
 		Uri captixUrl = Uri
 				.parse("http://www7.44doors.com/dl.aspx?cid=2444&pv_url=http://cptr.it/captixscan?2444_rm_id=100.3781911.7");
@@ -588,14 +594,18 @@ public class SettingActivity extends BaseActivity implements
 			e.printStackTrace();
 		}
 	}
+
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
+		DisplayMetrics displaymetrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+		int width = displaymetrics.widthPixels;
 		// Checks the orientation of the screen
 		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-			mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset_land);
+			mMenu.setBehindOff(width / 2 + width / 4);
 		} else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-			mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+			mMenu.setBehindOff(width / 2 + width / 5);
 		}
 	}
 }

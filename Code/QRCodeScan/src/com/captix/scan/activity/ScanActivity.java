@@ -1,6 +1,5 @@
 package com.captix.scan.activity;
 
-import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -24,6 +23,7 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -85,13 +85,14 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 			mTvTitle.setText(R.string.header_title_scan);
 			mMenu = new SlidingMenuCustom(this, this);
 			// Configure orientation for displaying Sliding Menu and Camera
+			DisplayMetrics displaymetrics = new DisplayMetrics();
+			getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+			int width = displaymetrics.widthPixels;
 			int display_mode = getResources().getConfiguration().orientation;
 			if (display_mode == 1) {
-				mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-				// setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+				mMenu.setBehindOff(width / 2 + width / 5);
 			} else {
-				mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset_land);
-				// setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+				mMenu.setBehindOff(width / 2 + width / 4);
 			}
 			mFrameCamera = (FrameLayout) findViewById(R.id.activity_scan_camera);
 			mDataHandler = new DatabaseHandler(this);
@@ -564,11 +565,14 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
+		DisplayMetrics displaymetrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+		int width = displaymetrics.widthPixels;
 		// Checks the orientation of the screen
 		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-			mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset_land);
+			mMenu.setBehindOff(width / 2 + width / 4);
 		} else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-			mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+			mMenu.setBehindOff(width / 2 + width / 5);
 		}
 	}
 }
