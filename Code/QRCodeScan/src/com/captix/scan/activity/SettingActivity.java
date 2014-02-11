@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.Html;
 import android.util.Base64;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -101,11 +102,14 @@ public class SettingActivity extends BaseActivity implements
 			}
 			mMenu = new SlidingMenuCustom(this, this);
 			mMenu.setTouchModeAboveMargin();
+			DisplayMetrics displaymetrics = new DisplayMetrics();
+			getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+			int width = displaymetrics.widthPixels;
 			int display_mode = getResources().getConfiguration().orientation;
 			if (display_mode == 1) {
-				mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+				mMenu.setBehindOff(width / 2 + width / 5);
 			} else {
-				mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset_land);
+				mMenu.setBehindOff(width / 2 + width / 4);
 			}
 			mSwitchViewSound = (ToggleButton) findViewById(R.id.activity_settings_sv_sound);
 			mSwitchViewOpenUrl = (ToggleButton) findViewById(R.id.activity_settings_sv_open_url);
@@ -610,11 +614,14 @@ public class SettingActivity extends BaseActivity implements
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
+		DisplayMetrics displaymetrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+		int width = displaymetrics.widthPixels;
 		// Checks the orientation of the screen
 		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-			mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset_land);
+			mMenu.setBehindOff(width / 2 + width / 4);
 		} else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-			mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+			mMenu.setBehindOff(width / 2 + width / 5);
 		}
 	}
 

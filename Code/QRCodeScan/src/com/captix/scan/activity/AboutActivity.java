@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebSettings.LayoutAlgorithm;
@@ -42,11 +43,14 @@ public class AboutActivity extends BaseActivity implements
 			mWvContent = (WebView) findViewById(R.id.about_wv_introduce);
 			setTransparentBackground();
 			mMenu = new SlidingMenuCustom(this, this);
+			DisplayMetrics displaymetrics = new DisplayMetrics();
+			getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+			int width = displaymetrics.widthPixels;
 			int display_mode = getResources().getConfiguration().orientation;
 			if (display_mode == 1) {
-				mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+				mMenu.setBehindOff(width / 2 + width / 5);
 			} else {
-				mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset_land);
+				mMenu.setBehindOff(width / 2 + width / 4);
 			}
 			new loadTask().execute();
 		} catch (Exception e) {
@@ -157,8 +161,8 @@ public class AboutActivity extends BaseActivity implements
 						finish();
 					} else {
 						Toast.makeText(getApplicationContext(),
-								getString(R.string.press_exit), Toast.LENGTH_SHORT)
-								.show();
+								getString(R.string.press_exit),
+								Toast.LENGTH_SHORT).show();
 						lastPressedTime = event.getEventTime();
 					}
 					return true;
@@ -169,14 +173,18 @@ public class AboutActivity extends BaseActivity implements
 		}
 		return false;
 	}
+
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
+		DisplayMetrics displaymetrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+		int width = displaymetrics.widthPixels;
 		// Checks the orientation of the screen
 		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-			mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset_land);
+			mMenu.setBehindOff(width / 2 + width / 4);
 		} else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-			mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+			mMenu.setBehindOff(width / 2 + width / 5);
 		}
 	}
 }

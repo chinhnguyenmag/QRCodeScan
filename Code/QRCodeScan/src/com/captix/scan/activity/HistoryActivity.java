@@ -22,6 +22,7 @@ import android.content.pm.Signature;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -72,11 +73,6 @@ public class HistoryActivity extends ParentActivity implements
 
 	// =============================================================
 	private int swipeMode = SwipeListView.SWIPE_MODE_BOTH;
-	private boolean swipeOpenOnLongPress = false;
-	private boolean swipeCloseAllItemsWhenMoveList = true;
-	private long swipeAnimationTime = 0;
-	private float swipeOffsetLeft = 300;
-	private float swipeOffsetRight = 100;
 	private int swipeActionLeft = SwipeListView.SWIPE_ACTION_REVEAL;
 	private int swipeActionRight = SwipeListView.SWIPE_ACTION_REVEAL;
 	private TextView mTvTitle;
@@ -104,12 +100,14 @@ public class HistoryActivity extends ParentActivity implements
 
 		mMenu = new SlidingMenuCustom(this, this);
 		mMenu.setTouchModeAboveMargin();
+		DisplayMetrics displaymetrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+		int width = displaymetrics.widthPixels;
 		int display_mode = getResources().getConfiguration().orientation;
-
 		if (display_mode == 1) {
-			mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+			mMenu.setBehindOff(width / 2 + width / 5);
 		} else {
-			mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset_land);
+			mMenu.setBehindOff(width / 2 + width / 4);
 		}
 		// Get QRCode from Database to inflate into list view
 		mDataHandler = new DatabaseHandler(this);
@@ -467,8 +465,6 @@ public class HistoryActivity extends ParentActivity implements
 		mSwipeListView.setSwipeActionRight(swipeActionRight);
 		mSwipeListView.setOffsetLeft(mWidthTotal - mWidthBtDelete);
 		mSwipeListView.setOffsetRight(mWidthTotal - mWidthSocial);
-		mSwipeListView.setAnimationTime(swipeAnimationTime);
-		mSwipeListView.setSwipeOpenOnLongPress(swipeOpenOnLongPress);
 	}
 
 	/**
@@ -669,11 +665,14 @@ public class HistoryActivity extends ParentActivity implements
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
+		DisplayMetrics displaymetrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+		int width = displaymetrics.widthPixels;
 		// Checks the orientation of the screen
 		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-			mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset_land);
+			mMenu.setBehindOff(width / 2 + width / 4);
 		} else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-			mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+			mMenu.setBehindOff(width / 2 + width / 5);
 		}
 	}
 }
