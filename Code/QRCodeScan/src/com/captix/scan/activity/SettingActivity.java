@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -75,6 +76,7 @@ public class SettingActivity extends BaseActivity implements
 	private DialogChangeProfile mDlChangeUrl;
 	private DialogChangeShortcut mDlChangeShortcus;
 	private TextView mTvUrlShortcut;
+	private ImageButton mIbShortcus;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +127,8 @@ public class SettingActivity extends BaseActivity implements
 			mRlShareMail = (RelativeLayout) findViewById(R.id.setting_ll_social_mail);
 			mRlShareTwitter = (RelativeLayout) findViewById(R.id.setting_ll_social_twitter);
 			mTvUrlShortcut = (TextView) findViewById(R.id.activity_setting_tv_link);
+			mIbShortcus = (ImageButton) findViewById(R.id.header_ib_shortcus);
+			mIbShortcus.setVisibility(View.GONE);
 			mRlShareSMS.setOnClickListener(this);
 			mRlShareMail.setOnClickListener(this);
 			mRlShareTwitter.setOnClickListener(this);

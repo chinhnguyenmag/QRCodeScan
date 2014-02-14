@@ -9,6 +9,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ public class AboutActivity extends BaseActivity implements
 	private long lastPressedTime;
 	private static final int PERIOD = 2000;
 	private AppPreferences mAppPreferences;
+	private ImageButton mIbShortcus;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,8 @@ public class AboutActivity extends BaseActivity implements
 
 			mTvTitle = (TextView) findViewById(R.id.header_tv_title);
 			mTvTitle.setText(R.string.header_title_about);
+			mIbShortcus = (ImageButton) findViewById(R.id.header_ib_shortcus);
+			mIbShortcus.setVisibility(View.GONE);
 			mAppPreferences = new AppPreferences(this);
 
 			mWvContent = (WebView) findViewById(R.id.about_wv_introduce);
