@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.captix.scan.R;
 import com.captix.scan.model.AppPreferences;
@@ -25,6 +27,7 @@ public class BrowserActivity extends BaseActivity {
 	// Closing Web Page
 	private int mCloseTime;
 	private Timer mTimer;
+	private ImageButton mIbShortcus;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,7 @@ public class BrowserActivity extends BaseActivity {
 			mCloseTime = mPreference.getCloseUrlTime();
 
 			mTvTitle = (TextView) findViewById(R.id.header_website_tv_title);
+
 			Bundle bundle = getIntent().getExtras();
 			if (bundle != null) {
 				mScanResult = bundle

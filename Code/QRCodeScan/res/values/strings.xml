@@ -71,5 +71,7 @@
     <string name="press_exit"> Press again to exit.</string>
     <string name="activity_settting_confirm">Are you sure you want to post on your wall?</string>
     <string name="email_title_share">Captix Scan Share</string>
+    <string name="mess_not_exist_shortcut">Sorry, no shortcut exists. Create a shortcut in Settings.</string>
+    <string name="mess_update_urlshortcut_successfull">URL Shortcut has been updated successfully.</string>
 
 </resources>
