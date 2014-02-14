@@ -28,7 +28,7 @@ public class DialogChangeShortcut extends BaseDialog implements OnClickListener 
 		this.getWindow().setBackgroundDrawableResource(
 				android.R.color.transparent);
 		/** Design the dialog in main.xml file */
-		setContentView(R.layout.dialog_change_shortcus);
+		setContentView(R.layout.dialog_change_shortcut);
 		mBtOk = (Button) findViewById(R.id.dialog_change_shortcus_bt_Ok);
 		mBtCancel = (Button) findViewById(R.id.dialog_change_shortcus_bt_Cancel);
 		mEtUrlShortcus = (EditText) findViewById(R.id.dialog_change_shortcus_et_link);
@@ -68,33 +68,37 @@ public class DialogChangeShortcut extends BaseDialog implements OnClickListener 
 	}
 
 	public boolean validate() {
-		String urlProfile = mEtUrlShortcus.getText().toString();
+		String urlProfile = mEtUrlShortcus.getText().toString().trim();
 		if (urlProfile.length() == 0) {
 			mUrl = "-1";
 			return true;
 		}
-		String urlProfile2 = urlProfile;
-		urlProfile2 = urlProfile2.replace("http://", "");
-		urlProfile2 = urlProfile2.replace("https://", "");
-		urlProfile2 = urlProfile2.replace("www.", "");
-		urlProfile2 = urlProfile2.replace("ftp://", "");
 
-		urlProfile2 = urlProfile2.replace("HTTP://", "");
-		urlProfile2 = urlProfile2.replace("HTTPS://", "");
-		urlProfile2 = urlProfile2.replace("WWW.", "");
-		urlProfile2 = urlProfile2.replace("FTP://", "");
+		if (!urlProfile.contains(" ")) {
+			String urlProfile2 = urlProfile;
+			urlProfile2 = urlProfile2.replace("http://", "");
+			urlProfile2 = urlProfile2.replace("https://", "");
+			urlProfile2 = urlProfile2.replace("www.", "");
+			urlProfile2 = urlProfile2.replace("ftp://", "");
 
-		if (urlProfile.indexOf("/") != -1) {
-			String[] domain = urlProfile2.split("/");
-			if (domain[0].contains(".")) {
-				mUrl = urlProfile;
-				return true;
+			urlProfile2 = urlProfile2.replace("HTTP://", "");
+			urlProfile2 = urlProfile2.replace("HTTPS://", "");
+			urlProfile2 = urlProfile2.replace("WWW.", "");
+			urlProfile2 = urlProfile2.replace("FTP://", "");
+
+			if (urlProfile.indexOf("/") != -1) {
+				String[] domain = urlProfile2.split("/");
+				if (domain[0].contains(".")) {
+					mUrl = urlProfile;
+					return true;
+				}
+			} else {
+				if (urlProfile2.contains(".")) {
+					mUrl = urlProfile;
+					return true;
+				}
 			}
-		} else {
-			if (urlProfile2.contains(".")) {
-				mUrl = urlProfile;
-				return true;
-			}
+			return true;
 		}
 
 		// Toast.makeText(

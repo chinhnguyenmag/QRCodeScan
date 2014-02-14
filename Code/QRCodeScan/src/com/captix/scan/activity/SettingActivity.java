@@ -377,7 +377,7 @@ public class SettingActivity extends BaseActivity implements
 								}
 
 								if (!oldUrl.equalsIgnoreCase(url)) {
-									showToastMessage(getString(R.string.mess_update_urlprofile_successfull));
+									showToastMessage(getString(R.string.mess_update_urlshortcut_successfull));
 								}
 
 							} catch (Exception e) {

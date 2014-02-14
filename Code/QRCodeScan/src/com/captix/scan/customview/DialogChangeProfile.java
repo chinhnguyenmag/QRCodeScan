@@ -78,33 +78,37 @@ public class DialogChangeProfile extends BaseDialog implements OnClickListener {
 	}
 
 	public boolean validate() {
-		String urlProfile = mEtUrlProfile.getText().toString();
+		String urlProfile = mEtUrlProfile.getText().toString().trim();
 		if (urlProfile.length() == 0) {
 			mUrl = "-1";
 			return true;
 		}
-		String urlProfile2 = urlProfile;
-		urlProfile2 = urlProfile2.replace("http://", "");
-		urlProfile2 = urlProfile2.replace("https://", "");
-		urlProfile2 = urlProfile2.replace("www.", "");
-		urlProfile2 = urlProfile2.replace("ftp://", "");
 
-		urlProfile2 = urlProfile2.replace("HTTP://", "");
-		urlProfile2 = urlProfile2.replace("HTTPS://", "");
-		urlProfile2 = urlProfile2.replace("WWW.", "");
-		urlProfile2 = urlProfile2.replace("FTP://", "");
+		if (!urlProfile.contains(" ")) {
+			String urlProfile2 = urlProfile;
+			urlProfile2 = urlProfile2.replace("http://", "");
+			urlProfile2 = urlProfile2.replace("https://", "");
+			urlProfile2 = urlProfile2.replace("www.", "");
+			urlProfile2 = urlProfile2.replace("ftp://", "");
 
-		if (urlProfile.indexOf("/") != -1) {
-			String[] domain = urlProfile2.split("/");
-			if (domain[0].contains(".")) {
-				mUrl = urlProfile;
-				return true;
+			urlProfile2 = urlProfile2.replace("HTTP://", "");
+			urlProfile2 = urlProfile2.replace("HTTPS://", "");
+			urlProfile2 = urlProfile2.replace("WWW.", "");
+			urlProfile2 = urlProfile2.replace("FTP://", "");
+
+			if (urlProfile.indexOf("/") != -1) {
+				String[] domain = urlProfile2.split("/");
+				if (domain[0].contains(".")) {
+					mUrl = urlProfile;
+					return true;
+				}
+			} else {
+				if (urlProfile2.contains(".")) {
+					mUrl = urlProfile;
+					return true;
+				}
 			}
-		} else {
-			if (urlProfile2.contains(".")) {
-				mUrl = urlProfile;
-				return true;
-			}
+			return true;
 		}
 
 		// Toast.makeText(
