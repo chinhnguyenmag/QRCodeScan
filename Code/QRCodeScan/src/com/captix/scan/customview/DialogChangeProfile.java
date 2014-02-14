@@ -83,6 +83,13 @@ public class DialogChangeProfile extends BaseDialog implements OnClickListener {
 			mUrl = "-1";
 			return true;
 		}
+
+		if (urlProfile.length() <= 3) {
+			Toast.makeText(mContext, "Invalid URL Profile", Toast.LENGTH_LONG)
+					.show();
+			return false;
+		}
+
 		String urlProfile2 = urlProfile;
 		urlProfile2 = urlProfile2.replace("http://", "");
 		urlProfile2 = urlProfile2.replace("https://", "");
@@ -94,6 +101,7 @@ public class DialogChangeProfile extends BaseDialog implements OnClickListener {
 		urlProfile2 = urlProfile2.replace("WWW.", "");
 		urlProfile2 = urlProfile2.replace("FTP://", "");
 
+		
 		if (urlProfile.indexOf("/") != -1) {
 			String[] domain = urlProfile2.split("/");
 			if (domain[0].contains(".")) {
