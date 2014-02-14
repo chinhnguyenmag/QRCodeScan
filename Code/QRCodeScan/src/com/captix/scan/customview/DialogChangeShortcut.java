@@ -101,7 +101,7 @@ public class DialogChangeShortcut extends BaseDialog implements OnClickListener 
 		// mContext,
 		// "Invalid URL profile. Url format should be  cptr.it/?var={variable}&id=test.",
 		// Toast.LENGTH_LONG).show();
-		Toast.makeText(mContext, "Invalid URL Profile", Toast.LENGTH_LONG)
+		Toast.makeText(mContext, "Invalid URL Shortcut", Toast.LENGTH_LONG)
 				.show();
 		return false;
 	}
