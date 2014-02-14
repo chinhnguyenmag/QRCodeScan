@@ -40,9 +40,6 @@ public class BrowserActivity extends BaseActivity {
 			mCloseTime = mPreference.getCloseUrlTime();
 
 			mTvTitle = (TextView) findViewById(R.id.header_website_tv_title);
-			
-			mIbShortcus = (ImageButton) findViewById(R.id.header_ib_shortcus);
-			mIbShortcus.setVisibility(View.GONE);
 
 			Bundle bundle = getIntent().getExtras();
 			if (bundle != null) {
@@ -102,10 +99,6 @@ public class BrowserActivity extends BaseActivity {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	public void onClick_Shortcus(View v) {
-		Toast.makeText(this, "Shortcus !", Toast.LENGTH_SHORT).show();
 	}
 
 }

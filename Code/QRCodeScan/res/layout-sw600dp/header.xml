@@ -51,11 +51,11 @@
         android:id="@+id/header_ib_shortcus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_star_shot"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:layout_marginRight="5dp"
-        android:visibility="visible"
+        android:background="@drawable/ic_favourite_browser"
         android:onClick="onClick_Shortcus"
-        />
+        android:visibility="visible" />
 
 </RelativeLayout>

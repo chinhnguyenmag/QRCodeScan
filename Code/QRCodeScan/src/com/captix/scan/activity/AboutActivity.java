@@ -15,6 +15,8 @@ import android.widget.Toast;
 import com.captix.scan.R;
 import com.captix.scan.customview.SlidingMenuCustom;
 import com.captix.scan.listener.MenuSlidingClickListener;
+import com.captix.scan.model.AppPreferences;
+import com.captix.scan.utils.StringExtraUtils;
 import com.captix.scan.utils.Utils;
 
 /**
@@ -30,6 +32,7 @@ public class AboutActivity extends BaseActivity implements
 	String mContent = "";
 	private long lastPressedTime;
 	private static final int PERIOD = 2000;
+	private AppPreferences mAppPreferences;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,7 @@ public class AboutActivity extends BaseActivity implements
 
 			mTvTitle = (TextView) findViewById(R.id.header_tv_title);
 			mTvTitle.setText(R.string.header_title_about);
+			mAppPreferences = new AppPreferences(this);
 
 			mWvContent = (WebView) findViewById(R.id.about_wv_introduce);
 			setTransparentBackground();
@@ -187,8 +191,20 @@ public class AboutActivity extends BaseActivity implements
 			mMenu.setBehindOff(width / 2 + width / 5);
 		}
 	}
-	
+
 	public void onClick_Shortcus(View v) {
-		Toast.makeText(this, "Shortcus !", Toast.LENGTH_SHORT).show();
+		if (mAppPreferences.getShortcusUrl().equals("-1")) {
+			Toast.makeText(
+					this,
+					getString(R.string.mess_not_exist_shortcut),
+					Toast.LENGTH_SHORT).show();
+		} else {
+			Intent dataIntent = new Intent(
+					AboutActivity.this, BrowserActivity.class);
+			dataIntent.putExtra(
+					StringExtraUtils.KEY_SCAN_RESULT,
+					mAppPreferences.getShortcusUrl().trim());
+			startActivity(dataIntent);
+		}
 	}
 }

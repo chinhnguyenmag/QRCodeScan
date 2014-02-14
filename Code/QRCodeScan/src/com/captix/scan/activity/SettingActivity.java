@@ -31,6 +31,8 @@ import android.widget.ToggleButton;
 
 import com.captix.scan.R;
 import com.captix.scan.customview.DialogChangeProfile;
+import com.captix.scan.customview.DialogChangeShortcut;
+import com.captix.scan.customview.DialogChangeShortcut.ProcessDialogShortcus;
 import com.captix.scan.customview.DialogChangeProfile.ProcessDialogProfile;
 import com.captix.scan.customview.DialogConfirm;
 import com.captix.scan.customview.DialogConfirm.ProcessDialogConfirm;
@@ -40,6 +42,7 @@ import com.captix.scan.customview.SlidingMenuCustom;
 import com.captix.scan.listener.MenuSlidingClickListener;
 import com.captix.scan.model.AppPreferences;
 import com.captix.scan.utils.SocialUtil;
+import com.captix.scan.utils.StringExtraUtils;
 import com.captix.scan.utils.Utils;
 import com.facebook.android.DialogError;
 import com.facebook.android.Facebook;
@@ -70,6 +73,8 @@ public class SettingActivity extends BaseActivity implements
 	private long lastPressedTime;
 	private static final int PERIOD = 2000;
 	private DialogChangeProfile mDlChangeUrl;
+	private DialogChangeShortcut mDlChangeShortcus;
+	private TextView mTvUrlShortcut;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +105,7 @@ public class SettingActivity extends BaseActivity implements
 					mTvUrlProfile.setText(urlProfile[0]);
 				}
 			}
+
 			mMenu = new SlidingMenuCustom(this, this);
 			mMenu.setTouchModeAboveMargin();
 			DisplayMetrics displaymetrics = new DisplayMetrics();
@@ -118,10 +124,23 @@ public class SettingActivity extends BaseActivity implements
 			mRlShareSMS = (RelativeLayout) findViewById(R.id.setting_ll_social_message);
 			mRlShareMail = (RelativeLayout) findViewById(R.id.setting_ll_social_mail);
 			mRlShareTwitter = (RelativeLayout) findViewById(R.id.setting_ll_social_twitter);
+			mTvUrlShortcut = (TextView) findViewById(R.id.activity_setting_tv_link);
 			mRlShareSMS.setOnClickListener(this);
 			mRlShareMail.setOnClickListener(this);
 			mRlShareTwitter.setOnClickListener(this);
 			mRlShareFacebook.setOnClickListener(this);
+
+			String[] urlShortcut = removeHttp(mAppPreferences.getShortcusUrl())
+					.split("/");
+			if (mAppPreferences.getShortcusUrl().equals("-1")) {
+				mTvUrlShortcut.setText("none");
+			} else {
+				if (urlShortcut.length == 0) {
+					removeHttp(mAppPreferences.getShortcusUrl());
+				} else {
+					mTvUrlShortcut.setText(urlShortcut[0]);
+				}
+			}
 
 			mSwitchViewSound.setChecked(mAppPreferences.isSound());
 			mSwitchViewOpenUrl
@@ -324,6 +343,53 @@ public class SettingActivity extends BaseActivity implements
 						}
 					});
 			mDlChangeUrl.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void onClick_UrlShortcus(View v) {
+		try {
+
+			mDlChangeShortcus = new DialogChangeShortcut(this,
+					mAppPreferences.getShortcusUrl(),
+					new ProcessDialogShortcus() {
+
+						@Override
+						public void click_Ok(String url) {
+							try {
+								String oldUrl = mAppPreferences
+										.getShortcusUrl();
+								mAppPreferences.setShortcutUrl(url);
+								String[] urlProfile = removeHttp(
+										mAppPreferences.getShortcusUrl())
+										.split("/");
+								if (mAppPreferences.getShortcusUrl().equals(
+										"-1")) {
+									mTvUrlShortcut.setText("none");
+								} else {
+									if (urlProfile.length == 0) {
+										removeHttp(mAppPreferences
+												.getShortcusUrl());
+									} else {
+										mTvUrlShortcut.setText(urlProfile[0]);
+									}
+								}
+
+								if (!oldUrl.equalsIgnoreCase(url)) {
+									showToastMessage(getString(R.string.mess_update_urlprofile_successfull));
+								}
+
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+
+						@Override
+						public void click_Cancel() {
+						}
+					});
+			mDlChangeShortcus.show();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -642,8 +708,19 @@ public class SettingActivity extends BaseActivity implements
 
 		return s;
 	}
-	
+
 	public void onClick_Shortcus(View v) {
-		Toast.makeText(this, "Shortcus !", Toast.LENGTH_SHORT).show();
+		if (mAppPreferences.getShortcusUrl().equals("-1")) {
+			Toast.makeText(
+					this,
+					getString(R.string.mess_not_exist_shortcut),
+					Toast.LENGTH_SHORT).show();
+		} else {
+			Intent dataIntent = new Intent(SettingActivity.this,
+					BrowserActivity.class);
+			dataIntent.putExtra(StringExtraUtils.KEY_SCAN_RESULT,
+					mAppPreferences.getShortcusUrl().trim());
+			startActivity(dataIntent);
+		}
 	}
 }
