@@ -27,6 +27,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -81,6 +82,7 @@ public class HistoryActivity extends ParentActivity implements
 	private int mWidthSocial;
 	private int mWidthTotal;
 	private long lastPressedTime;
+	private ImageButton mIbShortcus;
 	private static final int PERIOD = 2000;
 
 	@Override
@@ -90,6 +92,8 @@ public class HistoryActivity extends ParentActivity implements
 		mTvTitle = (TextView) findViewById(R.id.header_tv_title);
 		mTvTitle.setText(R.string.header_title_history);
 		mTvDelete = (TextView) findViewById(R.id.header_tv_right);
+		mIbShortcus = (ImageButton) findViewById(R.id.header_ib_shortcus);
+		mIbShortcus.setVisibility(View.GONE);
 		// inflate layout for list view
 		mSwipeListView = (SwipeListView) findViewById(R.id.activity_history_lv);
 		View v = new View(this);
@@ -674,5 +678,9 @@ public class HistoryActivity extends ParentActivity implements
 		} else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
 			mMenu.setBehindOff(width / 2 + width / 5);
 		}
+	}
+	
+	public void onClick_Shortcus(View v) {
+		Toast.makeText(this, "Shortcus !", Toast.LENGTH_SHORT).show();
 	}
 }

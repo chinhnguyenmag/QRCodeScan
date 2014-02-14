@@ -86,6 +86,25 @@ public class AppPreferences {
 		String profileUrl = mAppSharedPrefs.getString("ProfileUrl", "");
 		return profileUrl;
 	}
+	
+	
+	/**
+	 * @param profileUrl
+	 * @return
+	 */
+	public boolean setShortcutUrl(String shortcutUrl) {
+		mPrefsEditor.putString("shortcutUrl", shortcutUrl);
+		mPrefsEditor.commit();
+		return true;
+	}
+
+	/**
+	 * @return url of profile.
+	 */
+	public String getShortcusUrl() {
+		String profileUrl = mAppSharedPrefs.getString("shortcutUrl", "");
+		return profileUrl;
+	}
 
 	/**
 	 * @param closeUrl

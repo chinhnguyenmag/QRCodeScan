@@ -597,4 +597,19 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 			mMenu.setBehindOff(width / 2 + width / 5);
 		}
 	}
+
+	public void onClick_Shortcus(View v) {
+		if (mAppPreferences.getShortcusUrl().equals("-1")) {
+			Toast.makeText(
+					this,
+					getString(R.string.mess_not_exist_shortcut),
+					Toast.LENGTH_SHORT).show();
+		} else {
+			Intent dataIntent = new Intent(ScanActivity.this,
+					BrowserActivity.class);
+			dataIntent.putExtra(StringExtraUtils.KEY_SCAN_RESULT,
+					mAppPreferences.getShortcusUrl().trim());
+			startActivity(dataIntent);
+		}
+	}
 }

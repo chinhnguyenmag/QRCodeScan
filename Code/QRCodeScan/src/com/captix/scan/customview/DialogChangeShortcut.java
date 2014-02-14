@@ -10,26 +10,16 @@ import android.widget.Toast;
 
 import com.captix.scan.R;
 
-/**
- * 
- * @author Hung Hoang
- * 
- */
-public class DialogChangeProfile extends BaseDialog implements OnClickListener {
+public class DialogChangeShortcut extends BaseDialog implements OnClickListener {
+
 	private Button mBtOk;
 	private Button mBtCancel;
-	private EditText mEtUrlProfile;
-	private ProcessDialogProfile mProcess;
+	private EditText mEtUrlShortcus;
+	private ProcessDialogShortcus mProcess;
 	private String mUrl = "";
 
-	/**
-	 * 
-	 * 
-	 * @param context
-	 * @param arrMenu
-	 */
-	public DialogChangeProfile(Context context, String urlProfile,
-			ProcessDialogProfile process) {
+	public DialogChangeShortcut(Context context, String urlShortcus,
+			ProcessDialogShortcus process) {
 		super(context);
 		this.mContext = context;
 		this.mProcess = process;
@@ -38,22 +28,22 @@ public class DialogChangeProfile extends BaseDialog implements OnClickListener {
 		this.getWindow().setBackgroundDrawableResource(
 				android.R.color.transparent);
 		/** Design the dialog in main.xml file */
-		setContentView(R.layout.dialog_change_profile);
-		mBtOk = (Button) findViewById(R.id.dialog_change_profile_bt_Ok);
-		mBtCancel = (Button) findViewById(R.id.dialog_change_profile_bt_Cancel);
-		mEtUrlProfile = (EditText) findViewById(R.id.dialog_change_profile_et_url);
-		if (urlProfile.equals("-1")) {
-			mEtUrlProfile.setText("");
+		setContentView(R.layout.dialog_change_shortcut);
+		mBtOk = (Button) findViewById(R.id.dialog_change_shortcus_bt_Ok);
+		mBtCancel = (Button) findViewById(R.id.dialog_change_shortcus_bt_Cancel);
+		mEtUrlShortcus = (EditText) findViewById(R.id.dialog_change_shortcus_et_link);
+		if (urlShortcus.equals("-1")) {
+			mEtUrlShortcus.setText("");
 		} else {
-			mEtUrlProfile.setText(urlProfile);
+			mEtUrlShortcus.setText(urlShortcus);
 		}
-		mEtUrlProfile.requestFocus();
+		mEtUrlShortcus.requestFocus();
 		mBtOk.setOnClickListener(this);
 		mBtCancel.setOnClickListener(this);
 
 	}
 
-	public static abstract class ProcessDialogProfile {
+	public static abstract class ProcessDialogShortcus {
 		public abstract void click_Ok(String url);
 
 		public abstract void click_Cancel();
@@ -62,13 +52,13 @@ public class DialogChangeProfile extends BaseDialog implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.dialog_change_profile_bt_Ok:
+		case R.id.dialog_change_shortcus_bt_Ok:
 			if (validate()) {
 				mProcess.click_Ok(mUrl);
 			}
 			dismiss();
 			break;
-		case R.id.dialog_change_profile_bt_Cancel:
+		case R.id.dialog_change_shortcus_bt_Cancel:
 			mProcess.click_Cancel();
 			dismiss();
 			break;
@@ -78,7 +68,7 @@ public class DialogChangeProfile extends BaseDialog implements OnClickListener {
 	}
 
 	public boolean validate() {
-		String urlProfile = mEtUrlProfile.getText().toString().trim();
+		String urlProfile = mEtUrlShortcus.getText().toString().trim();
 		if (urlProfile.length() == 0) {
 			mUrl = "-1";
 			return true;
@@ -86,7 +76,7 @@ public class DialogChangeProfile extends BaseDialog implements OnClickListener {
 
 		if (urlProfile.length() <= 3) {
 			Toast.makeText(mContext,
-					mContext.getString(R.string.mess_update_urlprofile),
+					"Invalid URL Shortcut.",
 					Toast.LENGTH_LONG).show();
 			return false;
 		}
@@ -120,7 +110,7 @@ public class DialogChangeProfile extends BaseDialog implements OnClickListener {
 		// "Invalid URL profile. Url format should be  cptr.it/?var={variable}&id=test.",
 		// Toast.LENGTH_LONG).show();
 		Toast.makeText(mContext,
-				mContext.getString(R.string.mess_update_urlprofile),
+				"Invalid URL Shortcut.",
 				Toast.LENGTH_LONG).show();
 		return false;
 	}

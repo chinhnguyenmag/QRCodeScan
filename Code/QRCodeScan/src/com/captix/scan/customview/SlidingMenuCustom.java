@@ -11,7 +11,7 @@ import com.captix.scan.R;
 import com.captix.scan.listener.MenuSlidingClickListener;
 
 /**
- * @author Hung Hoang This class init Sliding Menu.
+ * @author Hung Hoang This class init Sliding Menu
  */
 public class SlidingMenuCustom {
 	private SlidingMenu menu = null;
