@@ -642,4 +642,8 @@ public class SettingActivity extends BaseActivity implements
 
 		return s;
 	}
+	
+	public void onClick_Shortcus(View v) {
+		Toast.makeText(this, "Shortcus !", Toast.LENGTH_SHORT).show();
+	}
 }

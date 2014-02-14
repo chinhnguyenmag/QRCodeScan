@@ -187,4 +187,8 @@ public class AboutActivity extends BaseActivity implements
 			mMenu.setBehindOff(width / 2 + width / 5);
 		}
 	}
+	
+	public void onClick_Shortcus(View v) {
+		Toast.makeText(this, "Shortcus !", Toast.LENGTH_SHORT).show();
+	}
 }
