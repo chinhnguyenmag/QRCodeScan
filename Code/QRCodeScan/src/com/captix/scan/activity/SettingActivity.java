@@ -714,7 +714,7 @@ public class SettingActivity extends BaseActivity implements
 	}
 
 	public void onClick_Shortcus(View v) {
-		if (mAppPreferences.getShortcusUrl().equals("-1")) {
+		if (mAppPreferences.getShortcusUrl().equals("-1") || mAppPreferences.getShortcusUrl().equals("")) {
 			Toast.makeText(
 					this,
 					getString(R.string.mess_not_exist_shortcut),

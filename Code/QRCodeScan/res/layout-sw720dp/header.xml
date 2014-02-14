@@ -46,7 +46,7 @@
         android:textColor="@android:color/white"
         android:textSize="@dimen/campaign_textfont_title"
         android:visibility="gone" />
-    
+
     <ImageButton
         android:id="@+id/header_ib_shortcus"
         android:layout_width="wrap_content"
@@ -54,8 +54,9 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="5dp"
-        android:background="@drawable/ic_favourite_browser"
+        android:background="@drawable/button_forcus_browser"
         android:onClick="onClick_Shortcus"
+        android:src="@drawable/ic_favourite_browser"
         android:visibility="visible" />
 
 </RelativeLayout>

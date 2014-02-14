@@ -53,8 +53,9 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="5dp"
-        android:background="@drawable/ic_favourite_browser"
+        android:background="@drawable/button_forcus_browser"
         android:onClick="onClick_Shortcus"
+        android:src="@drawable/ic_favourite_browser"
         android:visibility="visible" />
 
 </RelativeLayout>
