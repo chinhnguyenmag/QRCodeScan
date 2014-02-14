@@ -66,6 +66,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	private static final int PERIOD = 2000;
 	private AppPreferences mAppPreferences;
 	private AudioManager mAudio;
+	private int mDefaultVolume=0;
 
 	static {
 		System.loadLibrary("iconv");
@@ -487,6 +488,8 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		try {
 			MediaPlayer mp = MediaPlayer.create(getBaseContext(),
 					R.raw.camera_shutter);
+			mDefaultVolume=mAudio.getStreamVolume(AudioManager.STREAM_MUSIC);
+			mAudio.setStreamVolume(AudioManager.STREAM_MUSIC, mAudio.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
 			mp.setVolume(1.0f, 1.0f);
 			mp.start();
 
@@ -494,6 +497,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 				@Override
 				public void onCompletion(MediaPlayer mp) {
 					mp.release();
+					mAudio.setStreamVolume(AudioManager.STREAM_MUSIC, mDefaultVolume, 0);
 				}
 			});
 		} catch (Exception e) {
