@@ -24,8 +24,8 @@
     <string name="common_imagebutton_description">imagebutton</string>
     <string name="cancel">Cancel</string>
     <string name="mess_error_network">No Internet connection, please check your network.</string>
-    <string name="mess_error_urlprofile">Url Profile is required.</string>
-    <string name="mess_update_urlprofile_successfull">Url profile has been updated successfully.</string>
+    <string name="mess_error_urlprofile">URL Profile is required.</string>
+    <string name="mess_update_urlprofile_successfull">URL Profile has been updated successfully.</string>
 
     <!-- text use to show in layout not important -->
     <string name="link">cptr.it</string>
@@ -51,7 +51,7 @@
     <string name="activity_scan_open_url_confirm">Are you sure you want to browse scanned result?</string>
     <string name="activity_scan_open_browser_title"> Open Browser</string>
     <string name="activity_scan_invalid_url_title">Invalid URL</string>
-    <string name="activity_scan_invalid_url_message">This URL is not right format</string>
+    <string name="activity_scan_invalid_url_message">Invalid URL Format</string>
     <string name="activity_scan_camera_unavailable">Camera is not available</string>
 
     <!-- History Activity -->
@@ -69,5 +69,6 @@
     <string name="mess_post_success">Commment has been posted in your wall!</string>
     <string name="press_exit"> Press again to exit.</string>
     <string name="activity_settting_confirm">Are you sure you want to post on your wall?</string>
-	 <string name="email_title_share">Captix Scan Share</string>
+    <string name="email_title_share">Captix Scan Share</string>
+
 </resources>

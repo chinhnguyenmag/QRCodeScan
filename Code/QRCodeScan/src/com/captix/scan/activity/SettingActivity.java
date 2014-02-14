@@ -12,7 +12,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
 import android.content.res.Configuration;
-import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -293,6 +292,7 @@ public class SettingActivity extends BaseActivity implements
 						@Override
 						public void click_Ok(String url) {
 							try {
+								String oldUrl = mAppPreferences.getProfileUrl();
 								mAppPreferences.setProfileUrl(url);
 								String[] urlProfile = removeHttp(
 										mAppPreferences.getProfileUrl()).split(
@@ -308,7 +308,11 @@ public class SettingActivity extends BaseActivity implements
 										mTvUrlProfile.setText(urlProfile[0]);
 									}
 								}
-								showToastMessage(getString(R.string.mess_update_urlprofile_successfull));
+
+								if (!oldUrl.equalsIgnoreCase(url)) {
+									showToastMessage(getString(R.string.mess_update_urlprofile_successfull));
+								}
+
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
@@ -556,10 +560,9 @@ public class SettingActivity extends BaseActivity implements
 	 */
 	protected void sendMail() {
 		Intent emailIntent = new Intent(Intent.ACTION_SEND);
-		emailIntent.setType("text/html");
+		emailIntent.setType("message/rfc822");
 		emailIntent.putExtra(Intent.EXTRA_SUBJECT,
 				getString(R.string.email_title_share));
-
 		Uri captixUrl = Uri
 				.parse("http://www7.44doors.com/dl.aspx?cid=2444&pv_url=http://cptr.it/captixscan?2444_rm_id=100.3781911.7");
 		emailIntent.putExtra(

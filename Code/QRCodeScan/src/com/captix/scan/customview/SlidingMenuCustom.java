@@ -32,6 +32,7 @@ public class SlidingMenuCustom {
 		menu.setShadowWidthRes(R.dimen.shadow_width);
 		menu.setShadowDrawable(R.anim.shadow);
 		menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+		int n = menu.getBehindOffset();
 		menu.setFadeDegree(0.35f);
 		menu.attachToActivity((Activity) context, SlidingMenu.SLIDING_CONTENT);
 		menu.setMenu(R.layout.activity_sliding);
