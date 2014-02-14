@@ -74,7 +74,7 @@ public class DialogChangeShortcut extends BaseDialog implements OnClickListener 
 			return true;
 		}
 
-		if (!urlProfile.contains(" ")) {
+		if (!urlProfile.contains(" ") && urlProfile.contains(".")) {
 			String urlProfile2 = urlProfile;
 			urlProfile2 = urlProfile2.replace("http://", "");
 			urlProfile2 = urlProfile2.replace("https://", "");

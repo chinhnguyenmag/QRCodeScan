@@ -84,7 +84,6 @@ public class DialogChangeProfile extends BaseDialog implements OnClickListener {
 			return true;
 		}
 
-		if (!urlProfile.contains(" ")) {
 			String urlProfile2 = urlProfile;
 			urlProfile2 = urlProfile2.replace("http://", "");
 			urlProfile2 = urlProfile2.replace("https://", "");
@@ -108,8 +107,6 @@ public class DialogChangeProfile extends BaseDialog implements OnClickListener {
 					return true;
 				}
 			}
-			return true;
-		}
 
 		// Toast.makeText(
 		// mContext,
