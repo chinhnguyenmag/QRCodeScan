@@ -74,40 +74,44 @@ public class DialogChangeShortcut extends BaseDialog implements OnClickListener 
 			return true;
 		}
 
-		if (!urlProfile.contains(" ") && urlProfile.contains(".")) {
-			String urlProfile2 = urlProfile;
-			urlProfile2 = urlProfile2.replace("http://", "");
-			urlProfile2 = urlProfile2.replace("https://", "");
-			urlProfile2 = urlProfile2.replace("www.", "");
-			urlProfile2 = urlProfile2.replace("ftp://", "");
+		if (urlProfile.length() <= 3) {
+			Toast.makeText(mContext,
+					"Invalid URL Shortcut.",
+					Toast.LENGTH_LONG).show();
+			return false;
+		}
 
-			urlProfile2 = urlProfile2.replace("HTTP://", "");
-			urlProfile2 = urlProfile2.replace("HTTPS://", "");
-			urlProfile2 = urlProfile2.replace("WWW.", "");
-			urlProfile2 = urlProfile2.replace("FTP://", "");
+		String urlProfile2 = urlProfile;
+		urlProfile2 = urlProfile2.replace("http://", "");
+		urlProfile2 = urlProfile2.replace("https://", "");
+		urlProfile2 = urlProfile2.replace("www.", "");
+		urlProfile2 = urlProfile2.replace("ftp://", "");
 
-			if (urlProfile.indexOf("/") != -1) {
-				String[] domain = urlProfile2.split("/");
-				if (domain[0].contains(".")) {
-					mUrl = urlProfile;
-					return true;
-				}
-			} else {
-				if (urlProfile2.contains(".")) {
-					mUrl = urlProfile;
-					return true;
-				}
+		urlProfile2 = urlProfile2.replace("HTTP://", "");
+		urlProfile2 = urlProfile2.replace("HTTPS://", "");
+		urlProfile2 = urlProfile2.replace("WWW.", "");
+		urlProfile2 = urlProfile2.replace("FTP://", "");
+
+		if (urlProfile.indexOf("/") != -1) {
+			String[] domain = urlProfile2.split("/");
+			if (!domain[0].contains(" ") && domain[0].contains(".")) {
+				mUrl = urlProfile;
+				return true;
 			}
-			return true;
+		} else {
+			if (!urlProfile2.contains(" ") && urlProfile2.contains(".")) {
+				mUrl = urlProfile;
+				return true;
+			}
 		}
 
 		// Toast.makeText(
 		// mContext,
 		// "Invalid URL profile. Url format should be  cptr.it/?var={variable}&id=test.",
 		// Toast.LENGTH_LONG).show();
-		Toast.makeText(mContext, "Invalid URL Shortcut", Toast.LENGTH_LONG)
-				.show();
+		Toast.makeText(mContext,
+				"Invalid URL Shortcut.",
+				Toast.LENGTH_LONG).show();
 		return false;
 	}
-
 }

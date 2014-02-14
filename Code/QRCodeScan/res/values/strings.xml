@@ -26,6 +26,7 @@
     <string name="mess_error_network">No Internet connection, please check your network.</string>
     <string name="mess_error_urlprofile">URL Profile is required.</string>
     <string name="mess_update_urlprofile_successfull">URL Profile has been updated successfully.</string>
+    <string name="mess_update_urlprofile">Invalid URL Profile.</string>
 
     <!-- text use to show in layout not important -->
     <string name="link">cptr.it</string>
@@ -56,9 +57,9 @@
 
     <!-- History Activity -->
     <string name="activity_history_delete_history_confirm">Are you sure you want to delete this scan history?</string>
-    <string name="activity_history_delete_all_history_confirm">Are you sure you want to delete all scan histories?</string>
+    <string name="activity_history_delete_all_history_confirm">Are you sure you want to delete all scan history?</string>
     <string name="activity_history_delete_history_title">Delete History</string>
-    <string name="activity_history_delete_all_history_title">Delete All Histories</string>
+    <string name="activity_history_delete_all_history_title">Delete All History</string>
     <string name="activity_history_header_deleteall">Delete All</string>
 
     <drawable name="red_drawable">#CCAA1883</drawable>
