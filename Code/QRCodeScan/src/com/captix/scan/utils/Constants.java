@@ -48,7 +48,7 @@ public class Constants {
 	public static final String IEXTRA_OAUTH_VERIFIER = "oauth_verifier";
 	public static final String IEXTRA_OAUTH_TOKEN = "oauth_token";
 	// =================================================================
-	public static final String VALIDATE_URL_PROFILE = "XXXXX";
+	public static final String VALIDATE_URL_PROFILE = "var";
 
 	public static void displayMessage(Context context, String message) {
 

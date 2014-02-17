@@ -324,55 +324,65 @@ public class ScanActivity extends BaseActivity implements
 				}
 			}
 
-			if (urlProfile2.length() > 0) {
-				if (urlProfile2.startsWith(Constants.VALIDATE_URL_PROFILE
-						.toUpperCase())) {
-					return result1.toUpperCase().equalsIgnoreCase(
-							urlProfile1.toUpperCase());
-				}
-
-				if (result2.length() > 0) {
-					if (resultOld.contains(Constants.VALIDATE_URL_PROFILE
+			if (urlProfile2.length() > 0
+					&& urlProfile2.contains(Constants.VALIDATE_URL_PROFILE
 							.toUpperCase())) {
-						String contain1 = resultOld.toUpperCase().substring(
-								0,
-								resultOld
-										.indexOf(Constants.VALIDATE_URL_PROFILE
-												.toUpperCase()));
-
-						String contain2 = resultOld
-								.toUpperCase()
-								.substring(
-										resultOld
-												.indexOf(Constants.VALIDATE_URL_PROFILE
-														.toUpperCase())
-												+ Constants.VALIDATE_URL_PROFILE
-														.length(),
-										resultOld.length());
-
-						if (contain2.length() == 0) {
-							if (mAppPreferences.getProfileUrl().toUpperCase()
-									.contains(contain1.toUpperCase())) {
-								return true;
-							}
-						} else if (mAppPreferences.getProfileUrl()
-								.toUpperCase().contains(contain1.toUpperCase())
-								&& mAppPreferences.getProfileUrl()
-										.toUpperCase()
-										.contains(contain2.toUpperCase())) {
-							return true;
-						}
-					} else {
-						return result1.toUpperCase().equalsIgnoreCase(
-								urlProfile1.toUpperCase());
-					}
+				if (urlProfile1.equalsIgnoreCase(result1)
+						&& result2.contains(Constants.VALIDATE_URL_PROFILE
+								.toUpperCase())) {
+					return true;
 				} else {
 					return false;
 				}
+				// if (urlProfile2.startsWith(Constants.VALIDATE_URL_PROFILE
+				// .toUpperCase())
+				// || !(urlProfile2
+				// .contains(Constants.VALIDATE_URL_PROFILE))) {
+				// return result1.toUpperCase().equalsIgnoreCase(
+				// urlProfile1.toUpperCase());
+				// }
+				//
+				// if (result2.length() > 0) {
+				// if (resultOld.contains(Constants.VALIDATE_URL_PROFILE
+				// .toUpperCase())) {
+				// String contain1 = resultOld.toUpperCase().substring(
+				// 0,
+				// resultOld
+				// .indexOf(Constants.VALIDATE_URL_PROFILE
+				// .toUpperCase()));
+				//
+				// String contain2 = resultOld
+				// .toUpperCase()
+				// .substring(
+				// resultOld
+				// .indexOf(Constants.VALIDATE_URL_PROFILE
+				// .toUpperCase())
+				// + Constants.VALIDATE_URL_PROFILE
+				// .length(),
+				// resultOld.length());
+				//
+				// if (contain2.length() == 0) {
+				// if (mAppPreferences.getProfileUrl().toUpperCase()
+				// .contains(contain1.toUpperCase())) {
+				// return true;
+				// }
+				// } else if (mAppPreferences.getProfileUrl()
+				// .toUpperCase().contains(contain1.toUpperCase())
+				// && mAppPreferences.getProfileUrl()
+				// .toUpperCase()
+				// .contains(contain2.toUpperCase())) {
+				// return true;
+				// }
+				// } else {
+				// return result1.toUpperCase().equalsIgnoreCase(
+				// urlProfile1.toUpperCase());
+				// }
+				// } else {
+				// return false;
+				// }
 			} else
 				return result1.toUpperCase().equalsIgnoreCase(
 						urlProfile1.toUpperCase());
-			return false;
 		} catch (Exception e) {
 			return false;
 		}
