@@ -32,11 +32,7 @@ public class DialogChangeShortcut extends BaseDialog implements OnClickListener 
 		mBtOk = (Button) findViewById(R.id.dialog_change_shortcus_bt_Ok);
 		mBtCancel = (Button) findViewById(R.id.dialog_change_shortcus_bt_Cancel);
 		mEtUrlShortcus = (EditText) findViewById(R.id.dialog_change_shortcus_et_link);
-		if (urlShortcus.equals("-1")) {
-			mEtUrlShortcus.setText("");
-		} else {
-			mEtUrlShortcus.setText(urlShortcus);
-		}
+		mEtUrlShortcus.setText(urlShortcus);
 		mEtUrlShortcus.requestFocus();
 		mBtOk.setOnClickListener(this);
 		mBtCancel.setOnClickListener(this);
@@ -70,14 +66,12 @@ public class DialogChangeShortcut extends BaseDialog implements OnClickListener 
 	public boolean validate() {
 		String urlProfile = mEtUrlShortcus.getText().toString().trim();
 		if (urlProfile.length() == 0) {
-			mUrl = "-1";
 			return true;
 		}
 
 		if (urlProfile.length() <= 3) {
-			Toast.makeText(mContext,
-					"Invalid URL Shortcut.",
-					Toast.LENGTH_LONG).show();
+			Toast.makeText(mContext, "Invalid URL Shortcut.", Toast.LENGTH_LONG)
+					.show();
 			return false;
 		}
 
@@ -109,9 +103,8 @@ public class DialogChangeShortcut extends BaseDialog implements OnClickListener 
 		// mContext,
 		// "Invalid URL profile. Url format should be  cptr.it/?var={variable}&id=test.",
 		// Toast.LENGTH_LONG).show();
-		Toast.makeText(mContext,
-				"Invalid URL Shortcut.",
-				Toast.LENGTH_LONG).show();
+		Toast.makeText(mContext, "Invalid URL Shortcut.", Toast.LENGTH_LONG)
+				.show();
 		return false;
 	}
 }

@@ -27,6 +27,7 @@
     <string name="mess_error_urlprofile">URL Profile is required.</string>
     <string name="mess_update_urlprofile_successfull">URL Profile has been updated successfully.</string>
     <string name="mess_update_urlprofile">Invalid URL Profile.</string>
+    <string name="mess_example_urlprofile">Use *var* to indicate where to inject the code value http://cptr.it/*var* </string>
 
     <!-- text use to show in layout not important -->
     <string name="link">cptr.it</string>

@@ -42,40 +42,58 @@
                 android:background="@android:color/black" />
         </LinearLayout>
 
-        <EditText
-            android:id="@+id/dialog_change_profile_et_url"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:singleLine="true"
-            android:background="@drawable/edittext_selector" />
-
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal" >
+            android:layout_height="wrap_content" >
 
-            <Button
-                android:id="@+id/dialog_change_profile_bt_Cancel"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/button_cancel"
-                android:text="@string/cancel"
-                android:textColor="@android:color/white" />
+                android:orientation="vertical" >
 
-            <Button
-                android:id="@+id/dialog_change_profile_bt_Ok"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/button_submit"
-                android:text="@string/ok"
-                android:textColor="@android:color/white" />
-        </LinearLayout>
+                <EditText
+                    android:id="@+id/dialog_change_profile_et_url"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/edittext_selector"
+                    android:singleLine="true" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/mess_example_urlprofile"
+                    android:textColor="@color/White" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal" >
+
+                    <Button
+                        android:id="@+id/dialog_change_profile_bt_Cancel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_cancel"
+                        android:text="@string/cancel"
+                        android:textColor="@android:color/white" />
+
+                    <Button
+                        android:id="@+id/dialog_change_profile_bt_Ok"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_submit"
+                        android:text="@string/ok"
+                        android:textColor="@android:color/white" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
 
 </RelativeLayout>

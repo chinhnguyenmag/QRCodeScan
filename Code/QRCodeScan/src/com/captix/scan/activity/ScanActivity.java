@@ -9,7 +9,6 @@ import net.sourceforge.zbar.Image;
 import net.sourceforge.zbar.ImageScanner;
 import net.sourceforge.zbar.Symbol;
 import net.sourceforge.zbar.SymbolSet;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -43,8 +42,8 @@ import com.captix.scan.utils.Constants;
 import com.captix.scan.utils.StringExtraUtils;
 import com.captix.scan.utils.ZBarConstants;
 
-public class ScanActivity extends Activity implements Camera.PreviewCallback,
-		ZBarConstants, MenuSlidingClickListener {
+public class ScanActivity extends BaseActivity implements
+		Camera.PreviewCallback, ZBarConstants, MenuSlidingClickListener {
 
 	// private CameraPreview mPreview;
 	private CameraPreviewNew mPreview;
@@ -66,7 +65,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	private static final int PERIOD = 2000;
 	private AppPreferences mAppPreferences;
 	private AudioManager mAudio;
-	private int mDefaultVolume=0;
+	private int mDefaultVolume = 0;
 
 	static {
 		System.loadLibrary("iconv");
@@ -79,7 +78,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		mAudio = (AudioManager) getSystemService(this.AUDIO_SERVICE);
 		mAppPreferences = new AppPreferences(this);
 		if (mAppPreferences.getProfileUrl().equals("")) {
-			mAppPreferences.setProfileUrl("cptr.it/?var=XXXXX&id=test");
+			mAppPreferences.setProfileUrl("cptr.it/?var=XXXXX");
 		}
 		try {
 			mTvTitle = (TextView) findViewById(R.id.header_tv_title);
@@ -368,8 +367,7 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 								urlProfile1.toUpperCase());
 					}
 				} else {
-					return result1.toUpperCase().equalsIgnoreCase(
-							urlProfile1.toUpperCase());
+					return false;
 				}
 			} else
 				return result1.toUpperCase().equalsIgnoreCase(
@@ -494,8 +492,9 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 		try {
 			MediaPlayer mp = MediaPlayer.create(getBaseContext(),
 					R.raw.camera_shutter);
-			mDefaultVolume=mAudio.getStreamVolume(AudioManager.STREAM_MUSIC);
-			mAudio.setStreamVolume(AudioManager.STREAM_MUSIC, mAudio.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
+			mDefaultVolume = mAudio.getStreamVolume(AudioManager.STREAM_MUSIC);
+			mAudio.setStreamVolume(AudioManager.STREAM_MUSIC,
+					mAudio.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
 			mp.setVolume(1.0f, 1.0f);
 			mp.start();
 
@@ -503,7 +502,8 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 				@Override
 				public void onCompletion(MediaPlayer mp) {
 					mp.release();
-					mAudio.setStreamVolume(AudioManager.STREAM_MUSIC, mDefaultVolume, 0);
+					mAudio.setStreamVolume(AudioManager.STREAM_MUSIC,
+							mDefaultVolume, 0);
 				}
 			});
 		} catch (Exception e) {
@@ -599,11 +599,8 @@ public class ScanActivity extends Activity implements Camera.PreviewCallback,
 	}
 
 	public void onClick_Shortcus(View v) {
-		if (mAppPreferences.getShortcusUrl().equals("-1")) {
-			Toast.makeText(
-					this,
-					getString(R.string.mess_not_exist_shortcut),
-					Toast.LENGTH_SHORT).show();
+		if (mAppPreferences.getShortcusUrl().length() == 0) {
+			showToastMessage(getString(R.string.mess_not_exist_shortcut));
 		} else {
 			Intent dataIntent = new Intent(ScanActivity.this,
 					BrowserActivity.class);

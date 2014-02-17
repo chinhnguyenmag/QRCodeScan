@@ -136,8 +136,8 @@ public class SettingActivity extends BaseActivity implements
 
 			String[] urlShortcut = removeHttp(mAppPreferences.getShortcusUrl())
 					.split("/");
-			if (mAppPreferences.getShortcusUrl().equals("-1")) {
-				mTvUrlShortcut.setText("none");
+			if (mAppPreferences.getShortcusUrl().length() == 0) {
+				mTvUrlShortcut.setText("None");
 			} else {
 				if (urlShortcut.length == 0) {
 					removeHttp(mAppPreferences.getShortcusUrl());
@@ -368,9 +368,8 @@ public class SettingActivity extends BaseActivity implements
 								String[] urlProfile = removeHttp(
 										mAppPreferences.getShortcusUrl())
 										.split("/");
-								if (mAppPreferences.getShortcusUrl().equals(
-										"-1")) {
-									mTvUrlShortcut.setText("none");
+								if (mAppPreferences.getShortcusUrl().length() == 0) {
+									mTvUrlShortcut.setText("None");
 								} else {
 									if (urlProfile.length == 0) {
 										removeHttp(mAppPreferences
@@ -714,10 +713,9 @@ public class SettingActivity extends BaseActivity implements
 	}
 
 	public void onClick_Shortcus(View v) {
-		if (mAppPreferences.getShortcusUrl().equals("-1") || mAppPreferences.getShortcusUrl().equals("")) {
-			Toast.makeText(
-					this,
-					getString(R.string.mess_not_exist_shortcut),
+		if (mAppPreferences.getShortcusUrl().equals("-1")
+				|| mAppPreferences.getShortcusUrl().equals("")) {
+			Toast.makeText(this, getString(R.string.mess_not_exist_shortcut),
 					Toast.LENGTH_SHORT).show();
 		} else {
 			Intent dataIntent = new Intent(SettingActivity.this,
