@@ -346,7 +346,9 @@ public class ScanActivity extends BaseActivity implements
 									startPreviewAgain();
 								}
 							}); // create alert dialog
+			alertDialogBuilder.setCancelable(false);
 			alertDialog = alertDialogBuilder.create();
+			alertDialog.setCanceledOnTouchOutside(false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
