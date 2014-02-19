@@ -1,5 +1,6 @@
 package com.captix.scan.activity;
 
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -268,13 +269,12 @@ public class ScanActivity extends BaseActivity implements
 								// There is no URL profile format
 								continueScan(symData);
 							} else {
-								if (checkInvalidURL(symData)) {
-									// Continue scan following fixed URL format
-									continueScan(symData);
+								if (mAppPreferences.getProfileUrl().contains(
+										Constants.VALIDATE_URL_PROFILE)) {
+									continueScan(changeURLProfile(symData));
 								} else if (!alertDialog.isShowing()) {
 									alertDialog.show();
 								}
-
 							}
 						}
 					}
@@ -289,102 +289,12 @@ public class ScanActivity extends BaseActivity implements
 		}
 	}
 
-	public boolean checkInvalidURL(String result) {
+	public String changeURLProfile(String result) {
 		try {
-
-			String resultOld = result.toUpperCase();
-			String result1 = resultOld.toUpperCase();
-			String result2 = "";
-			String urlProfile1 = mAppPreferences.getProfileUrl().toUpperCase();
-			String urlProfile2 = "";
-
-			result1 = result1.replace("HTTPS://", "");
-			result1 = result1.replace("HTTP://", "");
-			result1 = result1.replace("WWW.", "");
-			result1 = result1.replace("FTP://", "");
-
-			if (result1.indexOf("/") != -1) {
-				String[] domain = result1.split("/");
-				result1 = domain[0];
-				if (domain.length > 1) {
-					result2 = domain[1];
-				}
-			}
-
-			urlProfile1 = urlProfile1.replace("HTTPS://", "");
-			urlProfile1 = urlProfile1.replace("HTTP://", "");
-			urlProfile1 = urlProfile1.replace("WWW.", "");
-			urlProfile1 = urlProfile1.replace("FTP://", "");
-
-			if (urlProfile1.indexOf("/") != -1) {
-				String[] domain = urlProfile1.split("/");
-				urlProfile1 = domain[0];
-				if (domain.length > 1) {
-					urlProfile2 = domain[1];
-				}
-			}
-
-			if (urlProfile2.length() > 0
-					&& urlProfile2.contains(Constants.VALIDATE_URL_PROFILE
-							.toUpperCase())) {
-				if (urlProfile1.equalsIgnoreCase(result1)
-						&& result2.contains(Constants.VALIDATE_URL_PROFILE
-								.toUpperCase())) {
-					return true;
-				} else {
-					return false;
-				}
-				// if (urlProfile2.startsWith(Constants.VALIDATE_URL_PROFILE
-				// .toUpperCase())
-				// || !(urlProfile2
-				// .contains(Constants.VALIDATE_URL_PROFILE))) {
-				// return result1.toUpperCase().equalsIgnoreCase(
-				// urlProfile1.toUpperCase());
-				// }
-				//
-				// if (result2.length() > 0) {
-				// if (resultOld.contains(Constants.VALIDATE_URL_PROFILE
-				// .toUpperCase())) {
-				// String contain1 = resultOld.toUpperCase().substring(
-				// 0,
-				// resultOld
-				// .indexOf(Constants.VALIDATE_URL_PROFILE
-				// .toUpperCase()));
-				//
-				// String contain2 = resultOld
-				// .toUpperCase()
-				// .substring(
-				// resultOld
-				// .indexOf(Constants.VALIDATE_URL_PROFILE
-				// .toUpperCase())
-				// + Constants.VALIDATE_URL_PROFILE
-				// .length(),
-				// resultOld.length());
-				//
-				// if (contain2.length() == 0) {
-				// if (mAppPreferences.getProfileUrl().toUpperCase()
-				// .contains(contain1.toUpperCase())) {
-				// return true;
-				// }
-				// } else if (mAppPreferences.getProfileUrl()
-				// .toUpperCase().contains(contain1.toUpperCase())
-				// && mAppPreferences.getProfileUrl()
-				// .toUpperCase()
-				// .contains(contain2.toUpperCase())) {
-				// return true;
-				// }
-				// } else {
-				// return result1.toUpperCase().equalsIgnoreCase(
-				// urlProfile1.toUpperCase());
-				// }
-				// } else {
-				// return false;
-				// }
-			} else
-				return result1.toUpperCase().equalsIgnoreCase(
-						urlProfile1.toUpperCase());
+			return mAppPreferences.getProfileUrl().replace(
+					Constants.VALIDATE_URL_PROFILE, URLEncoder.encode(result));
 		} catch (Exception e) {
-			return false;
+			return "";
 		}
 	}
 
