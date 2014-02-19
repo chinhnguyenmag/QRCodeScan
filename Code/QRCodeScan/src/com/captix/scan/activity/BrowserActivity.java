@@ -6,11 +6,12 @@ import java.util.TimerTask;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.captix.scan.R;
 import com.captix.scan.model.AppPreferences;
@@ -47,6 +48,14 @@ public class BrowserActivity extends BaseActivity {
 						.getString(StringExtraUtils.KEY_SCAN_RESULT);
 			}
 			mWebView = (WebView) findViewById(R.id.activity_website_wv);
+			mWebView.getSettings().setJavaScriptEnabled(true);
+			mWebView.setWebViewClient(new WebViewClient());
+			WebSettings webSettings = mWebView.getSettings();
+			webSettings.setJavaScriptEnabled(true);
+			webSettings.setDomStorageEnabled(true);
+			mWebView.getSettings().setJavaScriptEnabled(true);
+			mWebView.getSettings().setDomStorageEnabled(true);
+			mWebView.getSettings().setPluginState(PluginState.ON);
 			if (mScanResult != null
 					&& !mScanResult.toLowerCase().startsWith("http://")
 					&& !mScanResult.toLowerCase().startsWith("https://")) {
