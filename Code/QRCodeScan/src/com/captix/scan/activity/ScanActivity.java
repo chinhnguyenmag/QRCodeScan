@@ -78,9 +78,6 @@ public class ScanActivity extends BaseActivity implements
 		setContentView(R.layout.activity_scan);
 		mAudio = (AudioManager) getSystemService(this.AUDIO_SERVICE);
 		mAppPreferences = new AppPreferences(this);
-		if (mAppPreferences.getProfileUrl().equals("")) {
-			mAppPreferences.setProfileUrl("cptr.it/?var=XXXXX");
-		}
 		try {
 			mTvTitle = (TextView) findViewById(R.id.header_tv_title);
 			mTvTitle.setText(R.string.header_title_scan);
@@ -263,19 +260,27 @@ public class ScanActivity extends BaseActivity implements
 							mCamera.cancelAutoFocus();
 							mCamera.setPreviewCallback(null);
 							// Create dialog confirm to avoid opening twice
-							createDialogConfirmBrowsing(symData);
-							if (mAppPreferences.getProfileUrl()
-									.equalsIgnoreCase("-1")) {
-								// There is no URL profile format
-								continueScan(symData);
+							if (mAppPreferences.getProfileUrl().contains(
+									Constants.VALIDATE_URL_PROFILE)) {
+								String urlProfile = changeURLProfile(symData);
+								createDialogConfirmBrowsing(urlProfile);
+								continueScan(urlProfile);
 							} else {
-								if (mAppPreferences.getProfileUrl().contains(
-										Constants.VALIDATE_URL_PROFILE)) {
-									continueScan(changeURLProfile(symData));
-								} else if (!alertDialog.isShowing()) {
-									alertDialog.show();
-								}
+								createDialogConfirmBrowsing(symData);
+								continueScan(symData);
 							}
+							// if (mAppPreferences.getProfileUrl().length() ==
+							// 0) {
+							// // There is no URL profile format
+							// continueScan(symData);
+							// } else {
+							// if (mAppPreferences.getProfileUrl().contains(
+							// Constants.VALIDATE_URL_PROFILE)) {
+							// continueScan(changeURLProfile(symData));
+							// } else if (!alertDialog.isShowing()) {
+							// alertDialog.show();
+							// }
+							// }
 						}
 					}
 				}

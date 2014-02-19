@@ -47,6 +47,8 @@ public class DialogConfirm extends Dialog implements OnClickListener {
 				new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
 		setContentView(R.layout.dialog_confirm);
+		this.setCancelable(false);
+
 		this.process = pro;
 		this.mContext = context;
 		this.mBtCancel = (Button) findViewById(R.id.dialog_confirm_bt_Cancel);

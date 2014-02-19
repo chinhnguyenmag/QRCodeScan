@@ -321,7 +321,7 @@ public class SettingActivity extends BaseActivity implements
 										mAppPreferences.getProfileUrl()).split(
 										"/");
 								if (mAppPreferences.getProfileUrl()
-										.equals("-1")) {
+										.equals("")) {
 									mTvUrlProfile.setText("");
 								} else {
 									if (urlProfile.length == 0) {
